@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A2E6F711-F1F0-4F19-B5A9-DB5E6F6A7687}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Models</RootNamespace>
+    <AssemblyName>Models</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Constant.cs" />
+    <Compile Include="Dao\AccountModel.cs" />
+    <Compile Include="Dao\BlogModel.cs" />
+    <Compile Include="Dao\CommentModel.cs" />
+    <Compile Include="Dao\DashboardModel.cs" />
+    <Compile Include="Dao\FoodModel.cs" />
+    <Compile Include="Dao\ListBlog.cs" />
+    <Compile Include="Dao\ListOrder.cs" />
+    <Compile Include="Dao\ListPromotion.cs" />
+    <Compile Include="Dao\ListStaff.cs" />
+    <Compile Include="Dao\OrderModel.cs" />
+    <Compile Include="Dao\PersonalModel.cs" />
+    <Compile Include="Dao\PromotionModel.cs" />
+    <Compile Include="Dao\StaffModel.cs" />
+    <Compile Include="EF\Blog.cs" />
+    <Compile Include="EF\BlogCategory.cs" />
+    <Compile Include="EF\BlogComment.cs" />
+    <Compile Include="EF\Cart.cs" />
+    <Compile Include="EF\CartComboDetail.cs" />
+    <Compile Include="EF\CartFoodDetail.cs" />
+    <Compile Include="EF\DbCNWeb.cs" />
+    <Compile Include="EF\Combo.cs" />
+    <Compile Include="EF\ComboDetail.cs" />
+    <Compile Include="EF\Credential.cs" />
+    <Compile Include="EF\Food.cs" />
+    <Compile Include="EF\FoodCategory.cs" />
+    <Compile Include="EF\FoodComment.cs" />
+    <Compile Include="EF\FoodOption.cs" />
+    <Compile Include="EF\Image.cs" />
+    <Compile Include="EF\Order.cs" />
+    <Compile Include="EF\OrderFoodDetail.cs" />
+    <Compile Include="EF\Promotion.cs" />
+    <Compile Include="EF\PromotionFoodDetail.cs" />
+    <Compile Include="EF\PromotionType.cs" />
+    <Compile Include="EF\Role.cs" />
+    <Compile Include="EF\RoleName.cs" />
+    <Compile Include="EF\Slide.cs" />
+    <Compile Include="EF\SlideDetail.cs" />
+    <Compile Include="EF\sysdiagram.cs" />
+    <Compile Include="EF\Tag.cs" />
+    <Compile Include="EF\User.cs" />
+    <Compile Include="EF\UserGroup.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EntityFramework">
+      <Version>6.4.4</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

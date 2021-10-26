@@ -1,0 +1,29 @@
+﻿@model CNWeb.Models.ViewDetailBlogModel
+
+@{
+    ViewBag.Title = "ViewBlog";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+ 
+<!-- Page content -->
+@foreach (var item in Model.data)
+{
+    <div class="container-fluid mt--6">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <!-- Card header -->
+                    <div class="card-header">
+                        <h3 class="mb-0">@item.Name</h3>
+                    </div>
+                    <!-- Card body  Content Post -->
+                    <div class="card-body" id="listblogs">
+                        @Html.Raw(item.Content)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

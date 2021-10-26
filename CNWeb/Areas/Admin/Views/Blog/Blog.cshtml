@@ -1,0 +1,167 @@
+﻿<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Tables</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Blog Manager</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header">
+                    <div class="form-group">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">Bài viết đang chờ - <span id="numberofposts">1</span></h3>
+                            </div>
+                            <div class="col-4 text-right">
+                                <button type="submit" class="btn btn-sm btn-primary" onclick="ChangeStatusAll(true);" style="width:100%; max-width:100px;">Phê duyệt</button>
+                                <button type="submit" class="btn btn-sm btn-primary" onclick="ChangeStatusAll(false);" style="width:100%; max-width:100px;">Từ chối</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="input-search" placeholder="Nhập tên người đăng hoặc tên bài để tìm kiếm">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <select class="form-control" id="filter">
+                                        <option value="4">Tất cả</option>
+                                        <option value="0">Chưa duyệt</option>
+                                        <option value="1">Đã duyệt</option>
+                                        <option value="2">Bị từ chối</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="submit" class="btn btn-sm btn-primary" id="Submit" style="width: 100%; height: 60%"><i class="fas fa-search"></i>    Tìm kiếm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card body  Content Post -->
+                <div class="card-body" id="listblogs">                   
+                          
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //Initially load pagenumber=1
+    $(document).ready(function () {
+        $.getJSON("/Admin/Blog/ListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
+            RenderBlog(response);
+        });
+    });
+
+    function UnixToDate(unixtime) {
+        const unixTimestamp = unixtime;
+        const milliseconds = unixTimestamp * 1000 // 1575909015000
+        const dateObject = new Date(milliseconds)
+        const humanDateFormat = dateObject.toLocaleString() //2019-12-9 10:30:15
+        return humanDateFormat;
+    }
+
+    function RenderBlog(listblog) {
+        let html = '';
+        listblog.map((item, index) => {
+
+            let dateUnix = UnixToDate(item.CreatedDay);
+            var dateStart = new Date(dateUnix);
+
+            if (item.Status == 1) {
+                html += '<div class="row border-shadow"><div class="row-image"><input type="checkbox" class="checkbox" disabled/>';
+            } else if (item.Status == 0) {
+                html += `<div class="row border-shadow"><div class="row-image"><input type="checkbox" value="${item.ID}" class="checkbox"/>`;
+            }
+            if (item.pathImage != null)
+            {
+                html += `<img src="${item.pathImage}" class="rounded-circle autofit-image"></div>`
+            }
+            else
+            {
+                html += '<img src="~/Content/img/theme/team-4.jpg"></div>';
+            }
+            html += '<div class="col-lg-2 information--poster">';
+            html += `<span class="h2 font-weight-bold mb-0">${item.UserName}</span>`;
+            html += `<h5 class="card-title text-uppercase text-muted mb-0">${dateStart.toISOString().split('T')[0]}</h5></div>`;
+            html += '<div class="information--poster col-lg-4">';
+            html += `<h3 class="h3 mb-0" id="title--poster">${item.Name}</h3><span id="content">${item.Description}<a href="/Admin/Blog/ViewBlog/${item.ID}"> Xem Thêm</a></span></div>`;
+            if (item.Status == 1) {
+                html += `<div><button class="btn btn-info" disabled"> Phê duyệt</button><button class="btn btn btn-secondary" disabled>Từ chối</button></div></div>`
+            } else {
+                html += `<div><button class="btn btn-info" onclick="ChangeStatus(${item.ID}, true)"> Phê duyệt</button>
+                            <button class="btn btn btn-secondary" onclick="ChangeStatus(${item.ID}, false)">Từ chối</button></div></div>`
+            }
+        });
+        document.getElementById('listblogs').innerHTML = html;
+    }
+    
+    $('#filter').change(function () {
+        $.getJSON("/Admin/Blog/ListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
+            RenderBlog(response);
+        });
+    })
+
+    $("#Submit").on('click', function () {
+        $.getJSON("/Admin/Blog/ListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
+            RenderBlog(response);
+        });
+    });
+
+    function ChangeStatus(ID, bool) {
+        $.getJSON("/Admin/Blog/UpdateStatus", { id: ID, check: bool }, function (response) {
+            if (response.message == "Success!!") {
+                swal('Alert info', response.data, "success");
+                $.getJSON("/Admin/Blog/ListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
+                    RenderBlog(response);
+                });
+            }
+            else {
+                swal('Alert info', reponse.data, "error");
+            }
+        });
+    }
+
+    function ChangeStatusAll(bool) {
+        var checkedVals = $('.checkbox:checkbox:checked').map(function () {
+            return this.value;
+        }).get();
+        console.log(checkedVals);
+        $.getJSON("/Admin/Blog/UpdateAllStatus", { id: checkedVals, check: bool }, function (response) {
+            if (response.message == "Success!!") {
+                swal('Alert info', response.data, "success");
+                $.getJSON("/Admin/Blog/ListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
+                    RenderBlog(response);
+                });
+            }
+            else {
+                swal('Alert info', reponse.data, "error");
+            }
+        })
+    }
+       
+</script>

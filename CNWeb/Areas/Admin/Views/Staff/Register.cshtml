@@ -1,0 +1,277 @@
+﻿@model Models.EF.User
+
+<!-- Header FORM ĐĂNG KÝ NHÂN VIÊN-->
+<div class="header pb-6 d-flex align-items-center" style="min-height: 500px; background-image: url('/Content/img/theme/img-1-1000x600.jpg'); background-size: cover; background-position: center top; ">
+    <!-- Mask -->
+    <span class="mask bg-gradient-default opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+        <div class="row">
+            <div class="col-lg-12 col-md-10">
+                @{ var session = (CNWeb.Code.UserSession)Session[CNWeb.Code.Constants.USER_SESSION]; }
+                @if (session != null)
+                {
+                    <h1 class="display-2 text-white">Hello @session.FullName</h1>
+                }
+                    <p class="text-white mt-0 mb-5">Đây là form thêm nhân viên dành cho quản lý thêm vào nhân viên được thuê</p>
+                    <button class="btn btn-neutral" id="btn--new">New profile</button> <!-- Làm mới nội dung đã nhập -->
+                @if (TempData["AlertMessage"] != null)
+                {
+                    <div id="AlertBox" class="alert @TempData["AlertType"] hide" role="alert" style="margin-top: 10px">
+                        @TempData["AlertMessage"]
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-xl-4 order-xl-2">
+            <div class="card card-profile">
+                <img src="~/Content/img/theme/img-1-1000x600.jpg" alt="Image placeholder" class="card-img-top">
+                <div class="row justify-content-center">
+                    <div class="col-lg-3 order-lg-2">
+                        <div class="card-profile-image">
+                            <a href="#">
+                                @if (session != null)
+                                {
+                                    <img src="@session.pathImage" class="rounded-circle">
+                                }
+                                else
+                                {
+                                    <img src="~/Content/img/theme/team-4.jpg" class="rounded-circle">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                    <div class="d-flex justify-content-between">
+                        <a href="#" class="btn btn-sm btn-info  mr-4 ">Connect</a>
+                        <a href="#" class="btn btn-sm btn-default float-right">Message</a>
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card-profile-stats d-flex justify-content-center">
+                                <div>
+                                    <span class="heading">22</span>
+                                    <span class="description">Bạn</span>
+                                </div>
+                                <div>
+                                    <span class="heading">10</span>
+                                    <span class="description">Ảnh</span>
+                                </div>
+                                <div>
+                                    <span class="heading">89</span>
+                                    <span class="description">Bình luận</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        @if (session != null)
+                        {
+                            <h5 class="h3">
+                                @session.FullName<span class="font-weight-light">, @session.BirthDay</span>
+                            </h5>
+                            <div class="h5 font-weight-300">
+                                <i class="ni location_pin mr-2"></i>@session.City, @session.Country
+                            </div>
+                            <div class="h5 mt-4">
+                                <i class="ni business_briefcase-24 mr-2"></i>@session.Career
+                            </div>
+                        }
+                        else
+                        {
+                            <h5>
+                                Jessica Jones<span class="font-weight-light">, 27</span>
+                            </h5>
+                            <div class="h5 font-weight-300">
+                                <i class="ni location_pin mr-2"></i>Hà Nội, Việt Nam
+                            </div>
+                            <div class="h5 mt-4">
+                                <i class="ni business_briefcase-24 mr-2"></i>Quản trị viên
+                            </div>
+                        }                                           
+                        <div>
+                            <i class="ni education_hat mr-2"></i>Military Technology Academy
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8 order-xl-1">
+            <div class="card">
+                @using (Html.BeginForm("Register", "Staff", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                { 
+                    @Html.AntiForgeryToken()
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">Thêm nhân viên </h3>
+                            </div>
+                            <div class="col-4 text-right">
+                                <button type="submit" class="btn btn-sm btn-primary" id="Submit" style="width:100px;">Lưu</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="heading-small text-muted mb-4">Thông tin nhân viên</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Tên đăng nhập (*)</label>
+                                        @Html.TextBoxFor(model => model.UserName, new { @id = "input-username", @class = "form-control", @placeholder = "UserName" })
+                                        @Html.ValidationMessageFor(model => model.UserName)
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-password">Password (*)</label>
+                                        @Html.TextBoxFor(model => model.Password, new { @type = "password", @id = "input-password", @class = "form-control", @placeholder = "PassWord" })
+                                        @Html.ValidationMessageFor(model => model.Password)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-full-name">Họ và tên (*)</label>
+                                        @Html.TextBoxFor(model => model.FullName, new { @id = "input-full-name", @class = "form-control", @placeholder = "Full Name" })
+                                        @Html.ValidationMessageFor(model => model.FullName)
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Email address</label>
+                                        @Html.TextBoxFor(model => model.Email, new { @type = "email", @id = "input-email", @class = "form-control", @placeholder = "longle@example.com" })
+                                        @Html.ValidationMessageFor(model => model.Email)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-birthday">Ngày tháng năm sinh (*)</label>
+                                        <input type = "date" id = "input-unix-birthday" class = "form-control"/>
+                                        @Html.TextBoxFor(model => model.BirthDay, new { @id = "input-birthday", @class = "form-control", @style="display:none;" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-career">Nghề nghiệp</label>
+                                        @Html.TextBoxFor(model => model.Career, new { @id = "input-career", @class = "form-control", @placeholder="Học sinh/Sinh viên" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4" />
+                        <!-- Address -->
+                        <h6 class="heading-small text-muted mb-4">Thông tin liên lạc</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-address">Địa chỉ</label>
+                                        @Html.TextBoxFor(model => model.Address, new { @id = "input-address", @class = "form-control", @placeholder = "236 Hoàng Quốc Việt" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-city">Thành phố</label>
+                                        @Html.TextBoxFor(model => model.City, new { @id = "input-city", @class = "form-control", @placeholder = "Hà Nội" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-country">Quốc gia</label>
+                                        @Html.TextBoxFor(model => model.Country, new { @id = "input-country", @class = "form-control", @placeholder = "Việt Nam" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-postal-code">Postal code</label>
+                                        @Html.TextBoxFor(model => model.PostalCode, new { @type = "number", @id = "input-postal-code", @class = "form-control", @placeholder = "Postal code" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4" />
+                        <!-- Description -->
+                        <h6 class="heading-small text-muted mb-4">Mô tả bản thân</h6>
+                        <div class="row">    
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-file-image">Hình ảnh đính kèm</label>
+                                    @Html.TextBox("file", "", new { @type = "file", @id= "input-file-image", @class="form-control" })
+                                    @Html.TextBoxFor(model => model.Image, new { @style = "display:none;", @id = "input-image" })
+                                </div>
+                            </div>    
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-position">Chức vụ</label>
+                                    @Html.DropDownListFor(model => model.IDChucVu, null, new { @id = "input-position", @class="form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="form-control-label">Mô tả bản thân</label>
+                                    @Html.TextAreaFor(model => model.Description, new { @rows = "4", @class = "form-control", @placeholder = "Đẹp trai, hòa đồng..." })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#AlertBox').removeClass('hide');
+        $('#AlertBox').delay(2000).slideUp(500);
+    });
+
+    // Binding string path file is chosen to textbox
+    $('input[type=file]').change(function () {
+        document.getElementById('input-image').value = this.files[0].name;
+    });
+
+    // Convert date to UnixTimeStamp for db
+    $('input[type=date]').change(function () {
+        var date = this.value;
+        const UnixTime = new Date(date).getTime() / 1000
+        document.getElementById('input-birthday').value = UnixTime;
+    });
+
+    // function help clear input text 
+    function Clear() {
+        document.getElementById('input-username').value = '';
+        document.getElementById('input-password').value = '';
+        document.getElementById('input-full-name').value = '';
+        document.getElementById('input-email').value = '';
+        document.getElementById('input-unix-birthday').value = '';
+        document.getElementById('input-career').value = '';
+        document.getElementById('input-address').value = '';
+        document.getElementById('input-city').value = '';
+        document.getElementById('input-country').value = '';
+        document.getElementById('input-postal-code').value = '';
+        document.getElementById('input-position').value = '';
+        document.getElementById('Description').value = '';
+    }
+
+    document.getElementById("btn--new").addEventListener('click', (e) => {
+        Clear();
+    });
+</script>

@@ -1,0 +1,523 @@
+﻿<!-- Header -->
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Tables</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Order</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a href="/" class="btn btn-sm btn-neutral">Bán hàng</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<h3 id="id-order" style="display:none"></h3>
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header">
+                    <div class="form-group">
+                        <div class="row align-items-center">
+                            <div class="col-8" style="display: flex; justify-content: space-between;">
+                                <h3 class="mb-0">Đơn hàng</h3>
+                                <div style=" display: flex; align-items: center;">
+                                    <i class="fa fa-calendar"></i> &nbsp;
+                                    <input type="text" id="picker" class="form-control" value="12/04/2010 - 12/05/2019" />
+                                </div>
+                            </div>
+                            <div class="col-4 text-right">
+                                <a href="@Url.Action("ExportExcel_EPPlus", "Order")" class="btn btn-sm btn-success" style="width:100%; max-width:100px;">Xuất Excel</a>
+                                <button type="submit" class="btn btn-sm btn-primary" onclick="Reload()" style="width:100%; max-width:100px;">Cập nhật</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="input-search" placeholder="Nhập tên khách hàng hoặc mã để tìm kiếm">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <select class="form-control" id="filter">
+                                        <option value="6">Tất cả đơn hàng</option>
+                                        <option value="0">Đơn hàng đã đặt</option>
+                                        <option value="1">Đơn hàng đã thanh toán</option>
+                                        <option value="2">Đã giao cho ĐVVC</option>
+                                        <option value="3">Đang giao</option>
+                                        <option value="4">Đã xong</option>
+                                        <option value="5">Đơn đã hủy</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="submit" class="btn btn-sm btn-primary" id="Submit" style="width: 100%; height: 60%"><i class="fas fa-search"></i>    Tìm kiếm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Light table -->
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush" id="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="sort" data-sort="name">Mã phiếu</th>
+                                <th scope="col" class="sort" data-sort="email">Ngày bán</th>
+                                <th scope="col" class="sort" data-sort="budget">Khách hàng</th>
+                                <th scope="col" class="sort" data-sort="budget">Địa chỉ</th>
+                                <th scope="col" class="sort" data-sort="status">Phương thức thanh toán</th>
+                                <th scope="col" class="sort" data-sort="position">Trạng thái</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="list" id="tblData">
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Card footer -->
+                <div class="card-footer py-4" id="paged">
+                    <nav aria-label="..." class="card-footer--listPages">
+                        <ul class="pagination justify-content-end mb-0" id="pagination">
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="detailOrder">
+    <article class="card">
+        <header class="card-header"> Chi tiết đơn hàng / Theo dõi </header>
+        <div class="card-body">
+            <h6 id="id-order2">Mã đơn hàng: OD45345345435</h6>
+            <article class="card">
+                <div class="card-body row">
+                    <div class="col" id="time-delivery"> <strong>Estimated Delivery time:</strong> <br>29 nov 2019 </div>
+                    <div class="col"> <strong>Vận chuyển BỞI:</strong> <br> NLQH Team, | <i class="fa fa-phone"></i> +1598675986 </div>
+                    <div class="col"> <strong>Trạng thái:</strong> <br> <span id="status-delivery">Picked by the courier</span> </div>
+                    <div class="col"> <strong>Tracking #:</strong> <br> BD045903594059 </div>
+                </div>
+            </article>
+            <div class="track">
+                <div class="step"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Đơn hàng đã đặt</span> </div>
+                <div class="step"> <span class="icon"> <i class="fas fa-money-bill"></i> </span> <span class="text"> Đã thanh toán</span> </div>
+                <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> Đã giao cho ĐVVC </span> </div>
+                <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">Đơn hàng Đang giao</span> </div>
+                <div class="step"> <span class="icon"> <i class="far fa-star"></i> </span> <span class="text">Đơn hàng Đã giao</span> </div>
+            </div>
+            <hr>
+            <ul class="row" id="listfood">
+                <li class="col-md-4">
+                    <figure class="itemside mb-3">
+                        <div class="aside"><img src="https://i.imgur.com/iDwDQ4o.png" class="img-sm border"></div>
+                        <figcaption class="info align-self-center">
+                            <p class="title">Dell Laptop with 500GB HDD <br> 8GB RAM</p> <span class="text-muted">$950 </span>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li class="col-md-4">
+                    <figure class="itemside mb-3">
+                        <div class="aside"><img src="https://i.imgur.com/iDwDQ4o.png" class="img-sm border"></div>
+                        <figcaption class="info align-self-center">
+                            <p class="title">Dell Laptop with 500GB HDD <br> 8GB RAM</p> <span class="text-muted">$950 </span>
+                        </figcaption>
+                    </figure>
+                </li>
+            </ul>
+            <hr> <a href="#" class="btn btn-warning" data-abc="true"> <i class="fa fa-chevron-left"></i> Back to orders</a>
+        </div>
+    </article>
+</div>
+
+<div class="popup-overlay"></div>
+<div class="popup">
+    <div class="text">
+        <div><span id="title">Cập nhật đơn hàng</span></div>
+        <div>
+            <button class="btn btn-sm btn-warning" id="close-form--createfile"><i class="ni ni-fat-remove"></i></button>
+        </div>
+    </div>
+    <form>
+        <h6 class="heading-small mb-4">Trạng thái hiện tại</h6>
+        <div>
+            <div>
+                <div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="input-status">Trạng thái</label>
+                        <select id="input-status" class="form-control">
+                            <option value="0">Đơn hàng đã đặt</option>
+                            <option value="1">Đơn hàng đã thanh toán</option>
+                            <option value="2">Đã giao cho ĐVVC</option>
+                            <option value="3">Đang giao</option>
+                            <option value="4">Đã xong</option>
+                            <option value="5">Đơn đã hủy</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 text-right" style="width: 100%; max-width: 100%;">
+                <div id="div--btn-submit">
+                    <button type="button" id="btn--submit" class="btn btn-success">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="~/Content/vendor/moment/min/moment.min.js"></script>
+<script src="~/Content/vendor/datetimepicker/daterangepicker.js"></script>
+
+<script>
+
+    function TrackOrder(ID) {
+        var step = document.getElementsByClassName('step');
+
+        $.getJSON("/Admin/Order/DetailOrder", { id: ID }, function (response) {
+            document.getElementById("id-order2").innerHTML = `Mã đơn hàng: ${ID}`
+            document.getElementById("status-delivery").innerHTML = convertStatus(response[0].Status)
+            RederFoodForOrder(response);
+
+            var track = document.getElementsByClassName('step');
+            for (var i = 0; i < track.length; i++) {
+                track[i].classList.remove('active');
+            }
+            for (var i = 0; i <= response[0].Status; i++) {
+                step[i].classList.add('active');
+            }
+
+        });
+    };
+
+    function RederFoodForOrder(data) {
+        var html = '';
+        data.map((item, index) => {
+            html += '<li class="col-md-4"><figure class="itemside mb-3">';
+            html += `<div class="aside"><img src="${item.Image}" class="img-sm border"></div>`
+            html += '<figcaption class="info align-self-center">';
+            html += `<p class="title">${item.NameFood} <br>Số lượng: ${item.Quantity}</p> <span class="text-muted">${item.Price} </span></figcaption></figure></li>`
+        });
+        document.getElementById('listfood').innerHTML = html;
+    }
+
+    function convertStatus(status) {
+        var text = ''
+        switch (status) {
+            case 0:
+                text = 'Đơn hàng đã đặt';
+                break;
+            case 1:
+                text = 'Đơn hàng đã thanh toán';
+                break;
+            case 2:
+                text = 'Đã giao cho ĐVVC';
+                break;
+            case 3:
+                text = 'Đang giao';
+                break;
+            case 4:
+                text = 'Đã giao';
+                break;
+            case 5:
+                text = 'Đơn đã hủy';
+                break;
+        }
+        return text;
+    }
+
+    $(document).ready(function () {
+        //Initially load pagenumber=1
+        $.getJSON("/Admin/Order/GetPaggedData", { filter: $("#filter").val(), search: $("#input-search").val(), pageNumber: 1, pageSize: 5 }, function (response) {
+            PaginationButtons(response.TotalPages);
+            document.getElementsByClassName('btn--renderRule')[2].click();
+        });
+    });
+
+    function Reload() {
+        document.getElementById('pagination').innerHTML = '';
+        $.getJSON("/Admin/Order/GetPaggedData", { filter: $("#filter").val(), search: $("#input-search").val(), pageNumber: 1, pageSize: 5 }, function (response) {
+            PaginationButtons(response.TotalPages);
+            document.getElementsByClassName('btn--renderRule')[2].click();
+        });
+    }
+
+    // function Help
+    // Event when click btn Close in form New or Import file
+    document.getElementById("close-form--createfile").addEventListener('click', function () {
+        doingEdit = false;
+        document.getElementsByClassName("popup-overlay")[0].classList.remove("popup-overlay-active");
+        document.getElementsByClassName("popup")[0].classList.remove("popup-active");
+    })
+
+    function ConvertStatusHTML(status) {
+        var html = '';
+        if (status == 5) {
+            html += `<div class="btn-danger" id="unavailabel"><span>Đã hủy</span></div>`
+        } else if (status == 0) {
+            html += `<div class="btn-success" id="availabel"><span>Đơn hàng đã đặt</span></div>`
+        } else if (status == 1) {
+            html += `<div class="btn-success" id="availabel"><span>Đơn hàng đã thanh toán</span></div>`
+        } else if (status == 2) {
+            html += `<div class="btn-success" id="availabel"><span>Đã giao cho ĐVVC</span></div>`
+        } else if (status == 3) {
+            html += `<div class="btn-success" id="availabel"><span>Đang giao</span></div>`
+        } else if (status == 4) {
+            html += `<div class="btn-warning" id="availabel"><span>Đơn hàng Đã giao</span></div>`
+        }
+        return html;
+    }
+
+    function UnixToDate(unixtime) {
+        const unixTimestamp = unixtime;
+        const milliseconds = unixTimestamp * 1000 // 1575909015000
+        const dateObject = new Date(milliseconds)
+        const humanDateFormat = dateObject.toLocaleString() //2019-12-9 10:30:15
+        return humanDateFormat;
+    }
+
+    function GetPageData(pageNum, pageSize) {
+        //After every trigger remove previous data and paging
+        $("#tblData").empty();
+        $.getJSON("/Admin/Order/GetPaggedData", { filter: $("#filter").val(), search: $("#input-search").val(), pageNumber: pageNum, pageSize: pageSize }, function (response) {
+            var rowData = "";
+            for (var i = 0; i < response.Data.length; i++) {
+                console.log(response.Data[i]);
+                let html = ConvertStatusHTML(response.Data[i].Status);
+                let date1 = UnixToDate(response.Data[i].CreatedTime);
+                var date2 = new Date(date1);
+                rowData = rowData + `<tr id="${response.Data[i].ID}" onClick="TrackOrder(${response.Data[i].ID})"><td>` + response.Data[i].ID + `</td><td>${date2.toISOString().split('T')[0]}` + '</td><td>' +
+                    response.Data[i].CustomerName + '</td><td>' + response.Data[i].CustomerAddress + '</td><td>' + response.Data[i].PaymentMethod + `</td><td>${html}` + '</td><td> ' +
+                    '<div class="dropdown">' +
+                    '<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                    '<i class="fas fa-ellipsis-v"></i>' +
+                    '</a>' +
+                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">' +
+                    `<button class="dropdown-item" onClick="UpdateOrder(${response.Data[i].ID})">Cập nhật đơn hàng</button>` +
+                    `<button class="dropdown-item" onClick="DeteleOrder(${response.Data[i].ID})">Xóa đơn hàng</button>` +
+                    `<button class="dropdown-item" onClick="TrackOrder(${response.Data[i].ID})">Theo dõi đơn hàng</button>` +
+                    '</div></div>' +
+                    '</td></tr>'
+
+            }
+            $("#tblData").append(rowData);
+        });
+    }
+
+    var PageNumbers = (total, max, current) => {
+        const half = Math.round(max / 2);
+        let to = max;
+
+        if (current + half >= total) {
+            to = total;
+        } else if (current > half) {
+            to = current + half;
+        }
+        let from = to - max;
+
+        if (from < 0) {
+            return Array.from({ length: total }, (_, i) => (i + 1));
+        }
+        return Array.from({ length: max }, (_, i) => (i + 1) + from);
+    }
+
+    function PaginationButtons(totalPages, maxPageVisible = 2, currentPage = 1) {
+        let pages = PageNumbers(totalPages, maxPageVisible, currentPage);
+        let currentPageBtn = null;
+        const buttons = new Map();
+
+        const disabled = {
+            start: () => pages[0] === 1,
+            prev: () => currentPage === 1,
+            end: () => pages.slice(-1)[0] === totalPages,
+            next: () => currentPage === totalPages,
+        };
+
+        const createAndSetupButton = (label = '', cls = '', disabled = false, handleClick = () => { }) => {
+            const button = document.createElement('button');
+
+            button.textContent = label;
+            button.className = `btn btn-secondary btn--renderRule ${cls}`;
+            button.disabled = disabled;
+            button.addEventListener('click', event => {
+                handleClick(event);
+                this.update();
+                document.getElementById('pagination').nodeValue = currentPage;
+                document.getElementById('pagination').dispatchEvent(new Event('change'));
+            });
+
+            return button;
+        };
+
+        const onPageButtonClick = (e) => {
+            currentPage = Number(e.currentTarget.textContent);
+            GetPageData(currentPage, 5);
+        };
+
+        const onPageButtonUpdate = index => (btn) => {
+            btn.textContent = pages[index];
+
+            if (pages[index] === currentPage) {
+                currentPageBtn.classList.remove('active');
+                btn.classList.add('active');
+                currentPageBtn = btn;
+                currentPageBtn.focus();
+            }
+        };
+
+        buttons.set(
+            createAndSetupButton('start', '', disabled.start(), () => {
+                currentPage = 1;
+                GetPageData(currentPage, 5);
+            }),
+            (btn) => btn.disabled = disabled.start()
+        );
+
+        buttons.set(
+            createAndSetupButton('prev', '', disabled.prev(), () => {
+                currentPage -= 1;
+                GetPageData(currentPage, 5);
+            }),
+            (btn) => btn.disabled = disabled.prev()
+        );
+
+        pages.forEach((pageNumber, index) => {
+            const isCurrentPage = pageNumber === currentPage;
+            const button =
+                createAndSetupButton(pageNumber, isCurrentPage ? 'active' : '', false, onPageButtonClick);
+
+            if (isCurrentPage) {
+                currentPageBtn = button;
+            }
+
+            buttons.set(
+                button,
+                onPageButtonUpdate(index)
+            )
+        });
+
+        buttons.set(
+            createAndSetupButton('next', '', disabled.next(), () => {
+                currentPage += 1;
+                GetPageData(currentPage, 5);
+            }),
+            (btn) => btn.disabled = disabled.next()
+        );
+
+        buttons.set(
+            createAndSetupButton('end', '', disabled.end(), () => {
+                currentPage = totalPages;
+                GetPageData(currentPage, 5);
+            }),
+            (btn) => btn.disabled = disabled.end()
+        );
+
+        buttons.forEach((_, btn) => {
+            document.getElementById('pagination').appendChild(btn);
+        });
+
+        this.update = (newPageNumber = currentPage) => {
+            currentPage = newPageNumber;
+            console.log("currentPage: ", currentPage);
+            pages = PageNumbers(totalPages, maxPageVisible, currentPage);
+            buttons.forEach((updateButton, btn) => updateButton(btn));
+        };
+
+        this.onChange = (handler) => {
+            document.getElementById('pagination').addEventListener('change', handler);
+        }
+    }
+
+    $('#picker').daterangepicker({
+        opens: 'left',
+        startDate: moment().subtract(29, 'days'),
+        endDate: moment(),
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, function (start, end) {
+        $('#input--date').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'))
+    });
+
+    $('#filter').change(function () {
+        document.getElementById('pagination').innerHTML = '';
+        $.getJSON("/Admin/Order/GetPaggedData", { filter: $("#filter").val(), search: $("#input-search").val(), pageNumber: 1, pageSize: 5 }, function (response) {
+            PaginationButtons(response.TotalPages);
+            document.getElementsByClassName('btn--renderRule')[2].click();
+        });
+    })
+
+    $("#Submit").on('click', function () {
+        document.getElementById('pagination').innerHTML = '';
+        $.getJSON("/Admin/Order/GetPaggedData", { filter: $("#filter").val(), search: $("#input-search").val(), pageNumber: 1, pageSize: 5 }, function (response) {
+            PaginationButtons(response.TotalPages);
+            document.getElementsByClassName('btn--renderRule')[2].click();
+        });
+    });
+
+    function UpdateOrder(ID) {
+        document.getElementsByClassName("popup-overlay")[0].classList.add("popup-overlay-active");
+        document.getElementsByClassName("popup")[0].classList.add("popup-active");
+
+        document.getElementById('id-order').innerHTML = ID;
+    }
+
+    $("#btn--submit").click(function () {
+        $.getJSON("/Admin/Order/UpdateOrder", { id: $('#id-order').text(), status: $('#input-status').val() }, function (response) {
+            if (response.message == "Success!!") {
+                swal('Alert info', response.data, "success");
+                Reload();
+            }
+            else {
+                swal('Alert info', response.data, "error");
+            }
+        });
+    })
+
+    function DeteleOrder(ID) {
+        swal({
+            title: "Bạn có chắc chắn muốn xóa?",
+            text: "Một khi xóa bạn sẽ không thể khôi phục lại đơn hàng",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.getJSON("/Admin/Order/DeleteOrder", { id: ID }, function (response) {
+                        if (response.message == "Success!!") {
+                            swal('Alert info', response.data, "success");
+                            Reload();
+                        }
+                        else {
+                            swal('Alert info', response.data, "error");
+                        }
+                    });
+                } else {
+                    swal("Đơn hàng chưa được xóa");
+                }
+            });
+
+
+    }
+</script>

@@ -1,0 +1,431 @@
+﻿@{
+    ViewBag.Title = "The Pastauffeur | Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<body>
+    <!--Loader-->
+    <div class="loader">
+        <div class="cssload-container">
+            <div class="cssload-circle"></div>
+            <div class="cssload-circle"></div>
+        </div>
+    </div>
+
+    <!--Topbar-->
+    <div class="topbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="pull-left hidden-xs">The Pastauffeur</p>
+                    <div class="pull-right">
+                        <a href="@Url.Action("Login", "User")">Đăng nhập</a> /
+                        <a href="@Url.Action("Register", "User")">Đăng ký</a>
+                    </div>
+                    <p class="pull-none" id="test"> &nbsp; <i class="fa fa-phone"></i>Đặt hàng trực tuyến 111-123-6789</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Header-->
+    <header id="main-navigation">
+        <div id="navigation" data-spy="affix" data-offset-top="20">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <nav class="navbar navbar-default">
+                            <div class="navbar-header">
+                                <a href="#" class="btn">Đăng nhập</a>
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#fixed-collapse-navbar" aria-expanded="false">
+                                    <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="index.html"><img src="~/Content/img/theme/logo.png" alt="logo" class="img-responsive"></a>
+                            </div>
+
+                            <div id="fixed-collapse-navbar" class="navbar-collapse collapse navbar-right">
+                                <ul class="nav navbar-nav">
+                                    <li><a href="index.html">Trang chủ</a></li>
+                                    <li><a href="profile.html">Tài khoản</a></li>
+                                    <li><a href="gallery4c.html">Menu</a></li>
+                                    <li><a href="blog.html">Thông tin</a></li>
+                                    <li><a href="location.html">Địa điểm</a></li>
+
+                                    <li id="cart_">
+
+                                        <a href="cart.html" id="cart">
+                                            <i class="fa fa-shopping-cart"></i> Giỏ hàng <span class="badge">3</span>
+                                        </a>
+                                        <div class="shopping-cart">
+                                            <div class="shopping-cart-header">
+                                                <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">3</span>
+                                                <div class="shopping-cart-total">
+                                                    <span class="lighter-text">Tổng:</span>
+                                                    <span class="main-color-text total">450k</span>
+                                                </div>
+                                            </div>
+                                            <!--end shopping-cart-header -->
+
+                                            <ul class="shopping-cart-items">
+                                                <li class="clearfix">
+                                                    <img src="https://ngonaz.com/wp-content/uploads/2021/04/gia-ca-hoi-1.jpg" alt="item1" />
+                                                    <span class="item-name">Cá Hồi Nauy</span>
+                                                    <span class="item-detail">Thượng hạng</span>
+                                                    <span class="item-price">450k</span>
+                                                    <span class="item-quantity">Số lượng: 01</span>
+                                                </li>
+
+                                                <li class="clearfix">
+                                                    <img src="https://ngonaz.com/wp-content/uploads/2021/04/gia-ca-hoi-1.jpg" alt="item1" />
+                                                    <span class="item-name">Cá Hồi Nauy</span>
+                                                    <span class="item-detail">Thượng hạng</span>
+                                                    <span class="item-price">450k</span>
+                                                    <span class="item-quantity">Số lượng: 01</span>
+                                                </li>
+
+                                                <li class="clearfix">
+                                                    <img src="https://ngonaz.com/wp-content/uploads/2021/04/gia-ca-hoi-1.jpg" alt="item1" />
+                                                    <span class="item-name">Cá Hồi Nauy</span>
+                                                    <span class="item-detail">Thượng hạng</span>
+                                                    <span class="item-price">450k</span>
+                                                    <span class="item-quantity">Số lượng: 01</span>
+                                                </li>
+                                            </ul>
+
+                                            <a href="#" class="button">Thanh toán <i class="fa fa-chevron-right"></i></a>
+                                        </div>
+                                        <!--end shopping-cart -->
+                                        <!--end navbar-right -->
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+
+    <!-- REVOLUTION SLIDER -->
+
+    <div id="rev_slider_34_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="news-gallery34" style="margin:0px auto;background-color:#ffffff;padding:0px;margin-top:0px;margin-bottom:0px;">
+        <!-- START REVOLUTION SLIDER 5.0.7 fullwidth mode -->
+        <div id="rev_slider_34_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.0.7">
+            <ul>
+                <!-- SLIDE  -->
+                <li data-index="rs-129" data-transition="fade" data-slotamount="default" data-rotate="0" data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-title="Đồ &nbsp; ăn &nbsp nhanh" data-description="Thưởng thức ẩm thực thế giới!">
+                    <!-- MAIN IMAGE -->
+                    <img src="~/Content/img/theme/banner2.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+                    <!-- LAYER NR. 2 -->
+                    <h1 class="tp-caption tp-resizeme" data-x="left" data-hoffset="15" data-y="70" data-transform_idle="o:1;" data-transform_in="y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;s:1500;e:Power3.easeInOut;" data-transform_out="auto:auto;s:1000;e:Power3.easeInOut;"
+                        data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:0;y:0;s:inherit;e:inherit;" data-start="500" data-splitin="none" data-splitout="none" style="z-index: 6;">
+                        <span class="small_title">Thế giới</span> <br> Đồ &nbsp; Ăn &nbsp; <span class="color">Nhanh</span>
+                    </h1>
+                    <!-- LAYER NR. 2 -->
+                    <p class="tp-caption tp-resizeme" data-x="left" data-hoffset="15" data-y="210" data-transform_idle="o:1;" data-transform_in="y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;s:1500;e:Power3.easeInOut;" data-transform_out="auto:auto;s:1000;e:Power3.easeInOut;"
+                       data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:0;y:0;s:inherit;e:inherit;" data-start="800" style="z-index: 9;">
+                        Thiên đường ẩm thực!
+                    </p>
+                </li>
+
+                <li class="text-center" data-index="rs-130" data-transition="slideleft" data-slotamount="default" data-rotate="0" data-title="Đồ &nbsp ăn &nbsp mặn" data-description="Thưởng thức ẩm thực thế giới!">
+                    <img src="~/Content/img/theme/banner1.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+                    <h1 class="tp-caption tp-resizeme" data-x="center" data-hoffset="15" data-y="70" data-transform_idle="o:1;" data-transform_in="y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;s:1500;e:Power3.easeInOut;" data-transform_out="auto:auto;s:1000;e:Power3.easeInOut;"
+                        data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:0;y:0;s:inherit;e:inherit;" data-start="500" data-splitin="none" data-splitout="none" style="z-index: 6;">
+                        <span class="small_title">  Thế giới</span> <br> Đồ &nbsp; ăn &nbsp; <span class="color">mặn </span>
+                    </h1>
+                    <p class="tp-caption tp-resizeme" data-x="center" data-hoffset="15" data-y="210" data-transform_idle="o:1;" data-transform_in="y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;s:1500;e:Power3.easeInOut;" data-transform_out="auto:auto;s:1000;e:Power3.easeInOut;"
+                       data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:0;y:0;s:inherit;e:inherit;" data-start="800" style="z-index: 9;">
+                        Thiên đường ẩm thực!
+                    </p>
+                </li>
+
+                <li class="text-right" data-index="rs-131" data-transition="slideleft" data-rotate="0" data-title="Đồ &nbsp; uống" data-description="Thưởng thức ẩm thực thế giới!">
+                    <img src="~/Content/img/theme/banner4.jpg" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+                    <h1 class="tp-caption tp-resizeme" data-x="right" data-hoffset="" data-y="70" data-transform_idle="o:1;" data-transform_in="y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;s:1500;e:Power3.easeInOut;" data-transform_out="auto:auto;s:1000;e:Power3.easeInOut;"
+                        data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:0;y:0;s:inherit;e:inherit;" data-start="500" data-splitin="none" data-splitout="none" style="z-index: 6;">
+                        <span class="small_title">Thế giới</span> <br> Đồ &nbsp; <span class="color">uống</span>
+                    </h1>
+                    <p class="tp-caption tp-resizeme" data-x="right" data-hoffset="" data-y="210" data-transform_idle="o:1;" data-transform_in="y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;s:1500;e:Power3.easeInOut;" data-transform_out="auto:auto;s:1000;e:Power3.easeInOut;"
+                       data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:0;y:0;s:inherit;e:inherit;" data-start="800" style="z-index: 9;">
+                        Thiên đường ẩm thực!
+                    </p>
+                </li>
+                <!-- SLIDE  -->
+            </ul>
+        </div>
+    </div>
+    <!-- END REVOLUTION SLIDER -->
+    <!--Features Section-->
+    <section class="feature_wrap padding-half" id="specialities">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h2 class="heading ">GIẢI KHÁT GÌ CHO HÔM&nbsp;NAY?</h2>
+                    <hr class="heading_space">
+                </div>
+            </div>
+            <div class="row" id="favorite-food">
+                <div class="col-md-3 col-xs-6 feature text-center">
+                    <i class="icon-glass"></i>
+                    <h3><a href="./account/register.php">Rượu vang &amp; Cocktail</a></h3>
+                    <p> Hảo hạng!</p>
+                </div>
+                <div class="col-md-3 col-xs-6 feature text-center">
+                    <i class="icon-coffee"></i>
+                    <h3><a href="./account/register.php">Trà</a></h3>
+                    <p> Hảo hạng!</p>
+                </div>
+                <div class="col-md-3 col-xs-6 feature text-center">
+                    <i class="icon-glass"></i>
+                    <h3><a href="./account/register.php">Sinh tố</a></h3>
+                    <p> Hảo hạng!</p>
+                </div>
+                <div class="col-md-3 col-xs-6 feature text-center">
+                    <i class="icon-coffee"></i>
+                    <h3><a href="./account/register.php">Cà phê</a></h3>
+                    <p> Hảo hạng!</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!--Services plus working hours-->
+    <section id="services" class="padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2 class="heading">Các món nổi bật</h2>
+                    <hr class="heading_space">
+                    <div class="slider_wrap">
+                        <div id="service-slider" class="owl-carousel">
+                            <div class="item">
+                                <div class="item_inner">
+                                    <div class="image">
+                                        <img src="~/Content/img/theme/food-1.jpg" alt="Services Image">
+                                        <span class="sale">-40%</span>
+                                        <a href="./account/register.php"></a>
+                                    </div>
+                                    <h3><a href="./account/register.php">Gà xào giá đỗ</a></h3>
+                                    <p>Món ăn rất ngon miệng và giàu dinh dưỡng!</p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item_inner">
+                                    <div class="image">
+                                        <img src="~/Content/img/theme/food-2.jpg" alt="Services Image">
+                                        <a href="./account/register.php"></a>
+                                    </div>
+                                    <h3><a href="./account/register.php">Soup rau củ</a></h3>
+                                    <p>Thơm ngon và bổ dưỡng!</p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item_inner">
+                                    <div class="image">
+                                        <img src="~/Content/img/theme/food-3.jpg" alt="Services Image">
+                                        <a href="./account/register.php"></a>
+                                    </div>
+                                    <h3><a href="./account/register.php">Cá hồi sốt Teriyaki</a></h3>
+                                    <p>Món ngon đậm hương vị Nhật Bản!</p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="item_inner">
+                                    <div class="image">
+                                        <img src="~/Content/img/theme/food-4.jpg" alt="Services Image">
+                                        <a href="./account/register.php"></a>
+                                    </div>
+                                    <h3><a href="./account/register.php">Xúc xích hun khói sốt me</a></h3>
+                                    <p>Món ngon đậm hương vị Tây Ban Nha!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h2 class="heading">Menu</h2>
+                    <hr class="heading_space">
+                    <ul class="menu_widget">
+                        <li>Món xào tổng hợp<span>120.000 VNĐ</span></li>
+                        <li>Salad cá hồi<span>250.000 VNĐ</span></li>
+                        <li>Pizza xúc xích phô mai<span>120.000 VNĐ</span></li>
+                        <li>Bánh Macaron<span>15.000VNĐ</span></li>
+                        <li>Khoai tây chiên giòn<span>35.000VNĐ</span></li>
+                        <li>Món ăn nhẹ<span>50.000VNĐ</span></li>
+                        <li>Gà rán<span>55.000VNĐ</span></li>
+                    </ul>
+                    <!--<h3>Các món khác</h3>-->
+                    <p>Thiên đường ẩm thực thế giới!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- image with content -->
+    <section class="info_section paralax">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2"> </div>
+                <div class="col-md-8">
+                    <div class="text-center">
+                        <h2 class="heading_space">HOT Deal</h2>
+                        <div class="quadroDeAvisos" id="quadroDeAvisos">
+
+                            <main class="Loop js-loop lineUp" style="overflow:hidden" id="lineUp">
+                                <section class="avisos">
+                                    <h1>Giảm giá khi đặt hàng lúc 7h00&nbsp;đến&nbsp;7h30</h1>
+                                </section>
+                                <section class="avisos">
+                                    <h1>Giảm giá khi đặt hàng lúc 9h00&nbsp;đến&nbsp;9h30</h1>
+                                </section>
+                                <section class="avisos">
+                                    <h1>Giảm giá khi đặt hàng lúc 11h00&nbsp;đến&nbsp;11h30</h1>
+                                </section>
+                                <section class="avisos">
+                                    <h1>Giảm giá khi đặt hàng lúc 15h00&nbsp;đến&nbsp;15h30</h1>
+                                </section>
+                                <section class="avisos">
+                                    <h1>Giảm giá khi đặt hàng lúc 19h00&nbsp;đến&nbsp;19h30</h1>
+                                </section>
+                                <section class="avisos">
+                                    <h1>Giảm giá cả ngày 28/10</h1>
+                                </section>
+
+                                <!--
+                                       These blocks are the same as the first blocks to get that looping illusion going.
+                                       You need to add clones to fill out a full viewport height.
+                                       -->
+                            </main>
+                        </div>
+                        <p class="heading_space detail">Thiên đường ẩm thực thế giới!</p>
+
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- testinomial -->
+    <section id="testinomial" class="padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h2 class="heading">Phản &nbsp; hồi &nbsp; của &nbsp; khách &nbsp; hàng</h2>
+                    <hr class="heading_space">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="testinomial-slider" class="owl-carousel text-center">
+                        <div class="item">
+                            <h3>Đồ ăn thật tuyệt vời, giao hàng nhanh, người giao hàng rất thân thiện</h3>
+                            <p>Nguyễn Quang Minh</p>
+                        </div>
+                        <div class="item">
+                            <h3>Đây là ứng dụng đặt đồ ăn hài lòng đối với tôi từ trước đến nay!</h3>
+                            <p>Hoàng Ngọc Minh Châu</p>
+                        </div>
+                        <div class="item">
+                            <h3>Đồ ăn khi được giao đến vẫn nóng hổi, cảm ơn The Pastauffeur!</h3>
+                            <p>Nguyễn Minh Hương</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!--Footer-->
+    <footer class="padding-top bg_black">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 footer_column">
+                    <h4 class="heading">Tại sao bạn chọn The Pastauffeur?</h4>
+                    <hr class="half_space">
+                    <p class="half_space"></p>
+                    <p>
+                        The Pastauffeur - Ứng dụng đặt đồ ăn online vô càn deal giảm giá. Với The Pastauffeur, bạn thoải mái đặt nhiều đơn hàng cùng lúc, không cần chạy tới nhà hàng, quán ăn mới có thể tận hưởng bữa ăn của mình. The Pastauffeur đem đến nhiều
+                        mô hình ẩm thực đa dạng cho các thực khách ở Hà Nội, chỉ cần ngồi tại chỗ, bạn hoàn toàn có thể mua được cùng lúc các món ăn và thức uống khác nhau với mức giá cực kì ưu đãi.
+                    </p>
+                </div>
+                <div class="col-md-3 col-sm-6 footer_column">
+                    <h4 class="heading">Đường dẫn</h4>
+                    <hr class="half_space">
+                    <ul class="widget_links">
+                        <li><a href="index.html">Trang chủ</a></li>
+                        <li><a href="gallery4c.html">Menu</a></li>
+                        <li><a href="blog.html">Thông tin</a></li>
+                        <li><a href="location.html">Địa điểm</a></li>
+
+                    </ul>
+                </div>
+                <div class="col-md-3 col-sm-6 footer_column">
+                    <h4 class="heading">Tin mới nhất</h4>
+                    <hr class="half_space">
+                    <p class="icon"><i class="icon-dollar"></i>Đăng ký bằng tên và email của bạn để nhận những thông tin mới nhất.</p>
+                    <div id="result1" class="text-center"></div>
+
+                    <form action="http://themesindustry.us13.list-manage.com/subscribe/post-json?u=4d80221ea53f3a4487ddebd93&id=494727d648&c=?" method="get" onSubmit="return false" class="newsletter">
+                        <div class="form-group">
+                            <input type="email" placeholder="Địa chỉ email" required name="EMAIL" id="EMAIL" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn-submit button3" value="Đăng ký" />
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3 col-sm-6 footer_column">
+                    <h4 class="heading">Liên hệ</h4>
+                    <hr class="half_space">
+                    <p></p>
+                    <p class="address"><i class="icon-location"></i>Công ty cổ phần The Pastauffeur, Lầu H, Tòa nhà Jabes 1, số 123 đường Hoàng Quốc Việt, phường Cổ Nhuế 1, quận Bắc Từ Liêm, Hà Nội.</p>
+                    <p class="address"><i class="fa fa-phone"></i>(0253) 234 567 8901</p>
+                    <p class="address"><i class="icon-dollar"></i><a href="mailto:hello@website.com">hello@website.com</a></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="copyright clearfix">
+                        <p>Copyright &copy; 2021 The Pastauffeur</p>
+                        <ul class="social_icon">
+                            <li><a href="#" class="facebook"><i class="icon-facebook5"></i></a></li>
+                            <li><a href="#" class="twitter"><i class="icon-twitter4"></i></a></li>
+                            <li><a href="#" class="google"><i class="icon-google"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#" id="back-top"><i class="fa fa-angle-up fa-2x"></i></a>
+
+
+    <script src="~/Content/js/User/jquery-2.2.3.js" type="text/javascript"></script>
+    <script src="~/Content/js/User/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/User/jquery.themepunch.tools.min.js"></script>
+    <script src="~/Content/js/User/jquery.themepunch.revolution.min.js"></script>
+    <script src="~/Content/js/User/revolution.extension.layeranimation.min.js"></script>
+    <script src="~/Content/js/User/revolution.extension.navigation.min.js"></script>
+    <script src="~/Content/js/User/revolution.extension.parallax.min.js"></script>
+    <script src="~/Content/js/User/revolution.extension.slideanims.min.js"></script>
+    <script src="~/Content/js/User/revolution.extension.video.min.js"></script>
+    <script src="~/Content/js/User/slider.js" type="text/javascript"></script>
+    <script src="~/Content/js/User/owl.carousel.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/User/jquery.parallax-1.1.3.js"></script>
+    <script src="~/Content/js/User/jquery.mixitup.min.js"></script>
+    <script src="~/Content/js/User/jquery-countTo.js"></script>
+    <script src="~/Content/js/User/jquery.appear.js"></script>
+    <script src="~/Content/js/User/jquery.fancybox.js"></script>
+    <script src="~/Content/js/User/functions.js" type="text/javascript"></script>
+    <script src="~/Content/js/User/scroll-auto.js" type="text/javascript"></script>
+</body>

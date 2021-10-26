@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+    <meta name="author" content="Creative Tim">
+    <title>Dash Board Admin</title>
+    <!-- Favicon -->
+    <link rel="icon" href="~/Content/img/brand/favicon.png" type="image/png">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <!-- Icons -->
+    <link rel="stylesheet" href="~/Content/vendor/nucleo/css/nucleo.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/vendor/fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+    <!-- Argon CSS -->
+    <link rel="stylesheet" href="~/Content/css/argon.css?v=1.2.0" type="text/css">
+    <link rel="stylesheet" href="~/Content/css/main.css" type="text/css"/>
+    <!-- DateTimePicker -->
+    <link href="~/Content/vendor/datetimepicker/daterangepicker.css" rel="stylesheet"/>
+</head>
+<body>
+    <!-- SideBar -->
+    @{
+        Html.RenderAction("SideBar", "Admin");
+    }
+    <div class="main-content" id="panel">
+        <!-- TopNav -->
+        @{
+            Html.RenderAction("TopNav", "Admin");
+        }
+        <!-- Content -->
+        <div id="body">
+            @RenderBody()
+        </div>
+    </div>
+
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <script src="~/Content/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/vendor/js-cookie/js.cookie.js"></script>
+    <script src="~/Content/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="~/Content/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+    <!-- Optional JS -->
+    <script src="~/Content/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="~/Content/vendor/chart.js/dist/Chart.extension.js"></script>
+    <!-- Argon JS -->
+    <script src="~/Content/js/argon.js?v=1.2.0"></script>
+    <script src="~/Content/vendor/sweetalert2/dist/sweetalert.min.js"></script>
+
+    <script type="text/javascript">
+        // active nav-item sidebar
+        var itemSideBar = document.getElementsByClassName("sidebar");
+        var itemSideBarArray = [...itemSideBar];
+        var ArrayUrlPartials = ["/Admin/Admin/Dashboard", "/Admin/Order/Order","/Admin/Blog/Blog", "/Admin/Sales/Sales", "/Admin/Personal/Information", "/Admin/ListStaff/ListStaff", "/Admin/Category/Category", "/Admin/Staff/Register"];
+        itemSideBarArray.map((item, index) => {
+            item.addEventListener('click', (e) => {
+                $.get(ArrayUrlPartials[index], (data) => {
+                    $("#body").html(data);
+                })
+                document.getElementsByClassName('active')[0].classList.remove('active');
+                itemSideBar[index].classList.add('active');
+            })
+        });
+    </script>
+</body>
+</html>

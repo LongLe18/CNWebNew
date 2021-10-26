@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CNWeb", "CNWeb\CNWeb.csproj", "{D770C313-2A3A-459B-988B-0C35B2EF1F69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{A2E6F711-F1F0-4F19-B5A9-DB5E6F6A7687}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D770C313-2A3A-459B-988B-0C35B2EF1F69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D770C313-2A3A-459B-988B-0C35B2EF1F69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D770C313-2A3A-459B-988B-0C35B2EF1F69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D770C313-2A3A-459B-988B-0C35B2EF1F69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2E6F711-F1F0-4F19-B5A9-DB5E6F6A7687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2E6F711-F1F0-4F19-B5A9-DB5E6F6A7687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2E6F711-F1F0-4F19-B5A9-DB5E6F6A7687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2E6F711-F1F0-4F19-B5A9-DB5E6F6A7687}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F8BFEE80-C03F-4F03-8A5D-BA06225D3D5F}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,73 @@
+.span-tag-body {
+    font-size: 28px;
+    font-family: 'BebasRegular';
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+}
+
+.body-writing {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    margin-left: 2rem;
+}
+
+.title2 {
+    background-color: rgb(248, 248, 255);
+}
+
+.blog-tag {
+    background-color: rgb(248, 248, 255);
+}
+
+.blog-body {
+    background-color: rgb(248, 248, 255);
+}
+
+.note-editor note-frame {
+    margin-bottom: 4rem;
+}
+
+.summernote-div {
+    margin-bottom: 4rem;
+}
+
+.writing {
+    background-image: url(home-bg.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    position: relative;
+}
+
+.Body {
+    margin-bottom: 1rem;
+}
+
+.Tag {
+    margin-bottom: 1rem;
+}
+
+.title1 {
+    margin-bottom: 1rem;
+}
+
+.blogging {
+    font-size: 35px;
+    font-family: 'BebasRegular';
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+.blogging {
+    text-align: right;
+    margin-right: 5rem;
+    margin-top: 2rem;
+}
+
+.request-blogging {
+    text-align: right;
+    margin-right: 5rem;
+}

@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "Địa chỉ - Góp ý - Liên hệ";
+    Layout = "~/Areas/Main/Views/Shared/_Layout.cshtml";
+}
+
+@section page_header{
+    <!--Page header & Title-->
+    <style>
+        #page_header {
+            margin-left: -20px;
+            background: url("../../../Content/img/theme/page-header.jpg") no-repeat;
+            width: 110%;
+            position: relative;
+            min-height: 280px;
+            background-size: cover;
+            background-position: center center;
+            text-align: right;
+        }
+    </style>
+    <section id="page_header">
+        <div class="page_title">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="title">The Pastauffeur</h2>
+                        <p>Đem đến trải nghiệm tuyệt vời nhất cho bạn về thế giới ẩm thực</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+<!--LOcation Map-->
+<section class="padding">
+    <h3 class="hidden">hidden</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map"></div>
+                <div class="search_location">
+                    <form style="display:flex">
+                        <input id="geocomplete" type="text" placeholder="Nhập một địa chỉ" class="search" />
+                        <button id="find" type="button" class="find-btn"><i class="icon-map"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!--Contact Form & Address-->
+<section class="padding bg_grey" id="location">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-8">
+                <h2 class="heading">Góp ý</h2>
+                <hr class="heading_space">
+                <form class="callus" onSubmit="return false" id="contact_form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="result" class="text-center form-group"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="f_name" id="f_name" placeholder="Họ" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="l_name" id="l_name" placeholder="Tên" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input class="form-control" type="email" name="email" id="email" placeholder="Địa chỉ email" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="phone" id="phone" required placeholder="Số điện thoại">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <textarea placeholder="Tin nhắn" name="message" id="message"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="btn-submit button3">
+                                    <input type="submit" value="Gửi" id="btn_contact_submit">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4 col-sm-4 bistro" id="intro">
+                <h2 class="heading">The Pastauffeur</h2><img src="~/Content/img/theme/galler2.jpg" height="100%" width="100%" />
+            </div>
+        </div>
+    </div>
+</section>

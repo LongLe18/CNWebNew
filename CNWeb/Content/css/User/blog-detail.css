@@ -1,0 +1,18 @@
+.blogging {
+    display: block;
+    background: rgb(59, 59, 59);
+    font-size: 16px;
+    padding: 10px 30px;
+    cursor: pointer;
+    position: relative;
+    color: #fff;
+    width: 100%;
+}
+
+.writing {
+    margin-bottom: 2rem;
+}
+
+.blogging:hover {
+    background: #e25111;
+}

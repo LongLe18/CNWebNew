@@ -1,0 +1,292 @@
+﻿
+@{
+    Layout = null;
+}
+@{ var session = (CNWeb.Code.UserSession)Session[CNWeb.Code.Constants.USER_SESSION];}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/font-awesome.min.css">
+    <link rel="icon" href="~/Content/img/brand/favicon_2.png" type="~/Content/image/User/png">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/bistro-icons.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/settings.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/navigation.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/owl.transitions.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/jquery.fancybox.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/zerogrid.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/style.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/loader.css">
+
+    @RenderSection("stylesheet", required: false)
+</head>
+
+<body>
+
+    <script src="~/Content/js/User/jquery-2.2.3.js" type="text/javascript"></script>
+    <script src="~/Content/js/User/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/User/jquery.themepunch.tools.min.js"></script>
+    <script src="~/Content/js/User/jquery.themepunch.revolution.min.js"></script>
+    <!--Loader-->
+    <div class="loader">
+        <div class="cssload-container">
+            <div class="cssload-circle"></div>
+            <div class="cssload-circle"></div>
+        </div>
+    </div>
+
+    <!--Topbar-->
+    <div class="topbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="pull-left hidden-xs">The Pastauffeur</p>
+                    <div class="pull-right">
+                        @if (session == null)
+                        {
+
+
+                            <a href="/User/Login/">Đăng nhập</a>
+
+                            <span>/</span>
+
+
+                            <a href="/User/Register/" id="Register_">Đăng ký</a>
+                        }
+                        else
+                        { <span>Xin chào @session.FullName / </span> <a href="/User/Login/">Đăng xuất</a>}
+
+                    </div>
+                    <p class="pull-none"> &nbsp; <i class="fa fa-phone"></i>Đặt hàng trực tuyến 111-123-6789</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Header-->
+
+    <header id="main-navigation">
+        <div id="navigation" data-spy="affix" data-offset-top="20">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <nav class="navbar navbar-default">
+                            <div class="navbar-header">
+                                @if (session == null)
+                                {
+                                    <a href="/User/Login" class="btn" id="btnLogin">Đăng nhập</a>
+                                }
+                                else
+                                {
+                                    <h3 id="cardid" style="display:none;">@session.CartID</h3>
+                                    <a href="/User/Login" class="btn" id="btnLogin">Đăng xuất</a>
+                                }
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#fixed-collapse-navbar" aria-expanded="false">
+                                    <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="@Url.Action("Index", "Main", new { Area = "Main" })"><img src="~/Content/img/theme/logo.png" alt="logo" class="img-responsive"></a>
+                            </div>
+
+                            <div id="fixed-collapse-navbar" class="navbar-collapse collapse navbar-right">
+                                <ul class="nav navbar-nav">
+                                    <li><a href="@Url.Action("Index", "Main", new { Area = "Main" })">Trang chủ</a></li>
+                                    <li><a href="@Url.Action("Index", "Profile", new { Area = "Main" })">Tài khoản</a></li>
+                                    <li><a href="@Url.Action("Index", "Menu", new { Area = "Main" })">Menu</a></li>
+                                    <li><a href="@Url.Action("Index", "Blog", new { Area = "Main" })">Thông tin</a></li>
+                                    <li><a href="@Url.Action("Index", "Location", new { Area = "Main" })">Địa điểm</a></li>
+                                    <li id="cart_">
+
+                                        <a href="@Url.Action("Index", "Cart", new { Area = "Main" })" id="cart">
+                                            <i class="fa fa-shopping-cart"></i> Giỏ hàng <span class="badge">3</span>
+                                        </a>
+                                        <div class="shopping-cart">
+                                            <div class="shopping-cart-header">
+                                                <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">3</span>
+                                                <div class="shopping-cart-total">
+                                                    <span class="lighter-text">Tổng:</span>
+                                                    <span class="main-color-text total">450k</span>
+                                                </div>
+                                            </div>
+                                            <!--end shopping-cart-header -->
+
+                                            <ul class="shopping-cart-items" id="listcarts">
+                                                <li class="clearfix">
+                                                    <img src="https://ngonaz.com/wp-content/uploads/2021/04/gia-ca-hoi-1.jpg" alt="item1" />
+                                                    <span class="item-name">Cá Hồi Nauy</span>
+                                                    <span class="item-detail">Thượng hạng</span>
+                                                    <span class="item-price">450k</span>
+                                                    <span class="item-quantity">Số lượng: 01</span>
+                                                </li>
+
+                                                <li class="clearfix">
+                                                    <img src="https://ngonaz.com/wp-content/uploads/2021/04/gia-ca-hoi-1.jpg" alt="item1" />
+                                                    <span class="item-name">Cá Hồi Nauy</span>
+                                                    <span class="item-detail">Thượng hạng</span>
+                                                    <span class="item-price">450k</span>
+                                                    <span class="item-quantity">Số lượng: 01</span>
+                                                </li>
+
+                                                <li class="clearfix">
+                                                    <img src="https://ngonaz.com/wp-content/uploads/2021/04/gia-ca-hoi-1.jpg" alt="item1" />
+                                                    <span class="item-name">Cá Hồi Nauy</span>
+                                                    <span class="item-detail">Thượng hạng</span>
+                                                    <span class="item-price">450k</span>
+                                                    <span class="item-quantity">Số lượng: 01</span>
+                                                </li>
+                                            </ul>
+
+                                            <a href="#" class="button">Thanh toán <i class="fa fa-chevron-right"></i></a>
+                                        </div>
+                                        <!--end shopping-cart -->
+                                        <!--end navbar-right -->
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    @RenderSection("page_header", required: true)
+    @*<section id="page_header">
+            <div class="page_title">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="title">The Pastauffeur</h2>
+                            <p>Đem đến trải nghiệm tuyệt vời nhất cho bạn về thế giới ẩm thực</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>*@
+
+
+
+
+
+    @*Content của blog các thứ các thứ*@
+    <!-- Blogs -->
+
+    @RenderBody()
+
+
+
+
+    <!--Footer-->
+    <footer class="padding-top bg_black">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 footer_column">
+                    <h4 class="heading">Tại sao bạn chọn The Pastauffeur?</h4>
+                    <hr class="half_space">
+                    <p class="half_space"></p>
+                    <p>
+                        The Pastauffeur - Ứng dụng đặt đồ ăn online vô càn deal giảm giá. Với The Pastauffeur, bạn thoải mái đặt nhiều đơn hàng cùng lúc, không cần chạy tới nhà hàng, quán ăn mới có thể tận hưởng bữa ăn của mình. The Pastauffeur đem đến nhiều
+                        mô hình ẩm thực đa dạng cho các thực khách ở Hà Nội, chỉ cần ngồi tại chỗ, bạn hoàn toàn có thể mua được cùng lúc các món ăn và thức uống khác nhau với mức giá cực kì ưu đãi.
+                    </p>
+                </div>
+                <div class="col-md-3 col-sm-6 footer_column">
+                    <h4 class="heading">Đường dẫn</h4>
+                    <hr class="half_space">
+                    <ul class="widget_links">
+                        <li><a href="index.html">Trang chủ</a></li>
+                        <li><a href="gallery4c.html">Menu</a></li>
+                        <li><a href="blog.html">Thông tin</a></li>
+                        <li><a href="location.html">Địa điểm</a></li>
+
+                    </ul>
+                </div>
+                <div class="col-md-3 col-sm-6 footer_column">
+                    <h4 class="heading">Tin mới nhất</h4>
+                    <hr class="half_space">
+                    <p class="icon"><i class="icon-dollar"></i>Đăng ký bằng tên và email của bạn để nhận những thông tin mới nhất.</p>
+                    <div id="result1" class="text-center"></div>
+
+                    <form action="http://themesindustry.us13.list-manage.com/subscribe/post-json?u=4d80221ea53f3a4487ddebd93&id=494727d648&c=?" method="get" onSubmit="return false" class="newsletter">
+                        <div class="form-group">
+                            <input type="email" placeholder="Địa chỉ email" required name="EMAIL" id="EMAIL" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn-submit button3" value="Đăng ký" />
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3 col-sm-6 footer_column">
+                    <h4 class="heading">Liên hệ</h4>
+                    <hr class="half_space">
+                    <p></p>
+                    <p class="address"><i class="icon-location"></i>Công ty cổ phần The Pastauffeur, Lầu H, Tòa nhà Jabes 1, số 123 đường Hoàng Quốc Việt, phường Cổ Nhuế 1, quận Bắc Từ Liêm, Hà Nội.</p>
+                    <p class="address"><i class="fa fa-phone"></i>(0253) 234 567 8901</p>
+                    <p class="address"><i class="icon-dollar"></i><a href="mailto:hello@website.com">hello@website.com</a></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="copyright clearfix">
+                        <p>Copyright &copy; 2021 The Pastauffeur</p>
+                        <ul class="social_icon">
+                            <li><a href="#" class="facebook"><i class="icon-facebook5"></i></a></li>
+                            <li><a href="#" class="twitter"><i class="icon-twitter4"></i></a></li>
+                            <li><a href="#" class="google"><i class="icon-google"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#." id="back-top"><i class="fa fa-angle-up fa-2x"></i></a>
+
+    <script src="~/Content/js/User/revolution.extension.layeranimation.min.js"></script>
+    <script src="~/Content/js/User/revolution.extension.navigation.min.js"></script>
+    <script src="~/Content/js/User/revolution.extension.parallax.min.js"></script>
+    <script src="~/Content/js/User/revolution.extension.slideanims.min.js"></script>
+    <script src="~/Content/js/User/revolution.extension.video.min.js"></script>
+    <script src="~/Content/js/User/slider.js" type="text/javascript"></script>
+    <script src="~/Content/js/User/owl.carousel.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/User/jquery.parallax-1.1.3.js"></script>
+    <script src="~/Content/js/User/jquery.mixitup.min.js"></script>
+    <script src="~/Content/js/User/jquery-countTo.js"></script>
+    <script src="~/Content/js/User/jquery.appear.js"></script>
+    <script src="~/Content/js/User/jquery.fancybox.js"></script>
+    <script src="~/Content/js/User/functions.js" type="text/javascript"></script>
+    <script src="~/Content/js/User/scroll-auto.js" type="text/javascript"></script>
+    <script src="~/Content/js/User/profile.js" type="text/javascript"></script>
+
+    <script>
+
+        window.onload = function (e) {
+            if (document.getElementById('Register_') == null) {
+                $.getJSON("@Url.Action("GetListCarts", "Menu")", { cartid: $("#cardid").text() }, function (response) {
+                    RenderCart(response)
+                });
+            }
+        }
+
+        function RenderCart(data) {
+            let html = '';
+            data.map((item, index) => {
+                
+                html += `<li class="clearfix">
+                    <img src="/Content/img/food/${item.Alias}_1.jpg" alt="item1" />
+                    <span class="item-name">${item.Name}</span>
+                    <span class="item-detail">${item.Size}</span>
+                    <span class="item-price">${item.OriginPrice}</span>
+                    <span class="item-quantity">Số lượng: ${item.Quantity}</span>
+                </li>`;
+            });
+            document.getElementById('listcarts').innerHTML = html;
+            $('.badge').text(data.length < 5 ? data.length.toString() : '5+');
+            
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+.stars i {
+    color: gold;
+    font-size: 1.7rem;
+    padding: 1rem .1rem;
+}
+
+.share {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.Food-img {}
+
+.Food-img img {
+    max-width: 550px;
+    width: 100%;
+}
+
+.row1 {
+    margin: 3rem;
+    display: flex;
+    gap: 6rem;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    overflow: auto;
+}
+
+.detail {
+    width: 100%;
+}
+
+.tags {
+    display: flex;
+    position: relative;
+}
+
+.detail-contents {
+    width: 100%;
+}
+
+.collapsed {
+    margin-top: 3rem;
+}
+
+.accordion {
+    margin-top: 1rem;
+}
+
+.form-group {
+    margin-bottom: 3rem;
+}
+
+.payment {
+    margin-top: 3rem;
+}
+
+.shipping {
+    margin-top: 3rem;
+}
+
+.input-group {
+    margin-right: 3rem;
+    position: relative;
+}
+
+@media(max-width: 991px) {
+    .detail {
+        width: 100%;
+    }
+    .row1 {
+        display: list-item;
+    }
+    .input-group {
+        width: 30rem;
+        margin-right: 20rem;
+    }
+    .tags {
+        margin-right: 5rem;
+    }
+    .image_container {
+        margin-right: 10rem;
+    }
+    .card-body {
+        margin-right: 5rem;
+    }
+    .Food-img img {
+        max-width: 500px;
+        width: 100%;
+        height: auto;
+    }
+}

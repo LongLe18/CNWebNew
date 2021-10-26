@@ -1,0 +1,403 @@
+﻿@model PagedList.IPagedList<Models.EF.FoodCategory>
+@using PagedList.Mvc;
+
+<!-- Header -->
+<h3 id="id-staff" style="display:none"></h3>
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Tables</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Categery</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a href="javascript:void(0)" id="AddStaff" class="btn btn-sm btn-neutral">Thêm danh mục mới</a>
+                    <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Danh sách mục món ăn</h3>
+                </div>
+                <!-- Light table -->
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="sort" data-sort="name">Tên</th>
+                                <th scope="col" class="sort" data-sort="createdday">Ngày tạo</th>
+                                <th scope="col" class="sort" data-sort="createdby">Người tạo</th>
+                                <th scope="col" class="sort" data-sort="status">Trạng thái</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="list" id="tblData">
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Card footer -->
+                <div class="card-footer py-4" id="paged">
+                    <nav aria-label="..." class="card-footer--listPages">
+                        <ul class="pagination justify-content-end mb-0" id="pagination">
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="popup-overlay"></div>
+<div class="popup">
+    <div class="text">
+        <div><span id="title">Thêm danh mục</span></div>
+        <div>
+            <button class="btn btn-sm btn-warning" id="close-form--createfile"><i class="ni ni-fat-remove"></i></button>
+        </div>
+    </div>
+    <form>
+        <h6 class="heading-small mb-4">Thông tin danh mục</h6>
+        <div>
+            <div class="row">
+                <!-- row 1 -->
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="form-control-label" for="input-categoryname">Tên danh mục</label>
+                        @Html.TextBox("categoryname", "", new { @id = "input-categoryname", @class = "form-control", @placeholder = "Category Name" })
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="form-control-label" for="input-status">Trạng thái</label>
+                        <select id="input-status" class="form-control">
+                            <option value="0">Hết phục vụ</option>
+                            <option value="1" selected>Đang phục vụ</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 text-right" style="width: 100%; max-width: 100%;">
+                <div id="div--btn-submit">
+                    <button type="button" id="btn--submit" class="btn btn-success">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Footer -->
+<footer class="footer pt-0">
+    <div class="row align-items-center justify-content-lg-between">
+        <div class="col-lg-6">
+            <div class="copyright text-center  text-lg-left  text-muted">
+                &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">NLQH Team</a>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                <li class="nav-item">
+                    <a href="#" class="nav-link" target="_blank">NLQH Team</a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("About", "Home")" class="nav-link" target="_blank">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" target="_blank">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" target="_blank">MIT License</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var doingEdit = false;
+
+    $(document).ready(function () {
+        //Initially load pagenumber=1
+        $.getJSON("/Admin/Category/GetPaggedData", function (response) {
+            PaginationButtons(response.TotalPages);
+            document.getElementsByClassName('btn--renderRule')[2].click();
+        });
+    });
+
+    //function help
+    function ConvertStatusHTML(status) {
+        var html = '';
+        if (status == 0) {
+            html += `<div class="btn-warning" id="unavailabel"><span>Hết phục vụ</span></div>`
+        } else {
+            html += `<div class="btn-success" id="availabel"><span>Đang phục vụ</span></div>`
+        }
+        return html;
+    }
+
+    function UnixToDate(unixtime) {
+        const unixTimestamp = unixtime;
+        const milliseconds = unixTimestamp * 1000 // 1575909015000
+        const dateObject = new Date(milliseconds)
+        const humanDateFormat = dateObject.toLocaleString() //2019-12-9 10:30:15
+        return humanDateFormat;
+    }
+
+    function BindingDataEdit(id, categoryname, status) {
+        document.getElementById('title').innerText = 'Sửa thông tin - ' + id;
+        document.getElementById('input-categoryname').value = categoryname;
+        document.getElementById('input-status').value = status;
+    }
+
+    function Clear() {
+        document.getElementById('input-categoryname').value = '';
+        document.getElementById('input-status').value = '';
+    }
+
+    // ListPage
+    var PageNumbers = (total, max, current) => {
+        const half = Math.round(max / 2);
+        let to = max;
+
+        if (current + half >= total) {
+            to = total;
+        } else if (current > half) {
+            to = current + half;
+        }
+        let from = to - max;
+
+        if (from < 0) {
+            return Array.from({ length: total }, (_, i) => (i + 1));
+        }
+        return Array.from({ length: max }, (_, i) => (i + 1) + from);
+    }
+
+    function GetPageData(pageNum, pageSize) {
+        //After every trigger remove previous data and paging
+        $("#tblData").empty();
+        $.getJSON("/Admin/Category/GetPaggedData", { pageNumber: pageNum, pageSize: pageSize }, function (response) {
+            var rowData = "";
+            for (var i = 0; i < response.Data.length; i++) {
+                let html = ConvertStatusHTML(response.Data[i].Status);
+                let date1 = UnixToDate(response.Data[i].CreatedDate);
+                var date2 = new Date(date1);
+                rowData = rowData + `<tr id="${response.Data[i].ID}"><td>` + response.Data[i].Name + `</td><td>${date2.toISOString().split('T')[0]}` + '</td><td>' +
+                    response.Data[i].CreatedBy + `</td><td>${html}` + '</td><td> ' +
+                    '<div class="dropdown">' +
+                    '<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                    '<i class="fas fa-ellipsis-v"></i>' +
+                    '</a>' +
+                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">' +
+                    `<button class="dropdown-item" onClick="EditCate(${response.Data[i].ID})">Sửa thông tin</button>` +
+                    `<button class="dropdown-item" onClick="DeteleCate(${response.Data[i].ID})">Xóa nhân viên</button>` +
+                    '<button class="dropdown-item" >Something else here</button>' +
+                    '</div></div>' +
+                    '</td></tr>'
+
+            }
+            $("#tblData").append(rowData);
+        });
+    }
+
+    function PaginationButtons(totalPages, maxPageVisible = 2, currentPage = 1) {
+        let pages = PageNumbers(totalPages, maxPageVisible, currentPage);
+        let currentPageBtn = null;
+        const buttons = new Map();
+
+        const disabled = {
+            start: () => pages[0] === 1,
+            prev: () => currentPage === 1,
+            end: () => pages.slice(-1)[0] === totalPages,
+            next: () => currentPage === totalPages,
+        };
+
+        const createAndSetupButton = (label = '', cls = '', disabled = false, handleClick = () => { }) => {
+            const button = document.createElement('button');
+
+            button.textContent = label;
+            button.className = `btn btn-secondary btn--renderRule ${cls}`;
+            button.disabled = disabled;
+            button.addEventListener('click', event => {
+                handleClick(event);
+                this.update();
+                document.getElementById('pagination').nodeValue = currentPage;
+                document.getElementById('pagination').dispatchEvent(new Event('change'));
+            });
+
+            return button;
+        };
+
+        const onPageButtonClick = (e) => {
+            currentPage = Number(e.currentTarget.textContent);
+            GetPageData(currentPage);
+        };
+
+        const onPageButtonUpdate = index => (btn) => {
+            btn.textContent = pages[index];
+
+            if (pages[index] === currentPage) {
+                currentPageBtn.classList.remove('active');
+                btn.classList.add('active');
+                currentPageBtn = btn;
+                currentPageBtn.focus();
+            }
+        };
+
+        buttons.set(
+            createAndSetupButton('start', '', disabled.start(), () => {
+                currentPage = 1;
+                GetPageData(currentPage);
+            }),
+            (btn) => btn.disabled = disabled.start()
+        );
+
+        buttons.set(
+            createAndSetupButton('prev', '', disabled.prev(), () => {
+                currentPage -= 1;
+                GetPageData(currentPage);
+            }),
+            (btn) => btn.disabled = disabled.prev()
+        );
+
+        pages.forEach((pageNumber, index) => {
+            const isCurrentPage = pageNumber === currentPage;
+            const button =
+                createAndSetupButton(pageNumber, isCurrentPage ? 'active' : '', false, onPageButtonClick);
+
+            if (isCurrentPage) {
+                currentPageBtn = button;
+            }
+
+            buttons.set(
+                button,
+                onPageButtonUpdate(index)
+            )
+        });
+
+        buttons.set(
+            createAndSetupButton('next', '', disabled.next(), () => {
+                currentPage += 1;
+                GetPageData(currentPage);
+            }),
+            (btn) => btn.disabled = disabled.next()
+        );
+
+        buttons.set(
+            createAndSetupButton('end', '', disabled.end(), () => {
+                currentPage = totalPages;
+                GetPageData(currentPage);
+            }),
+            (btn) => btn.disabled = disabled.end()
+        );
+
+        buttons.forEach((_, btn) => {
+            document.getElementById('pagination').appendChild(btn);
+        });
+
+        this.update = (newPageNumber = currentPage) => {
+            currentPage = newPageNumber;
+            console.log("currentPage: ", currentPage);
+            pages = PageNumbers(totalPages, maxPageVisible, currentPage);
+            buttons.forEach((updateButton, btn) => updateButton(btn));
+        };
+
+        this.onChange = (handler) => {
+            document.getElementById('pagination').addEventListener('change', handler);
+        }
+    }
+
+    // Add Category
+    document.getElementById("AddStaff").addEventListener('click', (e) => {
+        doingEdit = false;
+        document.getElementById('title').innerText = 'Thêm danh mục';
+        document.getElementsByClassName("popup-overlay")[0].classList.add("popup-overlay-active");
+        document.getElementsByClassName("popup")[0].classList.add("popup-active");
+    });
+
+    // Edit Category
+    function EditCate(ID) {
+        doingEdit = true;
+        document.getElementsByClassName("popup-overlay")[0].classList.add("popup-overlay-active");
+        document.getElementsByClassName("popup")[0].classList.add("popup-active");
+
+        $.getJSON("/Admin/Category/CategoryInfor", { id: ID }, function (response) {
+            BindingDataEdit(response.ID, response.Name, response.Status);
+        });
+    }
+
+    $("#btn--submit").click(function () {
+        var formData = new FormData();
+        if (doingEdit == true) { // Đang Edit
+            formData.append("ID", $("#title").text().split("- ")[1]);
+            formData.append("Name", $("#input-categoryname").val());
+            formData.append("Status", $("#input-status").val());
+            formData.append("FullName", $("#FullName").text());
+            $.ajax({
+                url: "/Admin/Category/UpdateCategory",
+                type: "POST",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (response) {
+                    if (response.message == "Success!!") {
+                        swal("ALERT INFO", response.data, "success");
+                        location.reload();
+                    } else {
+                        swal("ALERT INFO", response.data, "error");
+                    }
+                },
+                error: function (err) {
+                    swal("Alert info", err, "error");
+                }
+            });
+        }
+        else { // Đang thêm
+            formData.append("Name", $("#input-categoryname").val());
+            formData.append("Status", $("#input-status").val());
+            formData.append("FullName", $("#FullName").text());
+            $.ajax({
+                url: "/Admin/Category/AddCategory",
+                type: "POST",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (response) {
+                    if (response.message == "Success!!") {
+                        swal("ALERT INFO", response.data, "success");
+                        location.reload();
+                    } else {
+                        swal("ALERT INFO", response.data, "error");
+                    }
+                },
+                error: function (err) {
+                    swal("Alert info", err, "error");
+                }
+            });
+        }
+    })
+
+    // Event when click btn Close in form New or Import file
+    document.getElementById("close-form--createfile").addEventListener('click', function () {
+        doingEdit = false;
+        document.getElementsByClassName("popup-overlay")[0].classList.remove("popup-overlay-active");
+        document.getElementsByClassName("popup")[0].classList.remove("popup-active");
+    })
+
+</script>

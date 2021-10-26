@@ -1,0 +1,132 @@
+﻿@using Models.EF
+@using PagedList.Mvc;
+@using CNWeb.Helper
+@model  PagedList.IPagedList<Models.EF.Blog>
+@{
+    ViewBag.Title = "Thông tin";
+    Layout = "~/Areas/Main/Views/Shared/_Layout.cshtml";
+}
+@section page_header{
+    <!--Page header & Title-->
+    <style>
+        #page_header {
+            margin-left: -20px;
+            background: url("../../../Content/img/theme/page-header.jpg") no-repeat;
+            width: 110%;
+            position: relative;
+            min-height: 280px;
+            background-size: cover;
+            background-position: center center;
+            text-align: right;
+        }
+    </style>
+    <section id="page_header">
+        <div class="page_title">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="title">The Pastauffeur</h2>
+                        <p>Đem đến trải nghiệm tuyệt vời nhất cho bạn về thế giới ẩm thực</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+@section stylesheet{
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/blog.css">
+}
+<section id="blog" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-7">
+                @foreach (Models.EF.Blog blog in Model)
+                {
+                    <div class="blog_item padding-bottom">
+                        <h2>@Html.Raw(blog.Name)</h2>
+                        <ul class="comments">
+                            <li><a href="#.">@ConvertDateTime.ConvertUnixToDateTime(@Convert.ToInt32(blog.CreatedDate))</a></li>
+                            <li><a href="#."><i class="icon-chat-2"></i>@Html.Raw(blog.ViewCount)</a></li>
+                        </ul>
+                        @Html.Raw(blog.Description)
+                        <a class="btn-common button3" href="/Main/Blog/Detail/@blog.ID">Xem thêm</a>
+                    </div>
+                }
+
+            </div>
+            <div class="col-md-4 col-sm-5">
+                <div class="writing">
+                    <button id="bt1" onclick="blogging()" class="blogging">
+                        Viết Blog
+                    </button>
+                    <script>
+                        function blogging() {
+                            location.assign("blog-writing.html");
+                        }
+                    </script>
+                </div>
+                <aside class="sidebar">
+                    <div class="widget">
+                        <ul class="tabs">
+                            <li class="active" rel="tab1">Nổi bật </li>
+                            <li rel="tab2">Mới nhất</li>
+                        </ul>
+                        <div class="tab_container bg_grey">
+                            <div id="tab1" class="tab_content">
+                                @foreach (Blog blogview in ViewBag.blogview)
+                                {
+                                    <div class="single_comments">
+                                        <p>
+                                            <a href="/Main/Blog/Detail/@blogview.ID">@Html.Raw(blogview.Name)</a>
+                                            <span>@ConvertDateTime.ConvertUnixToDateTime(@Convert.ToInt32(blogview.CreatedDate))</span>
+                                        </p>
+                                    </div>
+                                }
+                                <div class="clearfix"></div>
+                            </div>
+                            <h3 class="tab_drawer_heading" rel="tab2">Mới nhất</h3>
+                            <div id="tab2" class="tab_content">
+                                @foreach (Blog blognew in ViewBag.blognew)
+                                {
+                                <div class="single_comments">
+                                    <p>
+                                        <a href="/Main/Blog/Detail/@blognew.ID">@Html.Raw(blognew.Name)</a>
+                                        <span>@ConvertDateTime.ConvertUnixToDateTime(@Convert.ToInt32(blognew.CreatedDate))</span>
+                                    </p>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="widget">
+                            <h3>Danh mục</h3>
+                            <ul class="widget_links">
+                                @foreach (BlogCategory blogCategory in ViewBag.blogcategories)
+                                {
+                                    <li><a href="/Main/Blog/Categories/@blogCategory.ID">@Html.Raw(blogCategory.Name)</a></li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="widget">
+                            <h3>Tags</h3>
+                            <ul class="tags">
+                                @foreach (Tag blogtag in ViewBag.blogtag)
+                                {
+                                    <li><a href="/Main/Blog/Tag/@blogtag.ID">@Html.Raw(blogtag.Name)</a></li>
+                                }
+
+                            </ul>
+                        </div>
+                </aside>
+            </div>
+
+        </div>
+        <div class="col-md-12 text-center clear-both">
+
+
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+                new { page }))
+        </div>
+    </div>
+</section>
+
+

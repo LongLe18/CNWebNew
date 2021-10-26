@@ -1,0 +1,362 @@
+﻿
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Sales</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Sales Manager</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a href="javascript:void(0)" id="AddPromotion" class="btn btn-sm btn-neutral">Tạo mới khuyến mãi</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row" style="flex-direction: row-reverse">
+        <!-- Table promotions -->
+        <div class="col-xl-8 order-xl-1">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Chương trình khuyến mãi </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="input-search" placeholder="Nhập mã hoặc tên để tìm chương trình">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <select class="form-control" id="input-filter">
+                                    <option value="2">Tất cả</option>
+                                    <option value="1">Đang hoạt động</option>
+                                    <option value="0">Hết hạn</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <button type="submit" class="btn btn-sm btn-primary" id="Submit" style="width: 100%; height: 60%"><i class="fas fa-search"></i>    Tìm kiếm</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <!-- Light table -->
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col" class="sort" data-sort="name">Tên chương trình</th>
+                                        <th scope="col" class="sort" data-sort="budget">Trạng thái</th>
+                                        <th scope="col" class="sort" data-sort="status">Ngày bắt đầu</th>
+                                        <th scope="col" class="sort" data-sort="position">Ngày hết hạn</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="list" id="tblData">
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Card footer -->
+                        <div class="card-footer py-4" id="paged">
+                            <nav aria-label="..." class="card-footer--listPages">
+                                <ul class="pagination justify-content-end mb-0" id="pagination">
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+        </div>
+        <!-- Detail promotions -->
+        <div class="col-xl-4">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header">
+                    <h3 class="mb-0">Chi tiết khuyến mãi</h3>
+                </div>
+                <div class="card-body">
+                    <h3 class="heading-small text-muted mb-4">
+                        Tên CTKM:
+                        <strong id="name-promotion" style="font-size:15px; color: blue"></strong>
+                    </h3>
+                    <div>
+                        <h3>Loại khuyến mãi </h3>
+                        <span id="type-promotion"> (Cho tất cả khách hàng) </span>
+                    </div>
+                    <div>
+                        <h3>Nội dung khuyến mãi </h3>
+                        <span id="content-promotion"> (Cho tất cả khách hàng) </span>
+                    </div>
+                    <div>
+                        <h3>Đối tượng áp dụng </h3>
+                        <span> (Cho tất cả khách hàng) </span>
+                    </div>
+                </div>
+                <!-- Card footer -->
+                <div class="card-footer py-4 border-0 text-right" >
+                    <button class="btn btn-neutral" id="btn-changedstatus">KÍCH HOẠT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // status cho khuyến mãi = 0 => Ngừng
+    // status cho khuyến mãi = 1 => Hoạt động
+    var status = 0;
+
+    $(document).ready(function () {
+        //Initially load pagenumber=1
+        $.getJSON("/Admin/Sales/GetPaggedData", { filter: $("#input-filter").val(), search: $("#input-search").val(), pageNumber: 1, pageSize: 5 }, function (response) {
+            PaginationButtons(response.TotalPages);
+            document.getElementsByClassName('btn--renderRule')[2].click();
+        });
+    });
+
+    function Reload() {
+        document.getElementById('pagination').innerHTML = '';
+        $.getJSON("/Admin/Sales/GetPaggedData", { filter: $("#input-filter").val(), search: $("#input-search").val(), pageNumber: 1, pageSize: 5 }, function (response) {
+            PaginationButtons(response.TotalPages);
+            document.getElementsByClassName('btn--renderRule')[2].click();
+        });
+    };
+
+    //function help
+    function ConvertStatusHTML(status) {
+        var html = '';
+        if (status == 0) {
+            html += `<div class="btn-warning" id="unavailabel"><span>Ngừng</span></div>`
+        } else {
+            html += `<div class="btn-success" id="availabel"><span>Hoạt động</span></div>`
+        }
+        return html;
+    }
+
+    function UnixToDate(unixtime) {
+        const unixTimestamp = unixtime;
+        const milliseconds = unixTimestamp * 1000 // 1575909015000
+        const dateObject = new Date(milliseconds)
+        const humanDateFormat = dateObject.toLocaleString() //2019-12-9 10:30:15
+        return humanDateFormat;
+    }
+
+    function GetPageData(pageNum, pageSize) {
+        //After every trigger remove previous data and paging
+        $("#tblData").empty();
+        $.getJSON("/Admin/Sales/GetPaggedData", { filter: $("#input-filter").val(), search: $("#input-search").val(), pageNumber: pageNum, pageSize: pageSize }, function (response) {
+            var rowData = "";
+            for (var i = 0; i < response.Data.length; i++) {
+                let html = ConvertStatusHTML(response.Data[i].Status);
+
+                let dateUnix = UnixToDate(response.Data[i].ActiveDay);
+                var dateStart = new Date(dateUnix);
+                let dateUnix2 = UnixToDate(response.Data[i].EndDay);
+                var dateEnd = new Date(dateUnix2);
+
+                rowData = rowData + `<tr onclick="ShowDetailPromotion(${response.Data[i].ID})"><td>` + response.Data[i].Name + '</td><td>' + html + '</td><td>' +
+                    dateStart.toISOString().split('T')[0] + `</td><td>${dateEnd.toISOString().split('T')[0]}` + '</td><td> ' 
+                    '<div class="dropdown">' +
+                    '<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                    '<i class="fas fa-ellipsis-v"></i>' +
+                    '</a>' +
+                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">' +
+                    `<button class="dropdown-item" onClick="EditCate(${response.Data[i].ID})">Sửa phiếu</button>` +
+                    `<button class="dropdown-item" onClick="DeteleCate(${response.Data[i].ID})">Xóa phiếu</button>` +
+                    '<button class="dropdown-item" >Something else here</button>' +
+                    '</div></div>' +
+                    '</td></tr>'
+
+            }
+            $("#tblData").append(rowData);
+        });
+    }
+
+    // ListPage
+    var PageNumbers = (total, max, current) => {
+        const half = Math.round(max / 2);
+        let to = max;
+
+        if (current + half >= total) {
+            to = total;
+        } else if (current > half) {
+            to = current + half;
+        }
+        let from = to - max;
+
+        if (from < 0) {
+            return Array.from({ length: total }, (_, i) => (i + 1));
+        }
+        return Array.from({ length: max }, (_, i) => (i + 1) + from);
+    }
+
+    function PaginationButtons(totalPages, maxPageVisible = 2, currentPage = 1) {
+        let pages = PageNumbers(totalPages, maxPageVisible, currentPage);
+        let currentPageBtn = null;
+        const buttons = new Map();
+
+        const disabled = {
+            start: () => pages[0] === 1,
+            prev: () => currentPage === 1,
+            end: () => pages.slice(-1)[0] === totalPages,
+            next: () => currentPage === totalPages,
+        };
+
+        const createAndSetupButton = (label = '', cls = '', disabled = false, handleClick = () => { }) => {
+            const button = document.createElement('button');
+
+            button.textContent = label;
+            button.className = `btn btn-secondary btn--renderRule ${cls}`;
+            button.disabled = disabled;
+            button.addEventListener('click', event => {
+                handleClick(event);
+                this.update();
+                document.getElementById('pagination').nodeValue = currentPage;
+                document.getElementById('pagination').dispatchEvent(new Event('change'));
+            });
+
+            return button;
+        };
+
+        const onPageButtonClick = (e) => {
+            currentPage = Number(e.currentTarget.textContent);
+            GetPageData(currentPage);
+        };
+
+        const onPageButtonUpdate = index => (btn) => {
+            btn.textContent = pages[index];
+
+            if (pages[index] === currentPage) {
+                currentPageBtn.classList.remove('active');
+                btn.classList.add('active');
+                currentPageBtn = btn;
+                currentPageBtn.focus();
+            }
+        };
+
+        buttons.set(
+            createAndSetupButton('start', '', disabled.start(), () => {
+                currentPage = 1;
+                GetPageData(currentPage);
+            }),
+            (btn) => btn.disabled = disabled.start()
+        );
+
+        buttons.set(
+            createAndSetupButton('prev', '', disabled.prev(), () => {
+                currentPage -= 1;
+                GetPageData(currentPage);
+            }),
+            (btn) => btn.disabled = disabled.prev()
+        );
+
+        pages.forEach((pageNumber, index) => {
+            const isCurrentPage = pageNumber === currentPage;
+            const button =
+                createAndSetupButton(pageNumber, isCurrentPage ? 'active' : '', false, onPageButtonClick);
+
+            if (isCurrentPage) {
+                currentPageBtn = button;
+            }
+
+            buttons.set(
+                button,
+                onPageButtonUpdate(index)
+            )
+        });
+
+        buttons.set(
+            createAndSetupButton('next', '', disabled.next(), () => {
+                currentPage += 1;
+                GetPageData(currentPage);
+            }),
+            (btn) => btn.disabled = disabled.next()
+        );
+
+        buttons.set(
+            createAndSetupButton('end', '', disabled.end(), () => {
+                currentPage = totalPages;
+                GetPageData(currentPage);
+            }),
+            (btn) => btn.disabled = disabled.end()
+        );
+
+        buttons.forEach((_, btn) => {
+            document.getElementById('pagination').appendChild(btn);
+        });
+
+        this.update = (newPageNumber = currentPage) => {
+            currentPage = newPageNumber;
+            console.log("currentPage: ", currentPage);
+            pages = PageNumbers(totalPages, maxPageVisible, currentPage);
+            buttons.forEach((updateButton, btn) => updateButton(btn));
+        };
+
+        this.onChange = (handler) => {
+            document.getElementById('pagination').addEventListener('change', handler);
+        }
+    }
+
+    function ShowDetailPromotion(ID) {
+        $.getJSON("/Admin/Sales/GetDetailPromotionByID", { id: ID }, function (response) {
+            if (response[0].Status == 0) {
+                status = 1;
+                document.getElementById("btn-changedstatus").innerHTML = "KÍCH HOẠT";
+            } else {
+                status = 0;
+                document.getElementById("btn-changedstatus").innerHTML = "DỪNG KHUYỄN MÃI";
+            }
+            document.getElementById("name-promotion").innerHTML = response[0].Name;
+            document.getElementById("type-promotion").innerHTML = response[0].TypePromotion;
+            document.getElementById("content-promotion").innerHTML = response[0].Content;
+
+            document.getElementById("btn-changedstatus").addEventListener('click', ChangeStatus, false);
+            document.getElementById("btn-changedstatus").myParam = [ID, response[0].Status];
+        });
+    }
+
+    function ChangeStatus(evt) {
+        $.getJSON("/Admin/Sales/ActivePromotion", { id: evt.currentTarget.myParam[0], status: evt.currentTarget.myParam[1] }, function (response) {
+            if (response.message) {
+                swal('Alert info', response.data, 'success');
+                Reload();
+            } else {
+                swal('Alert info', response.data, 'error');
+            }
+        });
+    }
+
+    $("#Submit").on('click', function () {
+        document.getElementById('pagination').innerHTML = '';
+        $.getJSON("/Admin/Sales/GetPaggedData", { filter: $("#input-filter").val(), search: $("#input-search").val(), pageNumber: 1, pageSize: 5 }, function (response) {
+            PaginationButtons(response.TotalPages);
+            document.getElementsByClassName('btn--renderRule')[2].click();
+        });
+    });
+
+    $('#input-filter').change(function () {
+        document.getElementById('pagination').innerHTML = '';
+        $.getJSON("/Admin/Sales/GetPaggedData", { filter: $("#input-filter").val(), search: $("#input-search").val(), pageNumber: 1, pageSize: 5 }, function (response) {
+            PaginationButtons(response.TotalPages);
+            document.getElementsByClassName('btn--renderRule')[2].click();
+        });
+    })
+</script>
+

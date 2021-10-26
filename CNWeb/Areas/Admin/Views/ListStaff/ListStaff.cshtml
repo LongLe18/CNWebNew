@@ -1,0 +1,661 @@
+﻿@model PagedList.IPagedList<Models.EF.User>
+@using PagedList.Mvc;
+
+<!-- Header -->
+<h3 id="id-staff" style="display:none"></h3>
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Tables</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">ListStaff</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <a href="javascript:void(0)" id="AddStaff" class="btn btn-sm btn-neutral">Thêm nhân viên mới</a>
+                    <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Danh sách tài khoản</h3>
+                </div>
+                <!-- Light table -->
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="sort" data-sort="name">Họ và tên</th>
+                                <th scope="col" class="sort" data-sort="email">Email</th>
+                                <th scope="col" class="sort" data-sort="budget">Địa chỉ</th>
+                                <th scope="col" class="sort" data-sort="status">Nghề nghiệp</th>
+                                <th scope="col" class="sort" data-sort="position">Chức vụ</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="list" id="tblData">
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Card footer -->
+                <div class="card-footer py-4" id="paged">
+                    <nav aria-label="..." class="card-footer--listPages">
+                        <ul class="pagination justify-content-end mb-0" id="pagination">
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dark table -->
+    <div class="row">
+        <div class="col">
+            <div class="card bg-default shadow">
+                <div class="card-header bg-transparent border-0">
+                    <h3 class="text-white mb-0">Danh sách tài khoản</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-dark table-flush">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" class="sort" data-sort="name">Họ và tên</th>
+                                <th scope="col" class="sort" data-sort="email">Email</th>
+                                <th scope="col" class="sort" data-sort="budget">Địa chỉ</th>
+                                <th scope="col" class="sort" data-sort="status">Nghề nghiệp</th>
+                                <th scope="col" class="sort" data-sort="position">Chức vụ</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="list" id="tblData2">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Form Edit -->
+    <div class="row" id="addrule" style="display:none; flex-direction:row;">
+        <div class="col">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">Danh sách tài khoản</h3>
+                        </div>
+                        <div class="col text-right" style="display:none;">
+                            <button class="btn btn-sm btn-neutral" id="btn--add"><i class="ni ni-fat-add"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive" style="overflow-x:hidden !important;">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush" id="addrule--table" style="text-align:center;">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">NAME</th>
+                            </tr>
+                        </thead>
+                        <tbody id="addrule--listRules" class="table-responsive--tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9" id="addrule--form" style="display:none;">
+            <div class="card">
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0" id="name-addrule">Sửa thông tin tài khoản</h3>
+                        </div>
+                        <div class="col text-right">
+                            <button class="btn btn-sm btn-neutral" id="btn--close"><i class="ni ni-fat-remove"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <h6 class="heading-small text-muted mb-4">Thông tin nhân viên</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <!-- row 1 -->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Tên đăng nhập</label>
+                                        @Html.TextBox("username", "", new { @id = "input-username", @class = "form-control", @placeholder = "UserName" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-password">Password</label>
+                                        @Html.TextBox("password", "", new { @id = "input-password", @class = "form-control", @placeholder = "Password", @type="password" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- row 2-->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-full-name">Họ và tên</label>
+                                        @Html.TextBox("fullname", "", new { @id = "input-full-name", @class = "form-control", @placeholder = "Lê Ngọc Long" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Email</label>
+                                        @Html.TextBox("email", "", new { @id = "input-email", @class = "form-control", @placeholder = "long9a11to3@gmail.com", @type = "email" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- row 3-->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-birthday">Ngày tháng năm sinh (*)</label>
+                                        <input type="date" id="input-unix-birthday" class="form-control" />
+                                        @Html.TextBox("birthday", "", new { @id = "input-birthday", @class = "form-control", @style = "display:none;" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-career">Nghề nghiệp</label>
+                                        @Html.TextBox("career", "", new { @id = "input-career", @class = "form-control", @placeholder = "Sinh viên" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- row 4-->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-address">Địa chỉ</label>
+                                        @Html.TextBox("address", "", new { @id = "input-address", @class = "form-control", @placeholder = "236 Hoàng Quốc Việt" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-city">Thành phố</label>
+                                        @Html.TextBox("city", "", new { @id = "input-city", @class = "form-control", @placeholder = "Hà Nội" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- row 5-->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-country">Quốc gia</label>
+                                        @Html.TextBox("country", "", new { @id = "input-country", @class = "form-control", @placeholder = "Việt Nam" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-postal-code">Postal code</label>
+                                        @Html.TextBox("postalcode", "", new { @id = "input-postal-code", @class = "form-control", @type="number", @placeholder = "Postal code" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- row 6-->
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-position">Chức vụ</label>
+                                        @Html.DropDownList("position", (IEnumerable<SelectListItem>)ViewBag.ChucVu, new { @class = "form-control", @id = "input-position" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-description">Mô tả bản thân</label>
+                                        @Html.TextArea("description", "", new { @id= "input-description", @rows = "4", @class = "form-control", @placeholder = "Đẹp trai, hòa đồng..." })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 text-right">
+                                    <div style="width: 100%; padding-top: 50px;">
+                                        <button type="button" id="btn--submit" class="btn btn-success">Save All</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer pt-0">
+    <div class="row align-items-center justify-content-lg-between">
+        <div class="col-lg-6">
+            <div class="copyright text-center  text-lg-left  text-muted">
+                &copy; 2021 <a href="#" class="font-weight-bold ml-1" target="_blank">NLQH Team</a>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                <li class="nav-item">
+                    <a href="#" class="nav-link" target="_blank">NLQH Team</a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("About", "Home")" class="nav-link" target="_blank">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" target="_blank">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" target="_blank">MIT License</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<!-- Form delete -->
+<div class="modal" tabindex="-1" role="dialog" style="display:none;" id="delete-form">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: 3px solid #e9ecef">
+                <h5 class="modal-title">Xóa nhân viên vĩnh viễn?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloseFormDelete();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Sau khi xóa nhân viên sẽ không còn trong danh sách. Bạn sẽ không thể khôi phục lại!!!</p>
+                <p>Bạn có chắc chắn muốn xóa không?</p>
+            </div>
+            <div class="modal-footer" style="border-top: 3px solid #e9ecef">
+                <button type="button" class="btn btn-primary" id="confirm-delete">Xóa</button>
+                <button type="button" class="btn btn-secondary" onclick="CloseFormDelete();" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var id_staff = 0;
+
+    $('input[type=date]').change(function () {
+        var date = this.value;
+        const UnixTime = new Date(date).getTime() / 1000
+        document.getElementById('input-birthday').value = UnixTime;
+    });
+
+    // render Partial View when click 'Thêm nhân viên'
+    $("#AddStaff").click(function () {
+        const itemSideBar = document.getElementsByClassName("sidebar");
+        itemSideBar[itemSideBar.length - 1].click();
+    });
+
+    $(document).ready(function () {
+        //Initially load pagenumber=1
+        $.getJSON("/Admin/ListStaff/GetPaggedData", function (response) {
+            PaginationButtons(response.TotalPages);
+            document.getElementsByClassName('btn--renderRule')[2].click();
+        });
+    });
+
+    // function Help
+    function UnixToDate(unixtime) {
+        const unixTimestamp = unixtime;
+        const milliseconds = unixTimestamp * 1000 // 1575909015000
+        const dateObject = new Date(milliseconds)
+        const humanDateFormat = dateObject.toLocaleString() //2019-12-9 10:30:15
+        return humanDateFormat;
+    }
+
+    function GetPageData(pageNum, pageSize) {
+        //After every trigger remove previous data and paging
+        $("#tblData").empty();
+        $("#tblData2").empty();
+        $.getJSON("/Admin/ListStaff/GetPaggedData", { pageNumber: pageNum, pageSize: pageSize }, function (response) {
+            var rowData = "";
+            for (var i = 0; i < response.Data.length; i++) {
+                rowData = rowData + `<tr id="${response.Data[i].ID}"><td>` + response.Data[i].FullName + '</td><td>' + response.Data[i].Email + '</td><td>' +
+                    response.Data[i].Address + ', ' + response.Data[i].City + ', ' + response.Data[i].Country +
+                    '</td><td>' + response.Data[i].Career + '</td><td>' + response.Data[i].aChucVu + '</td><td class="text-right">' +
+                    '<div class="dropdown">' +
+                    '<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                    '<i class="fas fa-ellipsis-v"></i>' +
+                    '</a>' +
+                    '<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">' +
+                    `<button class="dropdown-item" onClick="EditStaff(${response.Data[i].ID})">Sửa thông tin</button>` +
+                    `<button class="dropdown-item" onClick="DeteleStaff(${response.Data[i].ID})">Xóa nhân viên</button>` +
+                    '<button class="dropdown-item" >Something else here</button>' +
+                    '</div></div>' +
+                    '</td></tr>'
+
+            }
+
+            $("#tblData").append(rowData);
+            $("#tblData2").append(rowData);
+        });
+    }
+
+    function BindingDataEdit(id, username, password, fullname, email, birthday, career, address, city, country, position,
+        description, postalcode) {
+        document.getElementById('name-addrule').innerText = 'Sửa thông tin tài khoản - ' + id;
+        document.getElementById('input-username').value = username;
+        document.getElementById('input-password').value = password;
+        document.getElementById('input-full-name').value = fullname;
+        document.getElementById('input-email').value = email;
+        let date1 = UnixToDate(birthday);
+        var date2 = new Date(date1);
+        document.getElementById('input-unix-birthday').value = date2.toISOString().split('T')[0];
+        document.getElementById('input-career').value = career;
+        document.getElementById('input-address').value = address;
+        document.getElementById('input-city').value = city;
+        document.getElementById('input-country').value = country;
+        document.getElementById('input-position').value = position;
+        document.getElementById('input-description').value = description;
+        let Postalcode = parseInt(postalcode, 10);
+        document.getElementById('input-postal-code').value = Postalcode;
+    }
+
+    function Clear() {
+        document.getElementById('input-username').value = '';
+        document.getElementById('input-password').value = '';
+        document.getElementById('input-full-name').value = '';
+        document.getElementById('input-email').value = '';
+        document.getElementById('input-birthday').value = '';
+        document.getElementById('input-career').value = '';
+        document.getElementById('input-address').value = '';
+        document.getElementById('input-city').value = '';
+        document.getElementById('input-country').value = '';
+        document.getElementById('input-position').value = '';
+        document.getElementById('input-description').value = '';
+        document.getElementById('input-postal-code').value = '';
+    }
+
+    // ListPage
+    var PageNumbers = (total, max, current) => {
+        const half = Math.round(max / 2);
+        let to = max;
+
+        if (current + half >= total) {
+            to = total;
+        } else if (current > half) {
+            to = current + half;
+        }
+        let from = to - max;
+
+        if (from < 0) {
+            return Array.from({ length: total }, (_, i) => (i + 1));
+        }
+        return Array.from({ length: max }, (_, i) => (i + 1) + from);
+    }
+
+    function PaginationButtons(totalPages, maxPageVisible = 2, currentPage = 1) {
+        let pages = PageNumbers(totalPages, maxPageVisible, currentPage);
+        let currentPageBtn = null;
+        const buttons = new Map();
+
+        const disabled = {
+            start: () => pages[0] === 1,
+            prev: () => currentPage === 1,
+            end: () => pages.slice(-1)[0] === totalPages,
+            next: () => currentPage === totalPages,
+        };
+
+        const createAndSetupButton = (label = '', cls = '', disabled = false, handleClick = () => { }) => {
+            const button = document.createElement('button');
+
+            button.textContent = label;
+            button.className = `btn btn-secondary btn--renderRule ${cls}`;
+            button.disabled = disabled;
+            button.addEventListener('click', event => {
+                handleClick(event);
+                this.update();
+                document.getElementById('pagination').nodeValue = currentPage;
+                document.getElementById('pagination').dispatchEvent(new Event('change'));
+            });
+
+            return button;
+        };
+
+        const onPageButtonClick = (e) => {
+            currentPage = Number(e.currentTarget.textContent);
+            GetPageData(currentPage);
+        };
+
+        const onPageButtonUpdate = index => (btn) => {
+            btn.textContent = pages[index];
+
+            if (pages[index] === currentPage) {
+                currentPageBtn.classList.remove('active');
+                btn.classList.add('active');
+                currentPageBtn = btn;
+                currentPageBtn.focus();
+            }
+        };
+
+        buttons.set(
+            createAndSetupButton('start', '', disabled.start(), () => {
+                currentPage = 1;
+                GetPageData(currentPage);
+            }),
+            (btn) => btn.disabled = disabled.start()
+        );
+
+        buttons.set(
+            createAndSetupButton('prev', '', disabled.prev(), () => {
+                currentPage -= 1;
+                GetPageData(currentPage);
+            }),
+            (btn) => btn.disabled = disabled.prev()
+        );
+
+        pages.forEach((pageNumber, index) => {
+            const isCurrentPage = pageNumber === currentPage;
+            const button =
+                createAndSetupButton(pageNumber, isCurrentPage ? 'active' : '', false, onPageButtonClick);
+
+            if (isCurrentPage) {
+                currentPageBtn = button;
+            }
+
+            buttons.set(
+                button,
+                onPageButtonUpdate(index)
+            )
+        });
+
+        buttons.set(
+            createAndSetupButton('next', '', disabled.next(), () => {
+                currentPage += 1;
+                GetPageData(currentPage);
+            }),
+            (btn) => btn.disabled = disabled.next()
+        );
+
+        buttons.set(
+            createAndSetupButton('end', '', disabled.end(), () => {
+                currentPage = totalPages;
+                GetPageData(currentPage);
+            }),
+            (btn) => btn.disabled = disabled.end()
+        );
+
+        buttons.forEach((_, btn) => {
+            document.getElementById('pagination').appendChild(btn);
+        });
+
+        this.update = (newPageNumber = currentPage) => {
+            currentPage = newPageNumber;
+            console.log("currentPage: ", currentPage);
+            pages = PageNumbers(totalPages, maxPageVisible, currentPage);
+            buttons.forEach((updateButton, btn) => updateButton(btn));
+        };
+
+        this.onChange = (handler) => {
+            document.getElementById('pagination').addEventListener('change', handler);
+        }
+    }
+
+    // Delete Staff
+    function CloseFormDelete() {
+        $("#delete-form").hide();
+    }
+
+    function DeteleStaff(id) {
+        $("#id-staff").text(id);
+
+        $("#delete-form").show();
+        var confirm = document.getElementById('confirm-delete');
+        console.log(confirm);
+        confirm.addEventListener('click', function () {
+            $.ajax({
+                url: "/Admin/ListStaff/DeleteStaffById",
+                async: false,
+                type: "POST",
+                dataType: "json",
+                contentType: 'application/json',
+                processData: false,
+                data: JSON.stringify({ ID: parseInt($('#id-staff').text(), 10) }),
+                success: function (response) {
+                    if (response.message == "Success!") {
+                        $("#delete-form").hide();
+                        document.getElementById(parseInt($('#id-staff').text(), 10)).remove();
+                        swal("Alert info", "Xóa nhân viên thành công", "success");
+                    }
+                    else {
+                        $("#delete-form").hide();
+                        swal("Alert info", "Không thể xóa được nhân viên này", "error");
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                    $("#delete-form").hide();
+                    swal("Alert info", err, "error");
+                }
+            })
+        });
+    }
+
+    // Edit Staff
+    function EditStaff(ID) {
+        ShowEditRule();
+        $.getJSON("/Admin/ListStaff/PersonalInfor", { id: ID }, function (response) {
+            BindingDataEdit(response.ID, response.UserName, response.Password, response.FullName, response.Email,
+                response.BirthDay, response.Career, response.Address, response.City,
+                response.Country, response.IDChucVu, response.Description, response.PostalCode);
+        });
+    }
+
+    function ShowEditRule() {
+        var x = document.getElementById("addrule");
+        if (x.style.display == 'none') {
+            x.style.display = 'flex';
+            $("#addrule--listRules tr").remove();
+            var scrollingElement = (document.scrollingElement || document.body);
+            $(scrollingElement).animate({
+                scrollTop: document.body.scrollHeight
+            }, 500);
+            $("#btn--add").click();
+        } else {
+            x.style.display = 'none';
+        }
+    };
+
+    $('#btn--add').click(function () {
+        var html_listfile = [];
+
+        var table = document.getElementById("addrule--table");
+        var tbodyRowCount = table.tBodies[0].rows.length; // dem so rule trong list
+
+        html_listfile.push(
+            `
+            <tr class="rows--rule">
+                <th scope='row'>
+                    <button class="btn btn--addrule" onclick="ShowFormAddRule(this)">
+                        Tài khoản 1
+                    </button>
+                </th>
+            </tr>
+            `
+        )
+        document.getElementById("addrule--listRules").innerHTML += html_listfile.join("\n");
+
+        var btn = document.getElementsByClassName("btn--addrule");
+        var countBtn = btn.length;
+        btn[countBtn - 1].click();
+    });
+
+    function ShowFormAddRule(button) {
+        button.focus();
+
+        id_Rule = button.value;
+        document.getElementById('addrule--form').style.display = 'block';
+
+        // clear text in input
+        Clear();
+
+        // Add class active
+        const current = document.getElementsByClassName('btn--active');
+        if (current.length > 0) {
+            current[0].className = current[0].className.replace('btn--active', '');
+        }
+        button.classList.add('btn--active');
+    }
+
+    $('#btn--close').click(function () {
+        var x = document.getElementById('addrule');
+        if (x.style.display == 'flex') {
+            document.getElementById('addrule--form').style.display = 'none';
+            $("#addrule--listRules tr").remove();
+            x.style.display = 'none';
+        }
+    })
+
+    $("#btn--submit").click(function () {
+        var formData = new FormData();
+        formData.append("ID", $("#name-addrule").text().split("- ")[1]);
+        formData.append("UserName", $("#input-username").val());
+        formData.append("Password", $("#input-password").val());
+        formData.append("FullName", $("#input-full-name").val());
+        formData.append("Email", $("#input-email").val());
+        formData.append("BirthDay", $("#input-birthday").val());
+        formData.append("Career", $("#input-career").val());
+        formData.append("Address", $("#input-address").val());
+        formData.append("City", $("#input-city").val());
+        formData.append("Country", $("#input-country").val());
+        formData.append("PostalCode", $("#input-postal-code").val());
+        formData.append("IDChucVu", $("#input-position").val());
+        formData.append("Description", $("#input-description").val());
+        $.ajax({
+            url: "/Admin/ListStaff/UpdateInforStaff",
+            type: "POST",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (response) {
+                if (response.message == "Success!!") {
+                    swal("ALERT INFO", response.data, "success");
+                    location.reload();
+                } else {
+                    swal("ALERT INFO", response.data, "error");
+                }
+            },
+            error: function (err) {
+                swal("Alert info", err, "error");
+            }
+        })
+    })
+</script>

@@ -1,0 +1,643 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Main/Views/Shared/_Layout.cshtml";
+}
+@using Models.EF
+@{ var session = (CNWeb.Code.UserSession)Session[CNWeb.Code.Constants.USER_SESSION];}
+@model List<Order>
+@section page_header{
+    <!--Page header & Title-->
+    <style>
+        #page_header {
+            margin-left: -20px;
+            background: url("../../../Content/img/theme/page-header.jpg") no-repeat;
+            width: 110%;
+            position: relative;
+            min-height: 280px;
+            background-size: cover;
+            background-position: center center;
+            text-align: right;
+        }
+    </style>
+    <section id="page_header">
+        <div class="page_title">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="title">The Pastauffeur</h2>
+                        <p>Đem đến trải nghiệm tuyệt vời nhất cho bạn về thế giới ẩm thực</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+@section stylesheet{
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/profile.css">
+}
+
+<div class="page-Container">
+    <div class="profile">
+        <div class="avatar">
+            <div class="profile-avatar">
+                <div class="profile-avatar__placeholder"></div><img class="shopee-avatar__img"
+                                                                    src="~/Content/img/User/face_27.jpg">
+            </div>
+            <div class="profile-name-and-money">
+                <div class="username"><span></span></div>
+                <div class="acount-balance" style="display:flex; flex-direction:column">
+                    <div><span style="color:Highlight; font-size:large; padding-top:50px">@session.FullName</span></div>
+                    <div class="acount-balance1"><span>Số dư tài khoản</span></div>
+                    <div class="acount-balance2"><span>@session.Wallet VNĐ</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="selection">
+            <div class="acount-selection">
+                <div class="my-acount">
+                    <a class="acount-icon-and-span">
+                        <div>
+                            <img src="~/Content/img/icons/user.png">
+                        </div>
+                        <div class="acount-span"><span>Tài khoản của tôi</span></div>
+                    </a>
+                </div>
+                <div class="my-acount-selection">
+                    <div class="select">
+                        <a id="select1">Hồ Sơ</a>
+                        <br>
+                        <a id="select2">Đổi Mật Khẩu</a>
+                    </div>
+                </div>
+            </div>
+            <div class="buy-history">
+                <div class="stardust-dropdown__item-header">
+                    <a class="acount-icon-and-span" href="/user/purchase">
+                        <div class="acount-icon-and-span1">
+                            <img src="~/Content/img/icons/buy-history.png">
+                            <a id="select4">Đơn Mua</a>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="detail" id="profile-detail">
+        <div class="detail1">
+            <div class="profile2">
+                <div class="profile3">
+                    <div class="my-profile-span">
+                        <div class="my-profile-span1" style="padding-top:15px">
+                            <h3>Hồ sơ của tôi</h3>
+                            <div>Quản lý thông tin hồ sơ để bảo mật tài khoản</div>
+                        </div>
+                    </div>
+                    <div class="detai-profile">
+                        <div class="detail-info">
+                            <form>
+                                <div class="_3BlbUs">
+                                    <div class="_1iNZU3" style="padding-top:15px">
+                                        <div class="_2PfA-y"><label>Tên đăng nhập</label></div>
+                                        <div class="_2_JugQ">
+                                            <div class="_2bdFDW">
+                                                <div class="_3S9myJ">@session.UserName</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="_3BlbUs">
+                                    <div class="_1iNZU3">
+                                        <div class="_2PfA-y"><label>Tên</label></div>
+                                        <div class="_2_JugQ">
+                                            <div class="input-with-validator-wrapper">
+                                                <input class="form-control" type="text" name="f_name" id="f_name"
+                                                       placeholder="@session.FullName" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="_3BlbUs">
+                                    <div class="_1iNZU3">
+                                        <div class="_2PfA-y"><label>Email</label></div>
+                                        <div class="_2_JugQ">
+                                            <div class="input-with-validator-wrapper">
+                                                <input class="form-control" type="text" name="f_name" id="f_name"
+                                                       placeholder="@(session.UserName)@('@')gmail.com" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="_3BlbUs">
+                                    <div class="_1iNZU3">
+                                        <div class="_2PfA-y"><label>Số điện thoại</label></div>
+                                        <div class="_2_JugQ">
+                                            <div class="input-with-validator-wrapper">
+                                                <input class="form-control" type="text" name="f_name" id="f_name"
+                                                       placeholder="" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="_3BlbUs">
+                                    <div class="_1iNZU3">
+                                        <div class="_2PfA-y"><label>Địa Chỉ</label></div>
+                                        <div class="_2_JugQ">
+                                            <div class="input-with-validator-wrapper">
+                                                <input class="form-control" type="text" name="f_name" id="f_name"
+                                                       placeholder="236 Hoàng Quốc Việt, Cổ Nhuế, Bắc Từ Liêm, Hà Nội"
+                                                       required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="_3BlbUs">
+                                    <div class="_1iNZU3">
+                                        <div class="_2PfA-y"><label>Giới tính</label></div>
+                                        <div class="_2_JugQ">
+                                            <div class="radio" style="display: flex; padding-left: 1.25rem;">
+                                                <label class="radio-inline">
+                                                    <input type="radio"
+                                                           name="optradio">Nam
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="optradio">Nữ
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="optradio">Khác
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="_3BlbUs">
+                                    <div class="_1iNZU3">
+                                        <div class="_2PfA-y"><label>Ngày sinh</label></div>
+                                        <div class="_2_JugQ">
+                                            <div id="datepicker" class="input-group date"
+                                                 data-date-format="dd-mm-yyyy">
+                                                <input class="form-control" readonly="" type="text"> <span class="input-group-addon">
+                                                    <i class="glyphicon glyphicon-calendar"></i>
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="_31PFen">
+                            <button type="button" class="btn1 btn-info">Lưu</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="_1aIEbS">
+                    <div class="X1SONv">
+                        <div class="_1FzaUZ">
+                            <div class="TgSfgo" style="background-image: url(images/avator1.jpg);">
+                            </div>
+                        </div><input class="_2xS5eV" style="display:none;" type="file"
+                                     accept=".jpg,.jpeg,.png"><button type="button" class="btn1 btn-success">
+                            Chọn
+                            ảnh
+                        </button>
+                        <div class="_3Jd4Zu">
+                            <div class="_3UgHT6">Dụng lượng file tối đa 1 MB</div>
+                            <div class="_3UgHT6">Định dạng:.JPEG, .PNG</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="detail-buy-history" id="buy">
+        <div class="search" style="background-color:#f5f5f5; padding-bottom:10px;" id="search_1">
+            <input type="text" placeholder="Nhập mã hóa đơn món ăn" name="txtSearch" class="form-control" style="border-radius:30px;">
+            <input type="submit" class="btn-submit button3" name="sub-btn" value="Tìm kiếm" style="color: white; background-color: #ee4d2d; border-radius:30px;margin-left:20px;padding-top:8px;padding-bottom:8px">
+        </div>
+        <div class="result">
+            
+
+        </div>
+        <div class="detail-order" style="display:none">
+
+        </div>
+    </div>
+    <div class="chace-password" id="chance-pw">
+        <div class="chance-password1">
+            <form>
+                <div class="chance-password2">
+                    <div class="chance-password3" style="padding-top: 15px">
+                        <h4>Đổi mật khẩu</h4>
+                        <div class="chance-password4">
+                            Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho
+                            người khác
+                        </div>
+                    </div>
+                    <div class="chance-password5">
+                        <div class="password">
+                            <div class="_3m9JxV">
+                                <div class="_1p2sNF">
+                                    <div class="J7OZkm">
+                                        <label class="_3W1PU2" for="password">
+                                            Mật khẩu hiện
+                                            tại
+                                        </label>
+                                    </div>
+                                    <div class="_38MRMp">
+                                        <input class="form-control" type="password" name="f_name"
+                                               id="password" placeholder="" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="eSOrcn">
+                                <div class="_3m9JxV">
+                                    <div class="_1p2sNF">
+                                        <div class="J7OZkm">
+                                            <label class="_3W1PU2" for="newPassword">
+                                                Mật khẩu
+                                                mới
+                                            </label>
+                                        </div>
+                                        <div class="_38MRMp">
+                                            <input class="form-control" type="password"
+                                                   name="f_name" id="newpassword" placeholder="" required />
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="eSOrcn">
+                            <div class="_3m9JxV">
+                                <div class="_1p2sNF">
+                                    <div class="J7OZkm">
+                                        <label class="_3W1PU2" for="newPasswordRepeat">
+                                            Xác
+                                            nhận mật khẩu
+                                        </label>
+                                    </div>
+                                    <div class="_38MRMp">
+                                        <input class="form-control" type="password" name="f_name"
+                                               id="renewpassword" placeholder="" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="eSOrcn">
+                            <div class="_1DS7fG"></div>
+                            <div class="_1IcdS-">
+                                <button type="button" class="btn btn-info">Xác nhận</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </form>
+    </div>
+</div>
+<script>
+
+    function UnixToDate(unixtime) {
+        const unixTimestamp = unixtime;
+        const milliseconds = unixTimestamp * 1000 // 1575909015000
+        const dateObject = new Date(milliseconds)
+        const humanDateFormat = dateObject.toLocaleString() //2019-12-9 10:30:15
+        return humanDateFormat;
+    }
+    $(document).ready(function () {
+        $('input[name="sub-btn"]').click(
+            function (e) {
+                e.preventDefault();
+
+                var id1 = $('input[name="txtSearch"]').val();
+
+                //var data-input = $('input[name="txtSearch"]').val();
+                $.getJSON("/Main/Profile/SearchOrder", { id: id1 }, function (response) {
+                    if (response.message == "OK") {
+                        $(".result").empty();
+                        var panel = "";
+
+                        var statuses = ['Đơn hàng đã đặt', 'Đơn hàng đã thanh toán', 'Đã giao cho shipper', 'Đang giao', 'Đánh giá', 'Đã hủy'];
+                        for (var i = 0; i < response.data.length; i++) {
+                            let date = UnixToDate(response.data[i].CreatedTime);
+                            let status = statuses[parseInt(response.data[i].Status)];
+                            let id = response.data[i].ID;
+                            let add = response.data[i].CustomerAddress;
+                            let totalpayment = response.data[i].ToTalPrice;
+                            panel = panel + `<div style="margin:20px;padding:20px; background-color: rgb(238, 228, 215); box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
+                    <div>
+                        <div style="display:flex; padding: 20px; flex-direction: row; justify-content: space-between;">
+                            <div>Đơn hàng #${id} vào ${date}</div>
+                            <div style="color:rgb(84, 133, 84)"> ${status} </div>
+
+                        </div>
+                        <div style="background-color: rgb(253, 253, 252); padding: 10;">
+                            <div>
+                                <img src="j.jpg" alt="">
+
+                            </div>
+                            <div style="padding: 15px;display:flex;flex-direction:row;justify-content:space-between">
+                                <div>
+                                    <div>Đơn hàng giao đến</div>
+                                    <div>${add}</div>
+                                </div>
+                                <div>
+                                    <div style="color:crimson; font-weight:400; font-size:large">Tổng tiền</div>
+                                    <div>${totalpayment} VNĐ</div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:flex;width: 100%; background-color: rgba(255, 255, 255, 0.973); align-items:flex-end; flex-direction:row-reverse;">
+                        
+
+                        <a href="#" onClick="detail(${id})">
+                            <div>
+                                <div style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;margin: 15px; padding: 12px;background-color: #ee4d2d;color:white">
+                                    Chi tiết
+                                </div>
+                            </div>
+                        </a>
+                        
+
+                    </div>
+                </div>
+
+`
+                        }
+                        $('.result').append(panel)
+
+                    }
+                    else {
+
+                        alert("Không tồn tại đơn hàng")
+                    }
+                });
+            }
+            //            var data-input = $('input[name="txtSearch"]').val();
+            //    //$.ajax.
+            //    $.getJSON("/Main/Profile/SearchOrder", { id: $('input[name="sub-btn"]').text() }, function (response) {
+            //        if (response.message == "OK") {
+            //            swal('Alert info', response.data, "success");
+            //            Reload();
+            //        }
+            //        else {
+            //            swal('Alert info', response.data, "error");
+            //        }
+            //    });
+            //}
+            //function (e) {
+            //    e.preventDefault();
+            //    alert("hola");
+            //}
+        );
+        $('input[name="sub-btn"]').click();
+    });
+
+    function returnList() {
+        $('.result').show();
+        $('.detail-order').hide();
+
+    }
+    function detail(id1) {
+
+        $.getJSON("/Main/Profile/SearchOrder", { id: id1 }, function (response) {
+            if (response.message == "OK") {
+
+                $(".result").empty();
+                var panel1 = "";
+
+                var statuses = ['Đơn hàng đã đặt', 'Đơn hàng đã thanh toán', 'Đã giao cho shipper', 'Đang giao', 'Đánh giá', 'Đã hủy'];
+                var i = 0;
+
+                var date1 = UnixToDate(response.data[i].CreatedTime);
+                var status1 = statuses[parseInt(response.data[i].Status)];
+                var id12 = response.data[i].ID;
+                var totalpayment1 = response.data[i].ToTalPrice;
+                
+                var st_arr = ["", "", "", "", ""];
+                for (var j = 0; j < 5; j++) {
+                    if (j < parseInt(response.data[i].Status)) {
+                        st_arr[j] = "active"
+                    }
+                }
+                
+                var html = '';
+                html = `<div class="container" style="margin-top:15px; margin-bottom:15px">
+<style>
+
+body {
+    background-color: #eeeeee;
+    font-family: 'Open Sans', serif
+}
+
+
+.card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.10rem
+}
+
+.card-header:first-child {
+    border-radius: calc(0.37rem - 1px) calc(0.37rem - 1px) 0 0
+}
+
+.card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1)
+}
+
+.track {
+    position: relative;
+    background-color: #ddd;
+    height: 7px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 60px;
+    margin-top: 50px
+}
+
+.track .step {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    width: 25%;
+    margin-top: -18px;
+    text-align: center;
+    position: relative
+}
+
+.track .step.active:before {
+    background: #FF5722
+}
+
+.track .step::before {
+    height: 7px;
+    position: absolute;
+    content: "";
+    width: 100%;
+    left: 0;
+    top: 18px
+}
+
+.track .step.active .icon {
+    background: #ee5435;
+    color: #fff
+}
+
+.track .icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    border-radius: 100%;
+    background: #ddd
+}
+
+.track .step.active .text {
+    font-weight: 400;
+    color: #000
+}
+
+.track .text {
+    display: block;
+    margin-top: 7px
+}
+
+.itemside {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%
+}
+
+.itemside .aside {
+    position: relative;
+    -ms-flex-negative: 0;
+    flex-shrink: 0
+}
+
+.img-sm {
+    width: 80px;
+    height: 80px;
+    padding: 7px
+}
+
+ul.row,
+ul.row-sm {
+    list-style: none;
+    padding: 0
+}
+
+.itemside .info {
+    padding-left: 15px;
+    padding-right: 7px
+}
+
+.itemside .title {
+    display: block;
+    margin-bottom: 5px;
+    color: #212529
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem
+}
+
+.btn-warning {
+    color: #ffffff;
+    background-color: #ee5435;
+    border-color: #ee5435;
+    border-radius: 1px
+}
+
+.btn-warning:hover {
+    color: #ffffff;
+    background-color: #ff2b00;
+    border-color: #ff2b00;
+    border-radius: 1px
+}</style>
+    <article class="card">
+        <header class="card-header"> Theo dõi đơn hàng </header>
+        <div class="card-body">
+            <h6>Order ID: #${id1}</h6>
+            <article class="card">
+                <div class="card-body row" style="margin:0px">
+                    <div class="col"> <strong>Thời gian tạo đơn hàng</strong> <br>${date1} </div>
+                    <div class="col"> <strong>Giao hàng bởi:</strong> <br> NGUYỄN HỮU NHÂN, | <i class="fa fa-phone"></i> +1598675986 </div>
+                    <div class="col"> <strong>Trạng thái:</strong> <br> ${status1} </div>
+                    <div class="col"> <strong>Tracking #:</strong> <br> ${id1} </div>
+                </div>
+            </article>
+            <div class="track">
+                <div class="step ${st_arr[0]}"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Đơn hàng được xác nhận</span> </div>
+                <div class="step ${st_arr[1]}"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text">Shipper xác nhận</span> </div>
+                <div class="step ${st_arr[2]}"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text">Đang vận chuyển</span> </div>
+                <div class="step ${st_arr[3]}"> <span class="icon"> <i class="fa fa-archive"></i> </span> <span class="text">Đã giao hàng</span> </div>
+                <div class="step ${st_arr[4]}"> <span class="icon"> <i class="fa fa-check-circle"></i> </span> <span class="text">Đánh giá</span> </div>
+            </div>
+            <hr>`;
+                $.getJSON("/Main/Profile/OrderDetail1", { id: id1 }, function (response) {
+                    if (response.message == "OK") {
+                        for (var h = 0; h < response.data.length / 3; h++) {
+                            html += `<ul class="row">`;
+                            for (var k = h *3; k < Math.min(response.data.length, (h+1) * 3); k++) {
+                                html += `<li class="col-md-4">
+                    <figure class="itemside mb-3">
+                        <div class="aside"><img src="/Content/img/food/${response.data[k].Alias}_1.jpg" class="img-sm border"></div>
+                        <figcaption class="info align-self-center">
+                            <p class="title"><span style="font-weight: bold; font-size:large">${response.data[k].Name}</span> <br> ${response.data[k].Size}</p> <span class="text-muted">${response.data[k].Quantity} </span>
+                        </figcaption>
+                    </figure>
+                </li>`
+                            }
+
+                            html +=
+                                `</ul>`;
+                        }
+                        
+                        html+=`
+            <hr> <a href="#search_1" class="btn btn-warning" onClick="returnList()"> <i class="fa fa-chevron-left"></i> Back to orders</a>
+        </div>
+    </article>
+</div>`;
+                        $(".detail-order").empty();
+                        $('.detail-order').append(html);
+
+                        $('.result').hide();
+                        $('.detail-order').show();
+                    }
+                    else {
+                        alert("Không tồn tại đơn hàng")
+                    }
+                }
+                );
+            }
+            else {
+                alert("Đơn hàng không tồn tại")
+                    ;
+            }
+        }
+        )
+    }
+</script>

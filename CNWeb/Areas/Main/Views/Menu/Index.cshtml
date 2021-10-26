@@ -1,0 +1,88 @@
+﻿@using Models.EF
+@{
+    ViewBag.Title = "The Menu";
+    Layout = "~/Areas/Main/Views/Shared/_Layout.cshtml";
+}
+
+@section page_header{
+    <!--Page header & Title-->
+    <style>
+        #page_header {
+            margin-left: -20px;
+            background: url("../../../Content/img/theme/page-header.jpg") no-repeat;
+            width: 110%;
+            position: relative;
+            min-height: 280px;
+            background-size: cover;
+            background-position: center center;
+            text-align: right;
+        }
+    </style>
+    <section id="page_header">
+        <div class="page_title">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="title">The Pastauffeur</h2>
+                        <p>Đem đến trải nghiệm tuyệt vời nhất cho bạn về thế giới ẩm thực</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<section id="gallery" class="padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form action="/Main/Menu/Search" method="post" class="newsletter">
+                    <div class="search">
+                        <input type="text" placeholder="Nhập tên món ăn" name="txtSearch" class="form-control"  />
+                        <input type="submit" class="btn-submit button3" value="Tìm kiếm" />
+                    </div>
+                </form>
+                <div class="work-filter">
+                    <ul class="text-center">
+                        <li><a href="javascript:;" data-filter="all" class="active filter">Tất cả</a></li>
+                        @foreach (var ctg in ViewBag.fc)
+                        {
+                            <li><a href="javascript:;" data-filter=".@ctg.Alias" class="filter">@ctg.Name</a></li>
+                        }
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="zerogrid">
+                <div class="wrap-container">
+                    <div class="wrap-content clearfix">
+                        
+                        @foreach ( Food food in ViewBag.foods)
+            {
+                    <div class="col-1-4 mix work-item @food.FoodCategory.Alias heading_space">
+                        <div class="wrap-col">
+                            <div class="item-container">
+                                <div class="image">
+                                    <img src="~/Content/img/food/@(food.Alias)_1.jpg" style="height: 120px; object-fit: contain" alt="cook" />
+                                    <div class="overlay">
+                                        <a class="fancybox overlay-inner" href="~/Content/img/food/@(food.Alias)_1.jpg" data-fancybox-group="gallery">
+                                            <i class=" icon-eye6"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery_content">
+                                <h3><a href="/Main/Menu/Detail/@food.ID">@food.Name</a></h3>
+                                <p>@food.Description</p>
+                            </div>
+                        </div>
+                    </div>
+            }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
