@@ -17,14 +17,6 @@ namespace CNWeb.Areas.Admin.Controllers
             return PartialView("Blog");
         }
 
-        // [GET] Admin/Blog/ListBlogs
-        public ActionResult ListBlogs(string filter, string search)
-        {
-            var dao = new BlogModel();
-            var blogs = dao.ListBlog(Int32.Parse(filter), search).ToList();
-            return Json(blogs, JsonRequestBehavior.AllowGet);
-        }
-
         // [GET] Admin/Blog/UpdateStatus
         public ActionResult UpdateStatus(string id, bool check)
         {
@@ -69,7 +61,6 @@ namespace CNWeb.Areas.Admin.Controllers
                 return Json(new { message = "Fail!!", data = "Duyệt bài thất bại" }, JsonRequestBehavior.AllowGet);
             }
         }
-
 
         // [GET] Admin/Blog/ViewBlog/{id}
         public ActionResult ViewBlog(int id)

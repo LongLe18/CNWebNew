@@ -23,7 +23,8 @@ namespace Models.Dao
         /// </summary>
         /// <returns></returns>
         public IQueryable<ListBlog> ListBlog(int filter, string search)
-        {            
+        {
+            if (search == null) search = "";
             var data = (from a in db.Blogs
                         join b in db.Users on a.CreatedBy equals b.ID
                         where b.UserName.Contains(search) || a.Name.Contains(search)

@@ -33,29 +33,5 @@ namespace CNWeb.Areas.Admin.Controllers
         {
             return PartialView("_TopNav");
         }
-
-        // [GET] Admin/Admin/GetUser
-        public JsonResult GetNumberUser()
-        {
-            var dao = new DashboardModel();
-            var data = dao.GetNumberUser();
-            return Json(data, JsonRequestBehavior.AllowGet);
-        }
-
-        // [GET] Admin/Admin/GetNumberOrder
-        public JsonResult GetNumberOrder()
-        {
-            var dao = new DashboardModel();
-            var data = dao.GetNumberOrder();
-            return Json(data, JsonRequestBehavior.AllowGet);
-        }
-
-        // [GET] Admin/Admin/Sales
-        public JsonResult GetSales()
-        {
-            var dao = new OrderModel();
-            var data = dao.Order().ToList();
-            return Json(data, JsonRequestBehavior.AllowGet);
-        }
     }
 }

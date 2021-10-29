@@ -72,7 +72,8 @@
 <script>
     //Initially load pagenumber=1
     $(document).ready(function () {
-        $.getJSON("/Admin/Blog/ListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
+        $.getJSON("/api/Admin/GetListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
+            console.log(response);
             RenderBlog(response);
         });
     });
@@ -121,13 +122,13 @@
     }
     
     $('#filter').change(function () {
-        $.getJSON("/Admin/Blog/ListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
+        $.getJSON("/api/Admin/GetListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
             RenderBlog(response);
         });
     })
 
     $("#Submit").on('click', function () {
-        $.getJSON("/Admin/Blog/ListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
+        $.getJSON("/api/Admin/GetListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
             RenderBlog(response);
         });
     });
@@ -136,7 +137,7 @@
         $.getJSON("/Admin/Blog/UpdateStatus", { id: ID, check: bool }, function (response) {
             if (response.message == "Success!!") {
                 swal('Alert info', response.data, "success");
-                $.getJSON("/Admin/Blog/ListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
+                $.getJSON("/api/Admin/GetListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
                     RenderBlog(response);
                 });
             }
@@ -154,7 +155,7 @@
         $.getJSON("/Admin/Blog/UpdateAllStatus", { id: checkedVals, check: bool }, function (response) {
             if (response.message == "Success!!") {
                 swal('Alert info', response.data, "success");
-                $.getJSON("/Admin/Blog/ListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
+                $.getJSON("/api/Admin/GetListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
                     RenderBlog(response);
                 });
             }

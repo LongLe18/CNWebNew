@@ -199,11 +199,11 @@
 
 <script>
     $(document).ready(function () {
-        $.getJSON("/Admin/Admin/GetNumberUser", function (response) {
+        $.getJSON("/api/Admin/GetNumberUser", function (response) {
             document.getElementById("numberUsers").innerHTML = response;
             document.getElementById("percentofuser").innerHTML = "2.1%";
         }); 
-        $.getJSON("/Admin/Admin/GetNumberOrder", function (response) {
+        $.getJSON("/api/Admin/GetNumberOrder", function (response) {
             document.getElementById("numberSales").innerHTML = response;
         });
         $('#month').click();
@@ -270,7 +270,7 @@
             async: false
         });
         if (check == true) {     
-            $.getJSON("/Admin/Admin/GetSales", function (response) {
+            $.getJSON("/api/Admin/GetSales", function (response) {
                 response.map((item, idex) => {
                     var dateUnix = UnixToDate(item.CreatedTime);
                     var dateStart = new Date(dateUnix);
@@ -280,7 +280,7 @@
             });
         }
         else {
-            $.getJSON("/Admin/Admin/GetSales", function (response) {
+            $.getJSON("/api/Admin/GetSales", function (response) {
                 response.map((item, idex) => {
                     var dateUnix = UnixToDate(item.CreatedTime);
                     var dateStart = new Date(dateUnix);
@@ -318,7 +318,7 @@
         $.ajaxSetup({
             async: false
         });
-        $.getJSON("/Admin/Admin/GetSales", function (response) {
+        $.getJSON("/api/Admin/GetSales", function (response) {
             response.map((item, idex) => {
                 var dateUnix = UnixToDate(item.CreatedTime);
                 var dateStart = new Date(dateUnix);
