@@ -53,7 +53,7 @@
         // active nav-item sidebar
         var itemSideBar = document.getElementsByClassName("sidebar");
         var itemSideBarArray = [...itemSideBar];
-        var ArrayUrlPartials = ["/Admin/Admin/Dashboard", "/Admin/Order/Order","/Admin/Blog/Blog", "/Admin/Sales/Sales", "/Admin/Personal/Information", "/Admin/ListStaff/ListStaff", "/Admin/Category/Category", "/Admin/Staff/Register"];
+        var ArrayUrlPartials = ["/Admin/Admin/Dashboard", "/Admin/Order/Order", "/Admin/Blog/Blog", "/Admin/Sales/Sales", "/Admin/Personal/Information", "/Admin/ListStaff/ListStaff", "/Admin/Category/Category", "/Admin/Staff/Register"];
         itemSideBarArray.map((item, index) => {
             item.addEventListener('click', (e) => {
                 $.get(ArrayUrlPartials[index], (data) => {
@@ -63,6 +63,7 @@
                 itemSideBar[index].classList.add('active');
             })
         });
+        
     </script>
 </body>
 </html>

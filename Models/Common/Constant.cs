@@ -15,10 +15,12 @@ namespace Models.Common
         public static int LEVEL_MANAGER = 3;
 
         // ID Chuc Vu
-        public static int ID_STAFF = 1;
+        public static int ID_SALEMAN = 1;
         public static int ID_MANAGER = 2;
         public static int ID_SHIPPER = 3;
         public static int ID_USER = 4;
+        public static int ID_CHEF = 5;
+        public static int ID_SERVANT = 6;
 
         // Status FoodCategory
         public static int ID_UNAVAILABLE = 0;

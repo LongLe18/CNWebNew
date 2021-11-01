@@ -11,10 +11,10 @@
                 @{ var session = (CNWeb.Code.UserSession)Session[CNWeb.Code.Constants.USER_SESSION]; }
                 @if (session != null)
                 {
-                    <h1 class="display-2 text-white">Hello @session.FullName</h1>
+                    <h1 class="display-2 text-white">Xin chào @session.FullName</h1>
                 }
                     <p class="text-white mt-0 mb-5">Đây là form thêm nhân viên dành cho quản lý thêm vào nhân viên được thuê</p>
-                    <button class="btn btn-neutral" id="btn--new">New profile</button> <!-- Làm mới nội dung đã nhập -->
+                    <button class="btn btn-neutral" id="btn--new">Làm mới</button> <!-- Làm mới nội dung đã nhập -->
                 @if (TempData["AlertMessage"] != null)
                 {
                     <div id="AlertBox" class="alert @TempData["AlertType"] hide" role="alert" style="margin-top: 10px">
@@ -50,8 +50,8 @@
                 </div>
                 <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                     <div class="d-flex justify-content-between">
-                        <a href="#" class="btn btn-sm btn-info  mr-4 ">Connect</a>
-                        <a href="#" class="btn btn-sm btn-default float-right">Message</a>
+                        <a href="#" class="btn btn-sm btn-info  mr-4 ">Kết nối</a>
+                        <a href="#" class="btn btn-sm btn-default float-right">Tin nhắn</a>
                     </div>
                 </div>
                 <div class="card-body pt-0">

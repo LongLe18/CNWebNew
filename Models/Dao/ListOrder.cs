@@ -14,7 +14,7 @@ namespace Models.Dao
         public int? Quantity { set; get; }
         public string NameFood { set; get; }
         public int? Price { set; get; }
-        public string Image { set; get; }
+        public string Alias { set; get; }
         public int? ToTalPrice { set; get; }
     }
 }

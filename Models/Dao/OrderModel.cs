@@ -104,7 +104,7 @@ namespace Models.Dao
                             CreatedTime = a.CreatedTime,
                             Quantity = b.Quantity,
                             Price = d.OriginPrice,
-                            Image = d.Image,
+                            Alias = d.Alias,
                             ToTalPrice = a.ToTalPrice
                         }).AsQueryable().Select(x => new ListOrder
                         {
@@ -114,7 +114,7 @@ namespace Models.Dao
                             CreatedTime = x.CreatedTime,
                             Quantity = x.Quantity,
                             Price = x.Price,
-                            Image = x.Image,
+                            Alias = x.Alias,
                             ToTalPrice = x.ToTalPrice
                         });
             return data;
