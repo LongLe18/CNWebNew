@@ -37,9 +37,9 @@ namespace CNWeb.Helper
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            filterContext.Result = new ViewResult
+            filterContext.Result = new PartialViewResult
             {
-                ViewName = "~/Views/Shared/Error.cshtml"
+                ViewName = "~/Areas/Admin/Views/Shared/Error.cshtml"
             };
         }
     }

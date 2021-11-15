@@ -1,4 +1,5 @@
-﻿using CNWeb.Models;
+﻿using CNWeb.Helper;
+using CNWeb.Models;
 using Models.Dao;
 using Models.EF;
 using System;
@@ -12,6 +13,7 @@ namespace CNWeb.Areas.Admin.Controllers
     public class BlogController : Controller
     {
         // [GET] Admin/Blog/Blog
+        [HasCredential(RoleID = "VIEW_ADMIN")]
         public ActionResult Blog()
         {
             return PartialView("Blog");

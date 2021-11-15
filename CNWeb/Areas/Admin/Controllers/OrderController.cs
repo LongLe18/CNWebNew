@@ -12,6 +12,7 @@ namespace CNWeb.Areas.Admin.Controllers
     public class OrderController : Controller
     {
         // [GET] Admin/Order/Order
+        [HasCredential(RoleID = "VIEW_ADMIN")]
         public ActionResult Order()
         {
             return PartialView("Order");

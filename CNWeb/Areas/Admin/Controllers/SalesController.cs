@@ -11,6 +11,7 @@ namespace CNWeb.Areas.Admin.Controllers
     public class SalesController : Controller
     {
         // [GET]: Admin/Sales/Sales
+        [HasCredential(RoleID = "VIEW_ADMIN")]
         public ActionResult Sales()
         {
             return PartialView("Sales");

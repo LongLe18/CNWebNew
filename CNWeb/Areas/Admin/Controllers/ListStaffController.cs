@@ -20,6 +20,7 @@ namespace CNWeb.Areas.Admin.Controllers
         }
 
         // [GET] Admin/ListStaff/ListStaff
+        [HasCredential(RoleID = "VIEW_ADMIN")]
         public ActionResult ListStaff()
         {
             SetViewBag();

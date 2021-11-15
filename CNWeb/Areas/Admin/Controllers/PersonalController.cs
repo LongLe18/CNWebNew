@@ -1,4 +1,5 @@
-﻿using Models.Common;
+﻿using CNWeb.Helper;
+using Models.Common;
 using Models.Dao;
 using Models.EF;
 using System;
@@ -20,6 +21,7 @@ namespace CNWeb.Areas.Admin.Controllers
         }
 
         // GET: Admin/Personal/Information
+        [HasCredential(RoleID = "VIEW_ADMIN")]
         public ActionResult Information()
         {
             SetViewBag();

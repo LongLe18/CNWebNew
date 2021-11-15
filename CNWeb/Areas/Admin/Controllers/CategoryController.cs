@@ -11,8 +11,9 @@ using CNWeb.Code;
 namespace CNWeb.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
-    { 
+    {
         // {GET] Admin/Category/Category
+        [HasCredential(RoleID = "VIEW_ADMIN")]
         public ActionResult Category()
         {
             return PartialView("Category");

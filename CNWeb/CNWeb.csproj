@@ -3479,6 +3479,7 @@
     <Content Include="Areas\Main\Views\Profile\Index.cshtml" />
     <Content Include="Areas\Main\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Home.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Error.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />

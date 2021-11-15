@@ -1,4 +1,5 @@
 ﻿using CNWeb.Controllers;
+using CNWeb.Helper;
 using Models.Dao;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,14 @@ namespace CNWeb.Areas.Admin.Controllers
     public class AdminController : BaseController
     {
         // [GET] Admin/Admin/Home
+        [HasCredential(RoleID = "VIEW_ADMIN")]
         public ActionResult Home() // view initialize Dashboard
         {
             return View();
         }
 
         // [GET] Admin/Admin/Dashboard
+        [HasCredential(RoleID = "VIEW_ADMIN")]
         public ActionResult Dashboard()
         {
             return PartialView("Dashboard");

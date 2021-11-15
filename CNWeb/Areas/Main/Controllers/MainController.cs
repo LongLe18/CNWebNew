@@ -9,6 +9,7 @@ namespace CNWeb.Areas.Main.Controllers
 {
     public class MainController : Controller
     {
+        // [Authorize]
         // GET: Main/Main/Index
         public ActionResult Index()
         {
