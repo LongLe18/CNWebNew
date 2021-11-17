@@ -197,8 +197,8 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="input-postal-code">Postal code</label>
-                                        @Html.TextBoxFor(model => model.PostalCode, new { @type = "number", @id = "input-postal-code", @class = "form-control", @placeholder = "Postal code", @disabled = "true" })
+                                        <label class="form-control-label" for="input-postal-code">Số điện thoại</label>
+                                        @Html.TextBoxFor(model => model.PhoneNumber, new { @type = "text", @id = "input-postal-code", @class = "form-control", @placeholder = "Số điện thoại", @disabled = "true" })
                                     </div>
                                 </div>
                             </div>
@@ -262,7 +262,7 @@
 
     // function help for binding data user
     function BindingInforEdit(username, password, fullname, email, birthday,
-                                career, address, city, country, postalcode, position, description) {
+                career, address, city, country, phonenumber, position, description) {
         document.getElementById('input-username').value = username;
         document.getElementById('input-password').value = password;
         document.getElementById('input-full-name').value = fullname;
@@ -274,8 +274,8 @@
         document.getElementById('input-address').value = address;
         document.getElementById('input-city').value = city;
         document.getElementById('input-country').value = country;
-        let Postalcode = parseInt(postalcode, 10);
-        document.getElementById('input-postal-code').value = Postalcode;
+        //let Postalcode = parseInt(postalcode, 10);
+        document.getElementById('input-postal-code').value = phonenumber;
         document.getElementById('input-position').value = position;
         document.getElementById('Description').value = description;
     };
@@ -306,7 +306,7 @@
         success: function (data) {
             console.log(data);
             BindingInforEdit(data.UserName, data.Password, data.FullName, data.Email, data.BirthDay, data.Career,
-                data.Address, data.City, data.Country, data.PostalCode, data.IDChucVu, data.Description);
+                data.Address, data.City, data.Country, data.PhoneNumber, data.IDChucVu, data.Description);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);

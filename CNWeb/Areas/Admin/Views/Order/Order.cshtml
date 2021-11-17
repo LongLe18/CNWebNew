@@ -285,7 +285,7 @@
                 let html = ConvertStatusHTML(response.Data[i].Status);
                 let date1 = UnixToDate(response.Data[i].CreatedTime);
                 var date2 = new Date(date1);
-                rowData = rowData + `<tr id="${response.Data[i].ID}" onClick="TrackOrder(${response.Data[i].ID})"><td>` + response.Data[i].ID + `</td><td>${date2.toISOString().split('T')[0]}` + '</td><td>' +
+                rowData = rowData + `<tr id="${response.Data[i].ID}" style="cursor:pointer;" onClick="TrackOrder(${response.Data[i].ID})"><td>` + response.Data[i].ID + `</td><td>${date2.toISOString().split('T')[0]}` + '</td><td>' +
                     response.Data[i].CustomerName + '</td><td>' + response.Data[i].CustomerAddress + '</td><td>' + response.Data[i].PaymentMethod + `</td><td>${html}` + '</td><td> ' +
                     '<div class="dropdown">' +
                     '<a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +

@@ -51,7 +51,7 @@
                         {
 
 
-                            <a href="/User/Login/">Đăng nhập</a>
+                            <a href="#" onclick="window.location.href = '/User/Login?returnUrl=' + window.location.href ">Đăng nhập</a>
 
                             <span>/</span>
 
@@ -79,7 +79,7 @@
                             <div class="navbar-header">
                                 @if (session == null)
                                 {
-                                    <a href="/User/Login" class="btn" id="btnLogin">Đăng nhập</a>
+                                    <a href="/User/Login/" class="btn" id="btnLogin">Đăng nhập</a>
                                 }
                                 else
                                 {
@@ -115,29 +115,7 @@
                                             <!--end shopping-cart-header -->
 
                                             <ul class="shopping-cart-items" id="listcarts">
-                                                <li class="clearfix">
-                                                    <img src="https://ngonaz.com/wp-content/uploads/2021/04/gia-ca-hoi-1.jpg" alt="item1" />
-                                                    <span class="item-name">Cá Hồi Nauy</span>
-                                                    <span class="item-detail">Thượng hạng</span>
-                                                    <span class="item-price">450k</span>
-                                                    <span class="item-quantity">Số lượng: 01</span>
-                                                </li>
-
-                                                <li class="clearfix">
-                                                    <img src="https://ngonaz.com/wp-content/uploads/2021/04/gia-ca-hoi-1.jpg" alt="item1" />
-                                                    <span class="item-name">Cá Hồi Nauy</span>
-                                                    <span class="item-detail">Thượng hạng</span>
-                                                    <span class="item-price">450k</span>
-                                                    <span class="item-quantity">Số lượng: 01</span>
-                                                </li>
-
-                                                <li class="clearfix">
-                                                    <img src="https://ngonaz.com/wp-content/uploads/2021/04/gia-ca-hoi-1.jpg" alt="item1" />
-                                                    <span class="item-name">Cá Hồi Nauy</span>
-                                                    <span class="item-detail">Thượng hạng</span>
-                                                    <span class="item-price">450k</span>
-                                                    <span class="item-quantity">Số lượng: 01</span>
-                                                </li>
+                                                Đăng nhập để thêm vào giỏ hàng
                                             </ul>
 
                                             <a href="#" class="button">Thanh toán <i class="fa fa-chevron-right"></i></a>

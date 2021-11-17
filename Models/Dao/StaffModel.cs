@@ -106,7 +106,7 @@ namespace Models.Dao
         /// <param name="level"></param>
         /// <returns></returns>
         public bool UpdateInforStaff(int id, string username, string password, string fullname, string email, int birthday, string career, 
-                                    string address, string city, string country, string postalcode, int position, string description, int level)
+                                    string address, string city, string country, string phonenumber, int position, string description, int level)
         {
             try
             {
@@ -120,7 +120,7 @@ namespace Models.Dao
                 user.Address = address;
                 user.City = city;
                 user.Country = country;
-                user.PostalCode = postalcode;
+                user.PhoneNumber = phonenumber;
                 user.IDChucVu = position;
                 user.Level = level;
                 user.Description = description;

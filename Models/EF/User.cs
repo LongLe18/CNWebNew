@@ -43,8 +43,8 @@ namespace Models.EF
         [StringLength(50)]
         public string Country { get; set; }
 
-        [StringLength(10)]
-        public string PostalCode { get; set; }
+        [StringLength(11)]
+        public string PhoneNumber { get; set; }
 
         public string Description { get; set; }
 
@@ -62,6 +62,8 @@ namespace Models.EF
         public int IDChucVu { get; set; }
 
         public int? Wallet { get; set; }
+
+        public bool? RequiresVerification { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlogComment> BlogComments { get; set; }

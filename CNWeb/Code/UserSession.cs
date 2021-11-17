@@ -16,6 +16,7 @@ namespace CNWeb.Code
         public int BirthDay { set; get; }
         public string Career { set; get; }
         public string pathImage { set; get; }
+        public string PhoneNumber { set; get; }
         public int Level { set; get; }
         public int Wallet { set; get; }
         public int CartID { set; get; }

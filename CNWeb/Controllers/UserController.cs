@@ -9,14 +9,20 @@ using System.Web;
 using System.Web.Mvc;
 using Models.EF;
 using System.Data.SqlClient;
+using System.Configuration;
+using Twilio;
+using Twilio.Types;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace CNWeb.Controllers
 {
     public class UserController : Controller
     {
         // [GET] /User/Login
-        public ActionResult Login()
+        public ActionResult Login(string returnUrl)
         {
+            ViewBag.returnUrl = returnUrl;
+            Session.Clear();
             return View();
         }
 
@@ -30,7 +36,7 @@ namespace CNWeb.Controllers
         // [POST] /User/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model)
+        public ActionResult Login(LoginModel model, string returnUrl)
         {
             var dao = new AccountModel();
             var result = dao.Login(model.UserName, model.Password);
@@ -43,6 +49,7 @@ namespace CNWeb.Controllers
                 userSession.UserID = user.ID;
                 userSession.FullName = user.FullName;
                 userSession.Country = user.Country;
+                userSession.PhoneNumber = user.PhoneNumber;
                 userSession.Wallet = (int)user.Wallet;
                 var db = new DbCNWeb();
                 SqlParameter parameter1 = new SqlParameter("@id", user.ID);
@@ -61,11 +68,13 @@ namespace CNWeb.Controllers
                 Session.Add(Constants.USER_SESSION, userSession);
                 if (result == 2) // neu thanh cong phai tao session
                 {
-                    return RedirectToAction("Home", "Admin/Admin");
+                    if (!string.IsNullOrEmpty(returnUrl)) { return Redirect(returnUrl); }
+                    else { return RedirectToAction("Home", "Admin/Admin"); }
                 }
                 else if (result == 1)
                 {
-                    return RedirectToAction("Main", "User");
+                    if (!string.IsNullOrEmpty(returnUrl)) { return Redirect(returnUrl); }
+                    else { return RedirectToAction("Main", "User"); }
                 }
                 else if (result == 0)
                 {
@@ -101,6 +110,7 @@ namespace CNWeb.Controllers
                     var dt = DateTime.UtcNow;
                     int createdDayUnix = CNWeb.Helper.ConvertDateTime.ConvertDateTimeToUnix(dt);
                     Account.CreatedDay = createdDayUnix;
+                    Account.RequiresVerification = false;
                     var model = new AccountModel();
 
                     int res = model.Register(Account);  // add to database
@@ -123,6 +133,25 @@ namespace CNWeb.Controllers
             {
                 return View();
             }
+        }
+
+        // [GET] /User/SendSms
+        public ActionResult SendSms()
+        {
+            var accountSid = ConfigurationManager.AppSettings["SMSAccountIdentification"];
+            var authToken = ConfigurationManager.AppSettings["SMSAccountPassword"];
+            TwilioClient.Init(accountSid, authToken);
+
+            var to = new PhoneNumber("+840961565976");
+            var from = new PhoneNumber(ConfigurationManager.AppSettings["SMSAccountFrom"]);
+
+            MessageResource result = MessageResource.Create(
+                to: to,
+                from: from,
+                body: "This is the ship that made the Kessel Run in 14 characters"
+            );
+
+            return Content(result.Sid);
         }
     }
 }

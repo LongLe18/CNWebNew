@@ -128,7 +128,7 @@
                             <div class="text-center text-muted mb-4">
                                 <small>Or sign in with credentials</small>
                             </div>
-                            @using (Html.BeginForm())
+                            @using (Html.BeginForm(new { returnUrl = ViewBag.returnUrl }))
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.ValidationSummary(true, null, new { @class = "alert alert-danger", @style = "height: 80px" })

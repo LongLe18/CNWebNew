@@ -134,7 +134,7 @@
                                         <div class="_2_JugQ">
                                             <div class="input-with-validator-wrapper">
                                                 <input class="form-control" type="text" name="f_name" id="f_name"
-                                                       placeholder="" required />
+                                                       placeholder="@(session.PhoneNumber)" required />
                                             </div>
                                         </div>
                                     </div>
@@ -226,7 +226,7 @@
     </div>
     <div class="chace-password" id="chance-pw">
         <div class="chance-password1">
-            <form>
+            <form action="Profile/ChangePass" method="post">
                 <div class="chance-password2">
                     <div class="chance-password3" style="padding-top: 15px">
                         <h4>Đổi mật khẩu</h4>
@@ -262,7 +262,7 @@
                                         </div>
                                         <div class="_38MRMp">
                                             <input class="form-control" type="password"
-                                                   name="f_name" id="newpassword" placeholder="" required />
+                                                   name="f_name1" id="newpassword" placeholder="" required />
                                         </div>
 
                                     </div>
@@ -279,7 +279,7 @@
                                         </label>
                                     </div>
                                     <div class="_38MRMp">
-                                        <input class="form-control" type="password" name="f_name"
+                                        <input class="form-control" type="password" name="f_name2"
                                                id="renewpassword" placeholder="" required />
                                     </div>
                                 </div>
@@ -288,7 +288,7 @@
                         <div class="eSOrcn">
                             <div class="_1DS7fG"></div>
                             <div class="_1IcdS-">
-                                <button type="button" class="btn btn-info">Xác nhận</button>
+                                <button type="button" class="btn btn-info" onclick="changepass()">Xác nhận</button>
                             </div>
                         </div>
                     </div>
@@ -297,7 +297,42 @@
         </form>
     </div>
 </div>
+
 <script>
+
+    function changepass() {
+        var oldPass = $('#password').val();
+        var newPass = $('#newpassword').val();
+        var renewPass = $('#renewpassword').val();
+
+        alert(oldPass + newPass + renewPass);
+        if (newPass != renewPass) {
+            alert("Nhập lại mật khẩu không đúng");
+            return false;
+        }
+        var frm = new FormData();
+        frm.append("oldPass", oldPass);
+        frm.append("newPass", newPass);
+
+        alert(frm)
+
+        $.ajax({
+            url: '/Profile/ChangePass',
+            data: frm,
+            type: "POST",
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $('.chance-password4').html("Đổi mật khẩu thành công");
+                $('.chance-password4').css("color", "green")
+            },
+            error: function (message) {
+                $('.chance-password4').html("Vui lòng kiểm tra đầu vào");
+                $('.chance-password4').css("color", "red")
+            }
+        })
+    }
 
     function UnixToDate(unixtime) {
         const unixTimestamp = unixtime;
@@ -400,7 +435,7 @@
     function returnList() {
         $('.result').show();
         $('.detail-order').hide();
-
+        $('input[name="sub-btn"]').click();
     }
     function detail(id1) {
 

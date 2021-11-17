@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CNWeb.Models;
@@ -46,6 +47,26 @@ namespace CNWeb.Areas.Main.Controllers
                 return Json(new { message = "Fail!!", data = "Không lấy được dữ liệu" }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpPost]
+        public ActionResult ChangePass(FormCollection form)
+        {
+            var sess = (CNWeb.Code.UserSession)Session[CNWeb.Code.Constants.USER_SESSION];
+            var u = new DbCNWeb();
+            var v = u.Users.Find(sess.UserID);
+            if (form["oldPass"] != v.Password)
+            {
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+            }
+            else
+            {
+                v.Password = form["newPass"];
+                u.SaveChanges();
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+
         public class OrderDetail
         {
             public string Name { get; set; }

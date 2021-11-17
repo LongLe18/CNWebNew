@@ -47,7 +47,7 @@ namespace Models.Dao
                 user.Address = entity.Address;
                 user.City = entity.City;
                 user.Country = entity.Country;
-                user.PostalCode = entity.PostalCode;
+                user.PhoneNumber = entity.PhoneNumber;
                 user.IDChucVu = entity.IDChucVu;
                 user.Level = entity.Level;
                 user.Description = entity.Description;

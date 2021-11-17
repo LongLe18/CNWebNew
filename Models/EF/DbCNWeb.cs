@@ -35,7 +35,6 @@ namespace Models.EF
         public virtual DbSet<RoleName> RoleNames { get; set; }
         public virtual DbSet<SlideDetail> SlideDetails { get; set; }
         public virtual DbSet<Slide> Slides { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<UserGroup> UserGroups { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -264,7 +263,7 @@ namespace Models.EF
                 .IsUnicode(false);
 
             modelBuilder.Entity<User>()
-                .Property(e => e.PostalCode)
+                .Property(e => e.PhoneNumber)
                 .IsFixedLength();
 
             modelBuilder.Entity<User>()
