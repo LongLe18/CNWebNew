@@ -1,15 +1,15 @@
-﻿@{
-    ViewBag.Title = "Register";
+﻿@model CNWeb.Models.VerifyCodeViewModel
+@{
+    ViewBag.Title = "VerifyCode";
     Layout = "~/Views/Shared/_Layout_2.cshtml";
 }
-@model Models.EF.User
 
 <body class="bg-default">
     <!-- Navbar -->
     <nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="@Url.Action("Login", "User")">
-                <img src="~/Content/img/brand/white.png">
+                <img src="~/Content/img/theme/logo.png">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -19,10 +19,11 @@
                     <div class="row">
                         <div class="col-6 collapse-brand">
                             <a href="@Url.Action("Login", "User")">
-                                <img src="~/Content/img/theme/logo.png">
+                                <img src="~/Content/img/brand/blue.png">
                             </a>
                         </div>
                         <div class="col-6 collapse-close">
+
                             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                                 <span></span>
                                 <span></span>
@@ -37,12 +38,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="@Url.Action("Login", "User")" class="nav-link">
+                        <a href="#" class="nav-link">
                             <span class="nav-link-inner--text">Login</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="@Url.Action("Register", "User")" class="nav-link">
                             <span class="nav-link-inner--text">Register</span>
                         </a>
                     </li>
@@ -93,7 +94,7 @@
                 <div class="header-body text-center mb-7">
                     <div class="row justify-content-center">
                         <div class="col-xl-5 col-lg-6 col-md-8 px-5">
-                            <h1 class="text-white">Create an account</h1>
+                            <h1 class="text-white">Welcome FOOD DELIVERY!</h1>
                             <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p>
                         </div>
                     </div>
@@ -107,14 +108,13 @@
         </div>
         <!-- Page content -->
         <div class="container mt--8 pb-5">
-            <!-- Table -->
             <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-8">
-                    <div class="card bg-secondary border-0">
+                <div class="col-lg-5 col-md-7">
+                    <div class="card bg-secondary border-0 mb-0">
                         <div class="card-header bg-transparent pb-5">
-                            <div class="text-muted text-center mt-2 mb-4"><small>Sign up with</small></div>
-                            <div class="text-center">
-                                <a href="#" class="btn btn-neutral btn-icon mr-4">
+                            <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
+                            <div class="btn-wrapper text-center">
+                                <a href="#" class="btn btn-neutral btn-icon">
                                     <span class="btn-inner--icon"><img src="~/Content/img/icons/common/github.svg"></span>
                                     <span class="btn-inner--text">Github</span>
                                 </a>
@@ -125,80 +125,37 @@
                             </div>
                         </div>
                         <div class="card-body px-lg-5 py-lg-5">
-                            <div class="text-center text-muted mb-4">
-                                <small>Or sign up with credentials</small>
-                            </div>
-                            @using (Html.BeginForm("Register", "User", FormMethod.Post))
+                            @using (Html.BeginForm("VerifyCode", "User", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post))
                             {
                                 @Html.AntiForgeryToken()
+
+                                <div class="text-center text-muted mb-4">
+                                    Enter verification code
+                                </div>
                                 @Html.ValidationSummary(true, null, new { @class = "alert alert-danger", @style = "height: 80px" })
-                                <div class="form-group">
-                                    <div class="input-group input-group-merge input-group-alternative mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                                        </div>
-                                        @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", @placeholder = "Full name" })
-                                        @Html.ValidationMessageFor(model => model.FullName)
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group input-group-merge input-group-alternative mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                                        </div>
-                                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @placeholder = "User name" })
-                                        @Html.ValidationMessageFor(model => model.UserName)
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group input-group-merge input-group-alternative mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
-                                        </div>
-                                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "Email", @type = "email" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
+                                <div class="form-group mb-3">
                                     <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                                        </div>
-                                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @placeholder = "Password", @type = "password" })
-                                        @Html.ValidationMessageFor(model => model.Password)
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group input-group-merge input-group-alternative mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                                        </div>
-                                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @placeholder = "Address" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group input-group-merge input-group-alternative mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                                        </div>
-                                        @Html.TextBoxFor(model => model.PhoneNumber, new { @type="tel", @class = "form-control", @placeholder = "Phone Number", @required=true })
-                                    </div>
-                                </div>
-                                //<div class="text-muted font-italic"><small>password strength: <span class="text-success font-weight-700">strong</span></small></div>
-                                <div class="row my-4">
-                                    <div class="col-12">
-                                        <div class="custom-control custom-control-alternative custom-checkbox">
-                                            <input class="custom-control-input" id="customCheckRegister" type="checkbox">
-                                            <label class="custom-control-label" for="customCheckRegister">
-                                                <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
-                                            </label>
+
+                                        @Html.LabelFor(m => m.Code, new { @class = "form-control", @required=true })
+                                        <div class="col-md-10">
+                                            @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
                                         </div>
                                     </div>
                                 </div>
+                                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @hidden = true, @value= @Model.PhoneNumber })                              
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary mt-4">Create account</button>
+                                    <button style="width:150px; max-width:150px;" type="submit" class="btn btn-primary my-4">Submit</button>
+                                    <button style="width:150px; max-width:150px;" id="sendcode" class="btn btn-primary my-4">Send Code</button>
                                 </div>
                             }
-
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <a href="#" class="text-light"><small>Forgot password?</small></a>
+                        </div>
+                        <div class="col-6 text-right">
+                            <a href="@Url.Action("Register", "User")" class="text-light"><small>Create new account</small></a>
                         </div>
                     </div>
                 </div>
@@ -242,14 +199,25 @@
     <script src="~/Content/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
     <!-- Argon JS -->
     <script src="~/Content/js/argon.js?v=1.2.0"></script>
-
-    @if (ViewBag.Message != null)
-    {
-        <script type="text/javascript">
-            window.onload = () => {
-                alert("Đăng ký tài khoản thành công!!");
-                window.location.href = "/User/Login";
-            }
-        </script>
-    }
 </body>
+
+<script>
+    document.getElementById("sendcode").addEventListener("click", (e) => {
+        e.preventDefault();
+        $.ajax({
+            url: "/User/SendSms", // gửi ajax đến file result.php
+            type: "post", // chọn phương thức gửi là post
+            dataType: "text", // dữ liệu trả về dạng text
+            data: { // Danh sách các thuộc tính sẽ gửi đi
+                phoneNumber: $("#PhoneNumber").val()
+            },
+            success: function (result) {
+                console.log("Success");
+            }
+        });
+    })
+
+</script>
+
+
+

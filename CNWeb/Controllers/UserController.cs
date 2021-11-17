@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using Twilio;
 using Twilio.Types;
-using Twilio.Rest.Api.V2010.Account;
+using Twilio.Rest.Verify.V2.Service;
 
 namespace CNWeb.Controllers
 {
@@ -50,7 +50,9 @@ namespace CNWeb.Controllers
                 userSession.FullName = user.FullName;
                 userSession.Country = user.Country;
                 userSession.PhoneNumber = user.PhoneNumber;
-                userSession.Wallet = (int)user.Wallet;
+                if (user.RequiresVerification != null) userSession.RequiresVerification = user.RequiresVerification;
+                if (user.Wallet != null) userSession.Wallet = (int)user.Wallet;
+                
                 var db = new DbCNWeb();
                 SqlParameter parameter1 = new SqlParameter("@id", user.ID);
                 
@@ -66,23 +68,30 @@ namespace CNWeb.Controllers
                 var listCredentials = dao.GetListCredential(model.UserName);
                 Session.Add(Constants.SESSION_CREDENTIALS, listCredentials);
                 Session.Add(Constants.USER_SESSION, userSession);
-                if (result == 2) // neu thanh cong phai tao session
+
+                if (user.RequiresVerification == true)
                 {
-                    if (!string.IsNullOrEmpty(returnUrl)) { return Redirect(returnUrl); }
-                    else { return RedirectToAction("Home", "Admin/Admin"); }
+                    return RedirectToAction("VerifyCode", "User", new { returnUrl = returnUrl, phoneNumber = user.PhoneNumber });
                 }
-                else if (result == 1)
-                {
-                    if (!string.IsNullOrEmpty(returnUrl)) { return Redirect(returnUrl); }
-                    else { return RedirectToAction("Main", "User"); }
-                }
-                else if (result == 0)
-                {
-                    ModelState.AddModelError("", "Tài khoản không tồn tại");
-                }               
-                else
-                {
-                    ModelState.AddModelError("", "Mật khẩu không chính xác");
+                else { 
+                    if (result == 2) // neu thanh cong phai tao session
+                    {
+                        if (!string.IsNullOrEmpty(returnUrl)) { return Redirect(returnUrl); }
+                        else { return RedirectToAction("Home", "Admin/Admin"); }
+                    }
+                    else if (result == 1)
+                    {
+                        if (!string.IsNullOrEmpty(returnUrl)) { return Redirect(returnUrl); }
+                        else { return RedirectToAction("Main", "User"); }
+                    }
+                    else if (result == 0)
+                    {
+                        ModelState.AddModelError("", "Tài khoản không tồn tại");
+                    }               
+                    else
+                    {
+                        ModelState.AddModelError("", "Mật khẩu không chính xác");
+                    }
                 }
                 return View(model);
             }
@@ -135,23 +144,78 @@ namespace CNWeb.Controllers
             }
         }
 
-        // [GET] /User/SendSms
-        public ActionResult SendSms()
+        // [POST] /User/SendSms
+        public ActionResult SendSms(string phoneNumber)
         {
             var accountSid = ConfigurationManager.AppSettings["SMSAccountIdentification"];
             var authToken = ConfigurationManager.AppSettings["SMSAccountPassword"];
             TwilioClient.Init(accountSid, authToken);
 
-            var to = new PhoneNumber("+840961565976");
-            var from = new PhoneNumber(ConfigurationManager.AppSettings["SMSAccountFrom"]);
-
-            MessageResource result = MessageResource.Create(
+            var to = "+84" + phoneNumber;
+ 
+            var result = VerificationResource.Create(
                 to: to,
-                from: from,
-                body: "This is the ship that made the Kessel Run in 14 characters"
+                channel: "sms",
+                pathServiceSid: "VA28731bdedc04a483e4cdf30e3e76907b"
             );
 
-            return Content(result.Sid);
+            return Json(result.Sid, JsonRequestBehavior.AllowGet);
+        }
+
+        // [GET] /User/VerifyCode
+        [HttpGet]
+        public ActionResult VerifyCode(string returnUrl, string phoneNumber)
+        {
+            if (Session.Count == 0 )
+            {
+                return View("~/Views/Shared/Error.cshtml");
+            }
+            return View(new VerifyCodeViewModel { ReturnUrl = returnUrl, PhoneNumber = phoneNumber });
+        }
+
+        // [POST] /User/VerifyCode
+        [HttpPost]
+        public ActionResult VerifyCode(VerifyCodeViewModel model)
+        {
+            try
+            {
+                var accountSid = ConfigurationManager.AppSettings["SMSAccountIdentification"];
+                var authToken = ConfigurationManager.AppSettings["SMSAccountPassword"];
+                TwilioClient.Init(accountSid, authToken);
+
+                var to = "+84" + model.PhoneNumber;
+
+                var result = VerificationCheckResource.Create(
+                    to: to,
+                    code: model.Code,
+                    pathServiceSid: "VA28731bdedc04a483e4cdf30e3e76907b"
+                );
+
+                if (result.Status == "approved")
+                {
+                    return Redirect(model.ReturnUrl);
+                }
+                return RedirectToAction("VerifyCode", "User", new { returnUrl = model.ReturnUrl, phoneNumber = model.PhoneNumber }); // status = approved => true ; pending => false
+            }
+            catch
+            {
+                return RedirectToAction("VerifyCode", "User", new { returnUrl = model.ReturnUrl, phoneNumber = model.PhoneNumber });
+            }
+        }
+
+        // [POST] /User/ChangeTwoFactor
+        public JsonResult TwoFactor(string id, bool status)
+        {
+            var dao = new AccountModel();
+            var result = dao.ChangeStatusTwoFactor(Int32.Parse(id), status);
+
+            if (result)
+            {
+                return Json("Success", JsonRequestBehavior.AllowGet); 
+            } else
+            {
+                return Json("Fail", JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

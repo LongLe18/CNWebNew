@@ -106,5 +106,18 @@ namespace Models.Dao
                        });
             return data.Select(x => x.RoleID).ToList();
         }
+        
+        public bool ChangeStatusTwoFactor(int id, bool status)
+        {
+            try { 
+                var user = db.Users.SingleOrDefault(x => x.ID == id);
+                user.RequiresVerification = !status;
+                db.SaveChanges();
+                return true;
+            } catch
+            {
+                return false;
+            }
+        }
     }
 }

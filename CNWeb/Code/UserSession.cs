@@ -20,5 +20,6 @@ namespace CNWeb.Code
         public int Level { set; get; }
         public int Wallet { set; get; }
         public int CartID { set; get; }
+        public bool? RequiresVerification { set; get; }
     }
 }

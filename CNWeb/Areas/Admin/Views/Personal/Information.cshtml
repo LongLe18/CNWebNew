@@ -13,7 +13,10 @@
                 {
                     <h1 class="display-2 text-white">Xin chào @session.FullName</h1>
                 }
-                <p class="text-white mt-0 mb-5">Đây là form thêm nhân viên dành cho quản lý thêm vào nhân viên được thuê</p>
+                <div style="display: flex; justify-content: space-around;">
+                    <p class="text-white mt-0 mb-5">Kích hoạt xác thực 2 lớp</p>
+                    <button style="max-height: 50px; height: 43px; text-align: center;" class="btn btn-neutral small" id="btn--enableTwofactor">Kích hoạt</button>
+                </div>
                 <button class="btn btn-neutral" id="btn--edit">Sửa thông tin</button>
             </div>
         </div>
@@ -238,6 +241,8 @@
 
 <script type="text/javascript">
     document.getElementById("Submit").disabled = true;
+    if ('@session.RequiresVerification' == true) document.getElementById('btn--enableTwofactor').innerText = "Hủy kích hoạt";
+    else if ('@session.RequiresVerification' == false) document.getElementById('btn--enableTwofactor').innerText = "Kích hoạt";
 
     // Binding string path file is chosen to textbox
     $('input[type=file]').change(function () {
@@ -366,5 +371,19 @@
                 swal("Alert info", e, "error");
             }
         })
+    })
+
+    document.getElementById("btn--enableTwofactor").addEventListener('click', (e) => {
+        $.ajax({
+            url: "/User/TwoFactor", // gửi ajax đến file result.php
+            type: "post", // chọn phương thức gửi là post
+            data: { // Danh sách các thuộc tính sẽ gửi đi
+                id: '@session.UserID',
+                status: '@session.RequiresVerification'
+            },
+            success: function (result) {
+                if (result == "Success") swal("Thông báo", "Kích hoạt thành công", "success");
+            }
+        });
     })
 </script>
