@@ -51,7 +51,6 @@ namespace CNWeb.Areas.Admin.Controllers
 
         // [POST] /Admin/Staff/Register
         [HttpPost]
-        [HasCredential(RoleID = "ADD_STAFF")]
         [ValidateAntiForgeryToken]
         public ActionResult Register(User Staff, HttpPostedFileBase file) // Đăng ký cho nhân viên
         {

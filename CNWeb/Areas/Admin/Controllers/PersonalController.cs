@@ -21,7 +21,7 @@ namespace CNWeb.Areas.Admin.Controllers
         }
 
         // GET: Admin/Personal/Information
-        [HasCredential(RoleID = "VIEW_ADMIN")]
+        //[HasCredential(RoleID = "VIEW_ADMIN")]
         public ActionResult Information()
         {
             SetViewBag();

@@ -13,7 +13,7 @@ namespace CNWeb.Areas.Admin.Controllers
     public class BlogController : Controller
     {
         // [GET] Admin/Blog/Blog
-        [HasCredential(RoleID = "VIEW_ADMIN")]
+        [HasCredential(RoleID = "EDIT_CONTENT")]
         public ActionResult Blog()
         {
             return PartialView("Blog");
@@ -65,6 +65,7 @@ namespace CNWeb.Areas.Admin.Controllers
         }
 
         // [GET] Admin/Blog/ViewBlog/{id}
+        [HasCredential(RoleID = "EDIT_CONTENT")]
         public ActionResult ViewBlog(int id)
         {
             var model = new ViewDetailBlogModel();

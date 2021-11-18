@@ -38,6 +38,7 @@ namespace CNWeb.Areas.Admin.Controllers
 
         // [POST] Admin/ListStaff/DeleteStaffById
         [HttpPost]
+        [HasCredential(RoleID = "DELETE_USER")]
         public ActionResult DeleteStaffById(int ID)
         {
             var dao = new StaffModel();
@@ -57,6 +58,7 @@ namespace CNWeb.Areas.Admin.Controllers
 
         // [POST] Admin/ListStaff/PersonalInfor
         [HttpGet]
+        [HasCredential(RoleID = "EDIT_USER")]
         public ActionResult PersonalInfor(int id)
         {
             var dao = new PersonalModel();
