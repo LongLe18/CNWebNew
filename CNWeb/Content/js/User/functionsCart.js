@@ -57,7 +57,7 @@ function updateQuantity(quantityInput)
   /* Update line price display and recalc cart totals */
   productRow.children('.product-line-price').each(function () {
     $(this).fadeOut(fadeTime, function() {
-      $(this).text(linePrice.toFixed(2));
+      $(this).text(linePrice.toFixed(0));
       recalculateCart();
       $(this).fadeIn(fadeTime);
     });

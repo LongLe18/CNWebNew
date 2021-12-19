@@ -24,7 +24,9 @@ Side note: I know that this style of nesting in SASS doesn't result in the most 
     float: left;
     width: 12%;
 }
-
+.checkout-proceed-checkout{
+    text-align:center;
+}
 .product-quantity {
     float: left;
     width: 10%;
@@ -40,7 +42,10 @@ Side note: I know that this style of nesting in SASS doesn't result in the most 
     width: 12%;
     text-align: right;
 }
-
+#abcd{
+    padding-left:30%;
+    padding-right:30%;
+}
 
 
 /* This is used as the traditional .clearfix class */
@@ -355,7 +360,6 @@ label {
         float: right;
         width: 70px;
     }
- 
 }
 
 
