@@ -1,8 +1,6 @@
 ﻿
-@{
-    ViewBag.Title = "Giỏ hàng";
-    Layout = "~/Areas/Main/Views/Shared/_Layout.cshtml";
-}
+@{ ViewBag.Title = "Giỏ hàng";
+                Layout = "~/Areas/Main/Views/Shared/_Layout.cshtml"; }
 @section stylesheet{
     <link rel="stylesheet" type="text/css" href="~/Content/css/User/cart.css">
 }
@@ -52,94 +50,75 @@
             </div>
             @foreach (var i in Model)
             {
-        <div class="product">
-            <div class="product-id" style="display:none">@(i.ID)</div>
-            <div class="product-image">
-                <img src="~/Content/img/food/@(i.Alias)_1.jpg">
-            </div>
+<div class="product">
+    <div class="product-id" style="display:none">@(i.ID)</div>
+    <div class="product-image">
+        <img src="~/Content/img/food/@(i.Alias)_1.jpg">
+    </div>
 
-            <div class="product-details">
-                <div class="product-title">@i.Name</div>
-                <p class="product-description">
-                    @i.Size
-                </p>
-            </div>
-            <div class="product-price">@i.OriginPrice</div>
-            <div class="product-quantity">
-                <input type="number" value="@i.Quantity" min="1">
-            </div>
-            <div class="product-removal">
-                <button class="remove-product">
-                    Remove
-                </button>
-            </div>
-            <div class="product-line-price">@(i.OriginPrice*i.Quantity)</div>
-        </div>
-            }
+    <div class="product-details">
+        <div class="product-title">@i.Name</div>
+        <p class="product-description">
+            @i.Size
+        </p>
+    </div>
+    <div class="product-price">@i.OriginPrice</div>
+    <div class="product-quantity">
+        <input type="number" value="@i.Quantity" min="1">
+    </div>
+    <div class="product-removal">
+        <button class="remove-product">
+            Remove
+        </button>
+    </div>
+    <div class="product-line-price">@(i.OriginPrice*i.Quantity)</div>
+</div>}
             @*<div class="product">
-                <div class="product-image">
-                    <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg">
+                    <div class="product-image">
+                        <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg">
+                    </div>
+                    <div class="product-details">
+                        <div class="product-title">Cá hồi nauy</div>
+                        <p class="product-description">
+                            Cá hồi Na uy được đánh bắt quanh năm, là nguồn cung cấp cá hồi nguyên con, cá hồi fillet và trứng cá hồi là loại thực phẩm giàu protein rất tốt cho sức khỏe. Thịt cá hồi cung cấp các chất dinh dưỡng
+                            như protein, axit amin thiết yếu cho cơ thể, omega-3, vitamin D, vitamin B12, iốt và selen, là các dưỡng chất khác ít thấy trong các thực phẩm khác.
+                        </p>
+                    </div>
+                    <div class="product-price">12.99</div>
+                    <div class="product-quantity">
+                        <input type="number" value="2" min="1">
+                    </div>
+                    <div class="product-removal">
+                        <button class="remove-product">
+                            Remove
+                        </button>
+                    </div>
+                    <div class="product-line-price">25.98</div>
                 </div>
-                <div class="product-details">
-                    <div class="product-title">Cá hồi nauy</div>
-                    <p class="product-description">
-                        Cá hồi Na uy được đánh bắt quanh năm, là nguồn cung cấp cá hồi nguyên con, cá hồi fillet và trứng cá hồi là loại thực phẩm giàu protein rất tốt cho sức khỏe. Thịt cá hồi cung cấp các chất dinh dưỡng
-                        như protein, axit amin thiết yếu cho cơ thể, omega-3, vitamin D, vitamin B12, iốt và selen, là các dưỡng chất khác ít thấy trong các thực phẩm khác.
-                    </p>
-                </div>
-                <div class="product-price">12.99</div>
-                <div class="product-quantity">
-                    <input type="number" value="2" min="1">
-                </div>
-                <div class="product-removal">
-                    <button class="remove-product">
-                        Remove
-                    </button>
-                </div>
-                <div class="product-line-price">25.98</div>
-            </div>
 
-            <div class="product">
-                <div class="product-image">
-                    <img src="https://s.cdpn.io/3/large-NutroNaturalChoiceAdultLambMealandRiceDryDogFood.png">
-                </div>
-                <div class="product-details">
-                    <div class="product-title">Cá hồi Nauy</div>
-                    <p class="product-description">Đặc biệt</p>
-                </div>
-                <div class="product-price">45.99</div>
-                <div class="product-quantity">
-                    <input type="number" value="1" min="1">
-                </div>
-                <div class="product-removal">
-                    <button class="remove-product">
-                        Remove
-                    </button>
-                </div>
-                <div class="product-line-price">45.99</div>
-            </div>*@
-
-            <div class="totals">
-                <div class="totals-item">
-                    <label>Tổng thuần</label>
-                    <div class="totals-value" id="cart-subtotal">71.97</div>
-                </div>
-                <div class="totals-item">
-                    <label>VAT (5%)</label>
-                    <div class="totals-value" id="cart-tax">3.60</div>
-                </div>
-                <div class="totals-item">
-                    <label>Giao hàng</label>
-                    <div class="totals-value" id="cart-shipping">15.00</div>
-                </div>
-                <div class="totals-item totals-item-total">
-                    <label>Tổng cộng</label>
-                    <div class="totals-value" id="cart-total">90.57</div>
-                </div>
-            </div>
-
-            <button class="checkout">Thanh Toán</button>
-
+                <div class="product">
+                    <div class="product-image">
+                        <img src="https://s.cdpn.io/3/large-NutroNaturalChoiceAdultLambMealandRiceDryDogFood.png">
+                    </div>
+                    <div class="product-details">
+                        <div class="product-title">Cá hồi Nauy</div>
+                        <p class="product-description">Đặc biệt</p>
+                    </div>
+                    <div class="product-price">45.99</div>
+                    <div class="product-quantity">
+                        <input type="number" value="1" min="1">
+                    </div>
+                    <div class="product-removal">
+                        <button class="remove-product">
+                            Remove
+                        </button>
+                    </div>
+                    <div class="product-line-price">45.99</div>
+                </div>*@
+   
+                    <div class="payment" style="text-align:right">
+                        <a style="margin:15px; padding-left: 40px; padding-right:40px; background-color: #da291c; color: #fff " class="btn-common button3" href="@Url.Action("Index", "Payment", new { Area = "Main" })"> Thanh Toán</a>
+                    </div>
         </div>
     </section>
 </div>

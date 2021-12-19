@@ -1,0 +1,151 @@
+﻿
+@{ ViewBag.Title = "Thanh toán";
+    Layout = "~/Areas/Main/Views/Shared/_Layout.cshtml"; }
+@using Models.EF;
+@using Models.Dao;
+
+@model List<CNWeb.Areas.Main.Controllers.MenuController.CartMini>
+@section stylesheet{
+    <link rel="stylesheet" type="text/css" href="~/Content/css/User/payment.css">
+}
+@section page_header{
+    <!--Page header & Title-->
+    <style>
+        #page_header {
+            margin-left: -20px;
+            background: url("../../../Content/img/theme/page-header.jpg") no-repeat;
+            width: 110%;
+            position: relative;
+            min-height: 280px;
+            background-size: cover;
+            background-position: center center;
+            text-align: right;
+        }
+    </style>
+    <section id="page_header">
+        <div class="page_title">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="title">The Pastauffeur</h2>
+                        <p>Đem đến trải nghiệm tuyệt vời nhất cho bạn về thế giới ẩm thực</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+<!-- Content -->
+<section id="payment" class="padding-top">
+
+    <div class="checkout-container">
+        <div class="checkout-container--left">
+            <div class="checkout-form">
+                <div class="checkout-page-title">
+                    <h2 class="title">Thanh toán</h2>
+                </div>
+                <div class="checkout-step checkout-shipping">
+                    <div class="checkout-step-title">1. Thông tin giao hàng</div>
+                </div>
+                @foreach (InfoUser user in ViewBag.info)
+                {
+                    <div class="checkout-step-content">
+                        <div class="form-group"><label>Họ tên</label> <input type="text" placeholder="@user.FullName" name="firstname" class="form-control"></div>
+                        <div class="form-group"><label>Số điện thoại</label> <input type="text" placeholder="@user.PhoneNumber" name="telephone" class="form-control"></div>
+                        <div class="form-group"><label>Email</label> <input type="text" name="email" placeholder="@user.Email" class="form-control"></div>
+                        <div class="form-group"><label>Địa chỉ </label> <input type="text" name="address" placeholder="@user.Address" class="form-control"></div>
+                        <div class="form-group"><label>Ghi chú cho đơn hàng <small>(tuỳ chọn)</small></label> <textarea name="notes" class="form-control"></textarea></div>
+                    </div>
+                }
+                <div data-v-49364e3c="" class="checkout-proceed-checkout">
+                    <a style="margin:15px; padding-left: 40px; padding-right:40px; text-align:right; background-color: #da291c; color: #fff " class="btn-common button3" href="@Url.Action("Index", "Payment", new { Area = "Main" })"> Thanh Toán </a>
+                </div>
+            </div>
+        </div>
+        <div class="checkout-container--right">
+            <div class="checkout-review">
+                <div class="checkout-step-title">
+                    <h2>Thông tin đơn hàng</h2>
+                </div>
+                <div class="checkout-step-content">
+                    <div style="align-items: center;">
+                        <section id="cart1" class="padding-top card1 container" style="justify-content: center; align-items: center;">
+                            <div class="shopping-cart1">
+
+                                <div class="column-labels">
+                                    <label class="product-image">Hình ảnh</label>
+                                    <label class="product-details">Món ăn</label>
+                                    <label class="product-price">Giá</label>
+                                    <label class="product-quantity">Số lượng</label>
+                                    <label class="product-removal">Xóa</label>
+                                    <label class="product-line-price" id="product-line-price1">Tổng</label>
+                                </div>
+                                @foreach (var i in Model)
+                                {
+                                    <div class="product">
+                                        <div class="product-id" style="display:none">@(i.ID)</div>
+                                        <div class="product-image">
+                                            <img src="~/Content/img/food/@(i.Alias)_1.jpg">
+                                        </div>
+
+                                        <div class="product-details">
+                                            <div class="product-title">@i.Name</div>
+                                            <p class="product-description">
+                                                @i.Size
+                                            </p>
+                                        </div>
+                                        <div class="product-price">@i.OriginPrice</div>
+                                        <div class="product-quantity">
+                                            @i.Quantity
+                                        </div>
+                                        <div class="product-line-price">@(i.OriginPrice * i.Quantity)</div>
+                                    </div>
+                                }
+                                @foreach (payment1 item in ViewBag.payment)
+                                {
+                                    <div class="totals">
+                                        <div class="totals-item" style="border-bottom: 1px solid #eee;">
+                                            <label>Số tiền trong ví</label>
+                                            <div class="totals-value" id="cart-subtotal">@item.Wallet</div>
+                                        </div>
+                                        <div class="totals">
+                                            <div class="totals-item">
+                                                <label>Tổng thuần</label>
+                                                <div class="totals-value" id="cart-subtotal">@item.OriginPrice</div>
+                                            </div>
+                                            <div class="totals-item">
+                                                <label>VAT (5%)</label>
+                                                <div class="totals-value" id="cart-tax">@item.VAT</div>
+                                            </div>
+                                            <div class="totals-item">
+                                                <label>Giao hàng</label>
+                                                <div class="totals-value" id="cart-shipping">@item.Shipping</div>
+                                            </div>
+                                            <div class="totals-item" style="border-bottom: 1px solid #eee;">
+                                                <label>Giảm giá</label>
+                                                <div class="totals-value" id="cart-shipping">@item.Discount</div>
+                                            </div>
+                                            <div class="totals-item" style="border-bottom: 1px solid #eee;">
+                                                <label>Tổng cộng</label>
+                                                <div class="totals-value" id="cart-total">@item.FinalPrice</div>
+
+                                            </div>
+                                                <div class="totals-item">
+                                                    <label>Số dư</label>
+                                                    <div class="totals-value" id="cart-shipping">@item.Balance</div>
+                                                </div>
+                                                
+                                            
+                                        </div>
+
+                                    </div>
+                                }
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

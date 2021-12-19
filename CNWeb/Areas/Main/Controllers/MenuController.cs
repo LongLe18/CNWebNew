@@ -127,6 +127,7 @@ namespace CNWeb.Areas.Main.Controllers
             public int OriginPrice { get; set; }
             public int? PromotionPrice { get; set; }
         }
+       
         public JsonResult GetListCarts(int cartid)
         {
             try

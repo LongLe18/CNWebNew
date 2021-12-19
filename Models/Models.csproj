@@ -49,11 +49,13 @@
     <Compile Include="Dao\CommentModel.cs" />
     <Compile Include="Dao\DashboardModel.cs" />
     <Compile Include="Dao\FoodModel.cs" />
+    <Compile Include="Dao\InfoUser.cs" />
     <Compile Include="Dao\ListBlog.cs" />
     <Compile Include="Dao\ListOrder.cs" />
     <Compile Include="Dao\ListPromotion.cs" />
     <Compile Include="Dao\ListStaff.cs" />
     <Compile Include="Dao\OrderModel.cs" />
+    <Compile Include="Dao\payment1.cs" />
     <Compile Include="Dao\PersonalModel.cs" />
     <Compile Include="Dao\PromotionModel.cs" />
     <Compile Include="Dao\StaffModel.cs" />
@@ -89,6 +91,9 @@
   <ItemGroup>
     <PackageReference Include="EntityFramework">
       <Version>6.4.4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <Version>3.6.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
