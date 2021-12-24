@@ -1,4 +1,4 @@
-/* Set rates + misc */
+﻿/* Set rates + misc */
 var taxRate = 0.05;
 var shippingRate = 15.00; 
 var fadeTime = 300;
@@ -46,14 +46,31 @@ function recalculateCart()
 
 
 /* Update quantity */
-function updateQuantity(quantityInput)
-{
-  /* Calculate line price */
-  var productRow = $(quantityInput).parent().parent();
-  var price = parseInt(productRow.children('.product-price').text());
-  var quantity = $(quantityInput).val();
-  var linePrice = price * quantity;
-  
+function updateQuantity(quantityInput) {
+    /* Calculate line price */
+    var productRow = $(quantityInput).parent().parent();
+    var price = parseInt(productRow.children('.product-price').text());
+    var quantity = $(quantityInput).val();
+    var linePrice = price * quantity;
+    if (quantity < 0) {
+        alert("Số lượng sai định dạng");
+        return;
+    }
+    if (quantity == 0) {
+        
+        console.log(productRow.children(":first").text())
+        productRow.slideUp(fadeTime, function () {
+            productRow.remove();
+            recalculateCart();
+            $.getJSON("/Main/Cart/DeleteFromCart", { id: productRow.children(":first").text() }, function (response) {
+                alert(response.data);
+            });
+        });
+        return;
+    }
+    $.getJSON("/Main/Cart/updateQuantity", { id: productRow.children(":first").text(), quantity: quantity }, function (response) {
+        alert(response.data);
+    });
   /* Update line price display and recalc cart totals */
   productRow.children('.product-line-price').each(function () {
     $(this).fadeOut(fadeTime, function() {

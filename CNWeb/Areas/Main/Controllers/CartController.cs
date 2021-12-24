@@ -19,7 +19,7 @@ namespace CNWeb.Areas.Main.Controllers
             var session =(CNWeb.Code.UserSession)Session[CNWeb.Code.Constants.USER_SESSION];
             if (session == null)
             {
-                RedirectToAction("Login", "User", new { area = "" });
+                return RedirectToAction("Login", "User", new { area = "" });
             }
             int cartid = session.CartID;
             SqlParameter parameter1 = new SqlParameter("@cartid", cartid);
@@ -43,6 +43,23 @@ namespace CNWeb.Areas.Main.Controllers
             }
 
         }
-    
+        public JsonResult updateQuantity(int id, int quantity)
+        {
+            try
+            {
+                var session = (CNWeb.Code.UserSession)Session[CNWeb.Code.Constants.USER_SESSION];
+                int cartid = session.CartID;
+                SqlParameter parameter1 = new SqlParameter("@cartid", cartid);
+                SqlParameter parameter2 = new SqlParameter("@id", id);
+                SqlParameter parameter3 = new SqlParameter("@quantity", quantity);
+                
+                db.Database.ExecuteSqlCommand("update CartFoodDetails set quantity=@quantity where cartid = @cartid and Foodoptionid =@id",parameter3, parameter1, parameter2);
+                return Json(new { message = "OK", data = "Thành công" }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(new { message = "FAIL", data = "KHÔNG Thành công" }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }   
 }
