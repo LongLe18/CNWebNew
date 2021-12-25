@@ -15,9 +15,10 @@ namespace CNWeb.Areas.Main.Controllers
     {
         // GET: Main/Payment
         DbCNWeb db = new DbCNWeb();
+        CNWeb.Code.UserSession session;
         public ActionResult Index()
         {
-            var session = (CNWeb.Code.UserSession)Session[CNWeb.Code.Constants.USER_SESSION];
+            session = (CNWeb.Code.UserSession)Session[CNWeb.Code.Constants.USER_SESSION];
             if (session == null)
             {
                 RedirectToAction("Login", "User", new { area = "" });
@@ -90,7 +91,7 @@ namespace CNWeb.Areas.Main.Controllers
             public int OriginPrice { get; set; }
             public int? PromotionPrice { get; set; }
         }
-        
+
         public ActionResult InforUser()
         {
             var session = (CNWeb.Code.UserSession)Session[CNWeb.Code.Constants.USER_SESSION];
@@ -104,6 +105,49 @@ namespace CNWeb.Areas.Main.Controllers
             SqlParameter parameter3 = new SqlParameter("@cartid", cartid);
             return View();
         }
+        public ActionResult CheckPayment(string sub, string name, string phone, string add, string note, string email)
+        {
+            try
+            {
+                session = (CNWeb.Code.UserSession)Session[CNWeb.Code.Constants.USER_SESSION];
+                var k = int.Parse(sub);
+            var k1 = db.Users.Find(session.UserID);
+                Order order = new Order();
+                order.CustomerName = name;
+                order.CustomerAddress = add;
+                order.CustomerMessage = note;
+                order.ToTalPrice = k;
+                order.IDUser = session.UserID;
+                order.CreatedByUserID = session.UserID;
+                order.Status = 1;
+                var dt = DateTime.UtcNow;
+                int createdDayUnix = CNWeb.Helper.ConvertDateTime.ConvertDateTimeToUnix(dt);order.CreatedTime = createdDayUnix;
+                db.Orders.Add(order);
+                
 
+            k1.Wallet -= k;
+            db.SaveChanges();
+                var id = order.ID;
+                var carts =db.CartFoodDetails.Where(i => i.CartID == session.CartID).ToList();
+                foreach(var item in carts)
+                {
+                    
+                    OrderFoodDetail or = new OrderFoodDetail();
+                    or.OrderID = id;
+                    or.FoodOptionID = item.FoodOptionID;
+                    or.Quantity = item.Quantity;
+                    db.OrderFoodDetails.Add(or);
+                    db.CartFoodDetails.Remove(item);
+                    
+                }
+                db.SaveChanges();
+            return Json(new { message = "OK", data = " Thanh toán Thành công" }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(new { message = "Lỗi", data = "Lỗi trong quá trình thanh toán" }, JsonRequestBehavior.AllowGet);
+            }
+            
+        }
     }
 }

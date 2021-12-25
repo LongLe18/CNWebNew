@@ -51,11 +51,11 @@
                 @foreach (InfoUser user in ViewBag.info)
                 {
                     <div class="checkout-step-content">
-                        <div class="form-group"><label>Họ tên</label> <input type="text" value="@user.FullName" name="firstname" class="form-control"></div>
-                        <div class="form-group"><label>Số điện thoại</label> <input type="text" value="@user.PhoneNumber" name="telephone" class="form-control"></div>
-                        <div class="form-group"><label>Email</label> <input type="text" name="email" value="@user.Email" class="form-control"></div>
-                        <div class="form-group"><label>Địa chỉ </label> <input type="text" name="address" value="@user.Address" class="form-control"></div>
-                        <div class="form-group"><label>Ghi chú cho đơn hàng <small>(tuỳ chọn)</small></label> <textarea name="notes" class="form-control"></textarea></div>
+                        <div class="form-group"><label>Họ tên</label> <input type="text" value="@user.FullName" id="firstname" class="form-control"></div>
+                        <div class="form-group"><label>Số điện thoại</label> <input type="text" value="@user.PhoneNumber" id="telephone" class="form-control"></div>
+                        <div class="form-group"><label>Email</label> <input type="text" id="email" value="@user.Email" class="form-control"></div>
+                        <div class="form-group"><label>Địa chỉ </label> <input type="text" id="address" value="@user.Address" class="form-control"></div>
+                        <div class="form-group"><label>Ghi chú cho đơn hàng <small>(tuỳ chọn)</small></label> <textarea id="notes" class="form-control"></textarea></div>
                     </div>
                 }
                 <div data-v-49364e3c="" class="checkout-proceed-checkout">
@@ -133,7 +133,7 @@
                                             </div>
                                                 <div class="totals-item">
                                                     <label>Số dư</label>
-                                                    <div class="totals-value" id="cart-shipping">@item.Balance</div>
+                                                    <div class="totals-value" id="cart-balance">@item.Balance</div>
                                                 </div>
                                                 
                                             
@@ -149,3 +149,25 @@
         </div>
     </div>
 </section>
+<script>
+    $('#abcd').click(function () {
+        
+        var k = $('#cart-balance').text();
+        
+        var j = parseInt(k);
+        var name = $('#firstname').val();
+        var phone = $('#telephone').val();
+        var email = $('#email').val();
+        var add = $('#address').val();
+        var note = $('#note').val();
+
+        if (j < 0) {
+            alert("Số tiền mua vượt quá tiền dư trong tài khoản")
+        }
+        else {
+            $.getJSON("/Main/Payment/CheckPayment", { sub: $("#cart-total").text() , name:name, phone:phone, email:email, add:add, note:note}, function (response) {
+            alert(response.data)
+        });
+        }
+    })
+</script>

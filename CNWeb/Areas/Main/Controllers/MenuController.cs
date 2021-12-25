@@ -101,10 +101,28 @@ namespace CNWeb.Areas.Main.Controllers
                 db.Database.ExecuteSqlCommand("insert into cartfooddetails values (@i, @j, @k)", new SqlParameter("@i", cartid), new SqlParameter("@j", foodoptid),
                     new SqlParameter("@k", quantity));
                 db.SaveChanges();
-                return Json("Thêm vào giở hàng thành công", JsonRequestBehavior.AllowGet);
+                return Json("Thêm vào giỏ hàng thành công", JsonRequestBehavior.AllowGet);
             } catch
             {
-                return Json("Thêm vào giở hàng không thành công", JsonRequestBehavior.AllowGet);
+                try
+                {
+                    var quan = db.Database.SqlQuery<int>("select quantity from cartfooddetails where cartid = @i and foodoptionid = @j", new SqlParameter("@i", cartid), new SqlParameter("@j", foodoptid)).FirstOrDefault();
+                    Console.WriteLine(quan);
+                    var k1 = quan;
+                    if (quan != null)
+                    {
+                        quantity = quantity + quan;
+                        db.Database.ExecuteSqlCommand("update cartfooddetails set quantity = @i where cartid = @j and foodoptionid = @k", new SqlParameter("@j", cartid), new SqlParameter("@k", foodoptid),
+                    new SqlParameter("@i", quantity));
+                    }
+                    db.SaveChanges();
+                    return Json("Thêm vào giỏ hàng thành công", JsonRequestBehavior.AllowGet);
+                }
+                catch
+                {
+
+                return Json("Thêm vào giỏ hàng không thành công", JsonRequestBehavior.AllowGet);
+                }
             }
         }
 

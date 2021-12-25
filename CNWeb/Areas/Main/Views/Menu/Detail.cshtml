@@ -377,7 +377,7 @@
 
     function AddCart(evt) {
         console.log(evt.currentTarget.myParam)
-        $.getJSON("@Url.Action("AddCart", "Menu")", { cartid: evt.currentTarget.myParam[0], foodoptid: evt.currentTarget.myParam[1], quantity: evt.currentTarget.myParam[2] }, function (response) {
+        $.getJSON("@Url.Action("AddCart", "Menu")", { cartid: evt.currentTarget.myParam[0], foodoptid: evt.currentTarget.myParam[1], quantity: $("#font-size").val() }, function (response) {
             alert(response);
         });
 
