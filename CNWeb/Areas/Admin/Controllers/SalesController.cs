@@ -1,5 +1,6 @@
 ﻿using CNWeb.Helper;
 using Models.Dao;
+using Models.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,13 @@ namespace CNWeb.Areas.Admin.Controllers
 {
     public class SalesController : Controller
     {
+        DbCNWeb db = new DbCNWeb();
         // [GET]: Admin/Sales/Sales
         //[HasCredential(RoleID = "VIEW_ADMIN")]
         public ActionResult Sales()
         {
+
+            ViewBag.AllFood = db.Foods.ToList();
             return PartialView("Sales");
         }
 
@@ -33,7 +37,46 @@ namespace CNWeb.Areas.Admin.Controllers
             var detail = dao.GetDetailPromotionByID(id);
             return Json(detail, JsonRequestBehavior.AllowGet);
         }
+        //Admin/Sales/Add
+        [HttpPost]
+        public ActionResult Add()
+        {
+            try
+            {
+                Promotion km = new Promotion();
+                km.Name = Request.Form["namepro"];
+                km.Content = Request.Form["des"];
+                km.TypeID = 1;
+                km.ActiveDay = Helper.ConvertDateTime.ConvertDateTimeToUnix(DateTime.ParseExact(Request.Form["datetime1"], "dd/MM/yyyy", null));
+                km.EndDay = Helper.ConvertDateTime.ConvertDateTimeToUnix(DateTime.ParseExact(Request.Form["datetime2"], "dd/MM/yyyy", null));
+                km.ID = db.Promotions.Max(i => i.ID) + 1;
+                List<int> k = new List<int>();
+                km.Status = 0;
+                db.Promotions.Add(km);
+                for (int i = 0; i < db.Foods.ToList().Count; i++)
+                {
+                    if (Request.Form[$"Checkbox[{i}]"] == "on")
+                    {
+                        k.Add(i);
+                    }
+                }
+                foreach(int j in k)
+                {
+                    PromotionFoodDetail z = new PromotionFoodDetail();
+                    z.FoodID = db.Foods.ToList()[j].ID;
+                    z.PromotionID = km.ID;
+                    z.PercentReduction = int.Parse(Request.Form["reduct"]);
+                    db.PromotionFoodDetails.Add(z);
+                }
+                db.SaveChanges();
+                return Json(new { message = "Success!!", data = "Thêm thành công" }, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(new { message = "Fail!!", data = "Lỗi khi thêm " }, JsonRequestBehavior.AllowGet);
+            }
 
+        }
         // [PUT] /Admin/Sales/ActivePromotion
         public JsonResult ActivePromotion(int id, int status)
         {
@@ -55,6 +98,25 @@ namespace CNWeb.Areas.Admin.Controllers
             {
                 return Json(new { message = "Fail!!", data = "Kích hoạt thất bại" }, JsonRequestBehavior.AllowGet);
             }
-        } 
+        }
+        public JsonResult Delete(int id)
+        {
+            try
+            {
+                DbCNWeb db = new DbCNWeb();
+                var k = db.Promotions.Find(id);
+
+                db.Promotions.Remove(k);
+                db.SaveChanges();
+                return Json(new { message = "Success!!", data = "Xóa thành công" }, JsonRequestBehavior.AllowGet);
+
+
+
+            }
+            catch
+            {
+                return Json(new { message = "Fail!!", data = "Xóa thất bại" }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

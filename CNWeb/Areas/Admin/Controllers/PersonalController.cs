@@ -46,10 +46,14 @@ namespace CNWeb.Areas.Admin.Controllers
             {
                 try
                 {
-                    string path = Path.Combine(Server.MapPath("~/Content/img/User"),
-                                       Path.GetFileName(file.FileName));
-                    file.SaveAs(path);
-                    Staff.Image = "/Content/img/User/" + Staff.Image;
+                    //string path = Path.Combine(Server.MapPath("~/Content/img/User"),
+                    //                   Path.GetFileName(file.FileName));
+                    //file.SaveAs(path);
+                    var byt = new byte[file.ContentLength];
+                    file.InputStream.Read(byt, 0, file.ContentLength);
+                    string encoded = Convert.ToBase64String(byt);
+
+                    Staff.Image = encoded;
                 }
                 catch
                 {

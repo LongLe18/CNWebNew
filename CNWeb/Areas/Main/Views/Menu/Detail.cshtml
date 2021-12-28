@@ -369,7 +369,7 @@
             async: false
         });
         $.getJSON("@Url.Action("GetIDFoodOption", "Menu")", { size: size, idfood: idfood }, function (response) {
-            document.getElementById("AddCart").myParam = [@session.CartID, response[0], $("#font-size").val()];
+            document.getElementById("AddCart").myParam = [@ViewBag.CartID, response[0], $("#font-size").val()];
         });
     }
 

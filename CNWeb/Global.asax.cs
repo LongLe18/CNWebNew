@@ -64,7 +64,7 @@ namespace CNWeb
                 var a = db.Promotions.ToList();
                 foreach (var item in a)
                 {
-                    if (t>item.ActiveDay && t < item.EndDay)
+                    if (t>item.ActiveDay && t < item.EndDay && item.Status == 1)
                     {
                         Debug.WriteLine(item.Name + " đang kích hoạt khuyến mãi");
                         var b = db.PromotionFoodDetails.Where(i => i.PromotionID == item.ID).ToList();

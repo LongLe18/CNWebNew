@@ -35,10 +35,13 @@
                             <a href="#">
                                 @if (session != null)
                                 {
-                                    <img src="@session.pathImage" class="rounded-circle"> }
-                                else
-                                {
-                            <img src="~/Content/img/theme/team-4.jpg" class="rounded-circle">}
+
+                                                var base64 = Convert.ToBase64String(Convert.FromBase64String(@session.pathImage));
+                                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64); 
+                                            <img src="@imgSrc" class="rounded-circle"> }
+                                        else
+                                        {
+                            <img src="~/Content/img/theme/team-4ẻwe.jpg" class="rounded-circle">}
                             </a>
                          </div>
                     </div>

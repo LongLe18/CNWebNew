@@ -100,7 +100,8 @@
             }
             if (item.pathImage != null)
             {
-                html += `<img src="${item.pathImage}" class="rounded-circle autofit-image"></div>`
+                
+                html += `<img src="data:image/png;base64,${item.pathImage}" class="rounded-circle autofit-image"></div>`
             }
             else
             {
@@ -120,7 +121,7 @@
         });
         document.getElementById('listblogs').innerHTML = html;
     }
-    
+
     $('#filter').change(function () {
         $.getJSON("/api/Admin/GetListBlogs", { filter: $("#filter").val(), search: $("#input-search").val() }, function (response) {
             RenderBlog(response);
@@ -164,5 +165,5 @@
             }
         })
     }
-       
+
 </script>

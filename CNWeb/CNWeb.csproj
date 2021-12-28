@@ -238,6 +238,7 @@
     <Content Include="Content\css\bootstrap\bootstrap-reboot.min.css" />
     <Content Include="Content\css\bootstrap\bootstrap.css" />
     <Content Include="Content\css\bootstrap\bootstrap.min.css" />
+    <Content Include="Content\css\datepicker.css" />
     <Content Include="Content\css\fonts\bebas-webfont.svg" />
     <Content Include="Content\css\fonts\bistro-icons.svg" />
     <Content Include="Content\css\fonts\fontawesome-webfont.svg" />
@@ -246,6 +247,7 @@
     <Content Include="Content\css\fonts\opensans-bold-webfont.svg" />
     <Content Include="Content\css\fonts\opensans-regular-webfont.svg" />
     <Content Include="Content\css\fonts\opensans-semibold-webfont.svg" />
+    <Content Include="Content\css\jquery-ui.min.css" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\User\animate.min.css" />
     <Content Include="Content\css\User\bistro-icons.css" />
@@ -441,6 +443,7 @@
     <Content Include="Content\js\components\vendor\nouislider.min.js" />
     <Content Include="Content\js\components\vendor\scrollbar.js" />
     <Content Include="Content\js\components\vendor\scrollbar.min.js" />
+    <Content Include="Content\js\jquery-ui.js" />
     <Content Include="Content\js\User\blog-detail.js" />
     <Content Include="Content\js\User\blog-writing.js" />
     <Content Include="Content\js\User\bootstrap.min.js" />

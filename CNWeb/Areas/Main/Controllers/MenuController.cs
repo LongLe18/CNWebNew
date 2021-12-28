@@ -23,10 +23,12 @@ namespace CNWeb.Areas.Main.Controllers
         }
         public ActionResult Detail(int id)
         {
+
             Food f = db.Foods.Where(s => s.ID == id).FirstOrDefault();
             ViewBag.food = f;
             SqlParameter parameter = new SqlParameter("@id", id);
-
+            var session = (CNWeb.Code.UserSession)Session[CNWeb.Code.Constants.USER_SESSION];
+            ViewBag.CartID = session == null ? 0 : session.CartID;
             ViewBag.image = db.Database.SqlQuery<Image>("select Image.ID, Image.Name, Image.Alias, Image.URL, Image.Description " +
                 "from Image, Foods, SlideDetails  where Foods.ID = @id and Foods.SlideID = SlideDetails.SlideID and SlideDetails.ImageID = Image.ID", parameter).ToList();
             SqlParameter parameter1 = new SqlParameter("@id", id);

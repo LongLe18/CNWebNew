@@ -155,53 +155,53 @@
                                 {
                                     if (session.pathImage != null)
                                     {
-                                        <img alt="Image placeholder" src="@session.pathImage">
+                                        var base64 = Convert.ToBase64String(Convert.FromBase64String(@session.pathImage));
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                        <img src="@imgSrc" class="rounded-circle"> 
+                                    
                                     }
-                                    else
-                                    {
-                                        <img alt="Image placeholder" src="~/Content/img/theme/team-4.jpg">
-                                    }
-                                }
-                                else
-                                {
-                                    <img alt="Image placeholder" src="~/Content/img/theme/team-4.jpg">
-                                }
-                            </span>
-                            <div class="media-body  ml-2  d-none d-lg-block">
-                                @if (session != null) {
-                                    <span class="mb-0 text-sm  font-weight-bold" id="FullName">@session.FullName</span>
-                                }
-                            </div>
-                        </div>
-                    </a>
-                    <div class="dropdown-menu  dropdown-menu-right ">
-                        <div class="dropdown-header noti-title">
-                            <h6 class="text-overflow m-0">Welcome!</h6>
-                        </div>
-                        <a href="#!" class="dropdown-item">
-                            <i class="ni ni-single-02"></i>
-                            <span>Tài khoản</span>
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                            <i class="ni ni-settings-gear-65"></i>
-                            <span>Cài đặt</span>
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                            <i class="ni ni-calendar-grid-58"></i>
-                            <span>Hoạt động</span>
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                            <i class="ni ni-support-16"></i>
-                            <span>Hỗ trợ</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="/User/Login" class="dropdown-item">
-                            <i class="ni ni-user-run"></i>
-                            <span>Đăng xuất</span>
-                        </a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+                                    else{ <img alt = "Image placeholder" src = "~/Content/img/theme/team-4.jpg" >}
+                    }
+                    else
+                    {
+                    <img alt="Image placeholder" src="~/Content/img/theme/team-4.jpg">
+                    }
+                </span>
+                                    <div class="media-body  ml-2  d-none d-lg-block">
+                                        @if (session != null)
+                                        {
+                    <span class="mb-0 text-sm  font-weight-bold" id="FullName">@session.FullName</span>}
+                                    </div>
+                                                    </div>
+                                                                    </a>
+                                                                                        <div class="dropdown-menu  dropdown-menu-right ">
+                                                                                            <div class="dropdown-header noti-title">
+                                                                                                <h6 class="text-overflow m-0">Welcome!</h6>
+                                                                                            </div>
+                                                                                            <a href="#!" class="dropdown-item">
+                                                                                                <i class="ni ni-single-02"></i>
+                                                                                                <span>Tài khoản</span>
+                                                                                            </a>
+                                                                                            <a href="#!" class="dropdown-item">
+                                                                                                <i class="ni ni-settings-gear-65"></i>
+                                                                                                <span>Cài đặt</span>
+                                                                                            </a>
+                                                                                            <a href="#!" class="dropdown-item">
+                                                                                                <i class="ni ni-calendar-grid-58"></i>
+                                                                                                <span>Hoạt động</span>
+                                                                                            </a>
+                                                                                            <a href="#!" class="dropdown-item">
+                                                                                                <i class="ni ni-support-16"></i>
+                                                                                                <span>Hỗ trợ</span>
+                                                                                            </a>
+                                                                                            <div class="dropdown-divider"></div>
+                                                                                            <a href="/User/Login" class="dropdown-item">
+                                                                                                <i class="ni ni-user-run"></i>
+                                                                                                <span>Đăng xuất</span>
+                                                                                            </a>
+                                                                                        </div>
+                                                                                                        </li>
+                                                                                                                        </ul>
+                                                                                                                                        </div>
+                                                                                                                                                        </div>
+                                                                                                                                                                        </nav>

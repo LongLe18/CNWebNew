@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -20,7 +21,33 @@ namespace CNWeb.Areas.Main.Controllers
             var session = (CNWeb.Code.UserSession)Session[CNWeb.Code.Constants.USER_SESSION];
             if (session == null) return RedirectToAction("Login", "User", new { area = "" });
             var model = db.Orders.Where(i => i.IDUser == session.UserID).ToList();
+            try
+            {
+ViewBag.Image = Convert.FromBase64String(db.Users.Where(i => i.ID == session.UserID).FirstOrDefault().Image);
+
+            }
+            catch
+            {
+                Console.WriteLine("looix");
+            }
+            
             return View(model);
+        }
+        [HttpPost]
+        public ActionResult UploadImage(HttpPostedFileBase Image)
+        {
+            if (Image == null)
+            {
+                return Redirect("/Main/Profile");
+            }
+            var session = (CNWeb.Code.UserSession)Session[CNWeb.Code.Constants.USER_SESSION];
+            var n = db.Users.Find(session.UserID);
+            var byt = new byte[Image.ContentLength];
+            Image.InputStream.Read(byt, 0, Image.ContentLength);
+            string encoded = Convert.ToBase64String(byt);
+            n.Image = encoded;
+            db.SaveChanges();
+            return Redirect("/Main/Profile");
         }
         public JsonResult SearchOrder(string id)
         {
